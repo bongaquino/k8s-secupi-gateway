@@ -2,18 +2,18 @@
 
 ## Overview
 This document details how the IPFS cluster nodes are connected and configured in our infrastructure. The cluster consists of three nodes:
-- Bootstrap Node (211.239.117.217)
-- Peer-01 (218.38.136.33)
-- Peer-02 (218.38.136.34)
+- Bootstrap Node (<BOOTSTRAP_NODE_IP>)
+- Peer-01 (<PEER_01_IP>)
+- Peer-02 (<PEER_02_IP>)
 
 ## Security Configuration
 
 ### IP Whitelisting
 The following IPs are whitelisted for access:
 - 52.77.36.120 (Backend server)
-- 211.239.117.217 (Bootstrap node)
-- 218.38.136.33 (Peer-01)
-- 218.38.136.34 (Peer-02)
+- <BOOTSTRAP_NODE_IP> (Bootstrap node)
+- <PEER_01_IP> (Peer-01)
+- <PEER_02_IP> (Peer-02)
 - 119.94.162.43 (External access)
 - 103.214.12.50 (External access)
 - 112.200.100.154 (External access)
@@ -72,7 +72,7 @@ We used `service.json` to manually add peers. Here's the configuration for each 
       "/ip4/0.0.0.0/udp/9096/quic"
     ],
     "announce_multiaddress": [
-      "/ip4/211.239.117.217/tcp/9096"
+      "/ip4/<BOOTSTRAP_NODE_IP>/tcp/9096"
     ]
   }
 }
@@ -89,10 +89,10 @@ We used `service.json` to manually add peers. Here's the configuration for each 
       "/ip4/0.0.0.0/udp/9096/quic"
     ],
     "announce_multiaddress": [
-      "/ip4/218.38.136.33/tcp/9096"
+      "/ip4/<PEER_01_IP>/tcp/9096"
     ],
     "peer_addresses": [
-      "/ip4/211.239.117.217/tcp/9096/p2p/12D3KooWSv57nfbit9pKb2BbmBRwRsWTnaHc4rk1NccuC1QBMGAT"
+      "/ip4/<BOOTSTRAP_NODE_IP>/tcp/9096/p2p/12D3KooWSv57nfbit9pKb2BbmBRwRsWTnaHc4rk1NccuC1QBMGAT"
     ]
   }
 }
@@ -109,10 +109,10 @@ We used `service.json` to manually add peers. Here's the configuration for each 
       "/ip4/0.0.0.0/udp/9096/quic"
     ],
     "announce_multiaddress": [
-      "/ip4/218.38.136.34/tcp/9096"
+      "/ip4/<PEER_02_IP>/tcp/9096"
     ],
     "peer_addresses": [
-      "/ip4/211.239.117.217/tcp/9096/p2p/12D3KooWSv57nfbit9pKb2BbmBRwRsWTnaHc4rk1NccuC1QBMGAT"
+      "/ip4/<BOOTSTRAP_NODE_IP>/tcp/9096/p2p/12D3KooWSv57nfbit9pKb2BbmBRwRsWTnaHc4rk1NccuC1QBMGAT"
     ]
   }
 }
@@ -300,20 +300,20 @@ As of this date, only the three cluster nodes are connected as IPFS swarm peers 
 
 #### Bootstrap Node Swarm Peers
 ```
-/ip4/218.38.136.33/tcp/4001/p2p/12D3KooWNSghb6wztPUwpTntpWvaCoR9BsDkZJAne8iy5XS6SFhv
-/ip4/218.38.136.34/tcp/4001/p2p/12D3KooWMovcPAJTwNgdDnB3F4jfcuY6NpGFExkU9Jhd2m6jUKGu
+/ip4/<PEER_01_IP>/tcp/4001/p2p/12D3KooWNSghb6wztPUwpTntpWvaCoR9BsDkZJAne8iy5XS6SFhv
+/ip4/<PEER_02_IP>/tcp/4001/p2p/12D3KooWMovcPAJTwNgdDnB3F4jfcuY6NpGFExkU9Jhd2m6jUKGu
 ```
 
 #### Peer-01 Swarm Peers
 ```
-/ip4/211.239.117.217/tcp/4001/p2p/12D3KooWE4Lzj5AhHin4MkinfGRPagNeeu9bHVBZua7kLNie1qzA
-/ip4/218.38.136.34/tcp/4001/p2p/12D3KooWMovcPAJTwNgdDnB3F4jfcuY6NpGFExkU9Jhd2m6jUKGu
+/ip4/<BOOTSTRAP_NODE_IP>/tcp/4001/p2p/12D3KooWE4Lzj5AhHin4MkinfGRPagNeeu9bHVBZua7kLNie1qzA
+/ip4/<PEER_02_IP>/tcp/4001/p2p/12D3KooWMovcPAJTwNgdDnB3F4jfcuY6NpGFExkU9Jhd2m6jUKGu
 ```
 
 #### Peer-02 Swarm Peers
 ```
-/ip4/211.239.117.217/tcp/4001/p2p/12D3KooWE4Lzj5AhHin4MkinfGRPagNeeu9bHVBZua7kLNie1qzA
-/ip4/218.38.136.33/tcp/4001/p2p/12D3KooWNSghb6wztPUwpTntpWvaCoR9BsDkZJAne8iy5XS6SFhv
+/ip4/<BOOTSTRAP_NODE_IP>/tcp/4001/p2p/12D3KooWE4Lzj5AhHin4MkinfGRPagNeeu9bHVBZua7kLNie1qzA
+/ip4/<PEER_01_IP>/tcp/4001/p2p/12D3KooWNSghb6wztPUwpTntpWvaCoR9BsDkZJAne8iy5XS6SFhv
 ```
 
 #### Cluster Peer List
@@ -334,9 +334,9 @@ All technical evidence confirms that only the three cluster nodes are connected 
 The following IPs have been whitelisted in the firewall for all nodes in the cluster:
 
 ### Cluster Nodes
-- Bootstrap Node: 211.239.117.217
-- Peer-01: 218.38.136.33
-- Peer-02: 218.38.136.34
+- Bootstrap Node: <BOOTSTRAP_NODE_IP>
+- Peer-01: <PEER_01_IP>
+- Peer-02: <PEER_02_IP>
 
 ### External Access
 - HostCenter Monitoring IP: 110.10.81.170
@@ -353,10 +353,10 @@ The following IPs have been whitelisted in the firewall for all nodes in the clu
 - Bong's IP: 112.200.100.154
 
 ### Firewall Rules Applied
-- **Bootstrap Node (211.239.117.217):**
-  - Allow from 211.239.117.217 (Bootstrap Node) to Anywhere
-  - Allow from 218.38.136.33 (Peer-01) to Anywhere
-  - Allow from 218.38.136.34 (Peer-02) to Anywhere
+- **Bootstrap Node (<BOOTSTRAP_NODE_IP>):**
+  - Allow from <BOOTSTRAP_NODE_IP> (Bootstrap Node) to Anywhere
+  - Allow from <PEER_01_IP> (Peer-01) to Anywhere
+  - Allow from <PEER_02_IP> (Peer-02) to Anywhere
   - Allow from 110.10.81.170 (HostCenter Monitoring IP) to Anywhere
   - Allow from 121.125.68.226 (HostCenter Management IP) to Anywhere
   - Allow from 169.150.218.66 (JB's IP) to Anywhere
@@ -370,10 +370,10 @@ The following IPs have been whitelisted in the firewall for all nodes in the clu
   - Allow from 119.94.162.43 (Alex's IP) to Anywhere
   - Allow from 112.200.100.154 (Bong's IP) to Anywhere
 
-- **Peer-01 (218.38.136.33):**
-  - Allow from 211.239.117.217 (Bootstrap Node) to Anywhere
-  - Allow from 218.38.136.33 (Peer-01) to Anywhere
-  - Allow from 218.38.136.34 (Peer-02) to Anywhere
+- **Peer-01 (<PEER_01_IP>):**
+  - Allow from <BOOTSTRAP_NODE_IP> (Bootstrap Node) to Anywhere
+  - Allow from <PEER_01_IP> (Peer-01) to Anywhere
+  - Allow from <PEER_02_IP> (Peer-02) to Anywhere
   - Allow from 110.10.81.170 (HostCenter Monitoring IP) to Anywhere
   - Allow from 121.125.68.226 (HostCenter Management IP) to Anywhere
   - Allow from 169.150.218.66 (JB's IP) to Anywhere
@@ -387,10 +387,10 @@ The following IPs have been whitelisted in the firewall for all nodes in the clu
   - Allow from 119.94.162.43 (Alex's IP) to Anywhere
   - Allow from 112.200.100.154 (Bong's IP) to Anywhere
 
-- **Peer-02 (218.38.136.34):**
-  - Allow from 211.239.117.217 (Bootstrap Node) to Anywhere
-  - Allow from 218.38.136.33 (Peer-01) to Anywhere
-  - Allow from 218.38.136.34 (Peer-02) to Anywhere
+- **Peer-02 (<PEER_02_IP>):**
+  - Allow from <BOOTSTRAP_NODE_IP> (Bootstrap Node) to Anywhere
+  - Allow from <PEER_01_IP> (Peer-01) to Anywhere
+  - Allow from <PEER_02_IP> (Peer-02) to Anywhere
   - Allow from 110.10.81.170 (HostCenter Monitoring IP) to Anywhere
   - Allow from 121.125.68.226 (HostCenter Management IP) to Anywhere
   - Allow from 169.150.218.66 (JB's IP) to Anywhere
@@ -412,9 +412,9 @@ The following IPs have been whitelisted in the firewall for all nodes in the clu
      ```
    - Example:
      ```bash
-     sudo ufw allow from 211.239.117.217 to any comment 'Bootstrap Node'
-     sudo ufw allow from 218.38.136.33 to any comment 'Peer-01'
-     sudo ufw allow from 218.38.136.34 to any comment 'Peer-02'
+     sudo ufw allow from <BOOTSTRAP_NODE_IP> to any comment 'Bootstrap Node'
+     sudo ufw allow from <PEER_01_IP> to any comment 'Peer-01'
+     sudo ufw allow from <PEER_02_IP> to any comment 'Peer-02'
      sudo ufw allow from 110.10.81.170 to any comment 'HostCenter Monitoring IP'
      sudo ufw allow from 121.125.68.226 to any comment 'HostCenter Management IP'
      sudo ufw allow from 169.150.218.66 to any comment 'JB IP'

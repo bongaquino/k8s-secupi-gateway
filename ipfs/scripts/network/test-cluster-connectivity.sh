@@ -7,15 +7,15 @@ YELLOW='\033[1;33m'
 NC='\033[0m'
 
 # Node IPs and Domains
-BOOTSTRAP_NODE="211.239.117.217"
-PEER_01="218.38.136.33"
-PEER_02="218.38.136.34"
+BOOTSTRAP_NODE="<BOOTSTRAP_NODE_IP>"
+PEER_01="<PEER_01_IP>"
+PEER_02="<PEER_02_IP>"
 <<<<<<< HEAD
-IPFS_API_DOMAIN="ipfs.bongaquino.co.kr"
-IPFS_GATEWAY_DOMAIN="gateway.bongaquino.co.kr"
+IPFS_API_DOMAIN="ipfs.example.com"
+IPFS_GATEWAY_DOMAIN="gateway.example.com"
 =======
-IPFS_API_DOMAIN="ipfs.koneksi.co.kr"
-IPFS_GATEWAY_DOMAIN="gateway.koneksi.co.kr"
+IPFS_API_DOMAIN="ipfs.koneksi.com"
+IPFS_GATEWAY_DOMAIN="gateway.koneksi.com"
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 # Required ports

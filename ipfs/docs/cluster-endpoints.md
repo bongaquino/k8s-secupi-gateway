@@ -2,25 +2,25 @@
 
 ## Cluster API Endpoints
 
-### Bootstrap Node (211.239.117.217)
+### Bootstrap Node (<BOOTSTRAP_NODE_IP>)
 ```
-Cluster API: http://211.239.117.217:9094
-IPFS API: http://211.239.117.217:5001
-IPFS Gateway: http://211.239.117.217:8080
-```
-
-### Peer-01 (218.38.136.33)
-```
-Cluster API: http://218.38.136.33:9094
-IPFS API: http://218.38.136.33:5001
-IPFS Gateway: http://218.38.136.33:8080
+Cluster API: http://<BOOTSTRAP_NODE_IP>:9094
+IPFS API: http://<BOOTSTRAP_NODE_IP>:5001
+IPFS Gateway: http://<BOOTSTRAP_NODE_IP>:8080
 ```
 
-### Peer-02 (218.38.136.34)
+### Peer-01 (<PEER_01_IP>)
 ```
-Cluster API: http://218.38.136.34:9094
-IPFS API: http://218.38.136.34:5001
-IPFS Gateway: http://218.38.136.34:8080
+Cluster API: http://<PEER_01_IP>:9094
+IPFS API: http://<PEER_01_IP>:5001
+IPFS Gateway: http://<PEER_01_IP>:8080
+```
+
+### Peer-02 (<PEER_02_IP>)
+```
+Cluster API: http://<PEER_02_IP>:9094
+IPFS API: http://<PEER_02_IP>:5001
+IPFS Gateway: http://<PEER_02_IP>:8080
 ```
 
 ## API Usage Examples
@@ -30,12 +30,12 @@ IPFS Gateway: http://218.38.136.34:8080
 #### Using Cluster API
 ```bash
 # Add and pin a file
-curl -X POST "http://211.239.117.217:9094/add" \
+curl -X POST "http://<BOOTSTRAP_NODE_IP>:9094/add" \
   -H "Content-Type: multipart/form-data" \
   -F "file=@/path/to/file.txt"
 
 # Pin existing content
-curl -X POST "http://211.239.117.217:9094/pins/<CID>" \
+curl -X POST "http://<BOOTSTRAP_NODE_IP>:9094/pins/<CID>" \
   -H "Content-Type: application/json" \
   -d '{"replication_factor": -1}'
 ```
@@ -43,12 +43,12 @@ curl -X POST "http://211.239.117.217:9094/pins/<CID>" \
 #### Using IPFS API
 ```bash
 # Add a file
-curl -X POST "http://211.239.117.217:5001/api/v0/add" \
+curl -X POST "http://<BOOTSTRAP_NODE_IP>:5001/api/v0/add" \
   -H "Content-Type: multipart/form-data" \
   -F "file=@/path/to/file.txt"
 
 # Pin a file
-curl -X POST "http://211.239.117.217:5001/api/v0/pin/add" \
+curl -X POST "http://<BOOTSTRAP_NODE_IP>:5001/api/v0/pin/add" \
   -H "Content-Type: application/json" \
   -d '{"arg": "<CID>"}'
 ```
@@ -58,10 +58,10 @@ curl -X POST "http://211.239.117.217:5001/api/v0/pin/add" \
 #### Using IPFS Gateway
 ```bash
 # Get content via HTTP
-curl "http://211.239.117.217:8080/ipfs/<CID>"
+curl "http://<BOOTSTRAP_NODE_IP>:8080/ipfs/<CID>"
 
 # Get content via API
-curl -X POST "http://211.239.117.217:5001/api/v0/cat" \
+curl -X POST "http://<BOOTSTRAP_NODE_IP>:5001/api/v0/cat" \
   -H "Content-Type: application/json" \
   -d '{"arg": "<CID>"}'
 ```
@@ -71,16 +71,16 @@ curl -X POST "http://211.239.117.217:5001/api/v0/cat" \
 #### List Pins
 ```bash
 # List all pins
-curl "http://211.239.117.217:9094/pins"
+curl "http://<BOOTSTRAP_NODE_IP>:9094/pins"
 
 # Get specific pin
-curl "http://211.239.117.217:9094/pins/<CID>"
+curl "http://<BOOTSTRAP_NODE_IP>:9094/pins/<CID>"
 ```
 
 #### Remove Pins
 ```bash
 # Remove a pin
-curl -X DELETE "http://211.239.117.217:9094/pins/<CID>"
+curl -X DELETE "http://<BOOTSTRAP_NODE_IP>:9094/pins/<CID>"
 ```
 
 ### 4. Status and Health Checks
@@ -88,19 +88,19 @@ curl -X DELETE "http://211.239.117.217:9094/pins/<CID>"
 #### Cluster Status
 ```bash
 # Get cluster status
-curl "http://211.239.117.217:9094/status"
+curl "http://<BOOTSTRAP_NODE_IP>:9094/status"
 
 # Get peer status
-curl "http://211.239.117.217:9094/peers"
+curl "http://<BOOTSTRAP_NODE_IP>:9094/peers"
 ```
 
 #### IPFS Status
 ```bash
 # Get IPFS node info
-curl "http://211.239.117.217:5001/api/v0/id"
+curl "http://<BOOTSTRAP_NODE_IP>:5001/api/v0/id"
 
 # Get IPFS swarm peers
-curl "http://211.239.117.217:5001/api/v0/swarm/peers"
+curl "http://<BOOTSTRAP_NODE_IP>:5001/api/v0/swarm/peers"
 ```
 
 ## Common CIDs Used in Testing

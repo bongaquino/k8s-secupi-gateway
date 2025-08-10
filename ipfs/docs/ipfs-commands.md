@@ -2,7 +2,7 @@
 
 ## 1. Adding Test Files
 
-### Bootstrap Node (211.239.117.217)
+### Bootstrap Node (<BOOTSTRAP_NODE_IP>)
 ```bash
 # Create and add test file
 echo "Test file from Bootstrap Node" > /tmp/test1.txt
@@ -13,7 +13,7 @@ docker exec ipfs ipfs add /tmp/test1.txt
 docker exec ipfs-cluster ipfs-cluster-ctl pin add QmUCTUkGaDzsJXkEDC6ZN81C4BUH9Tnn6YSEtjgiyPQfM4
 ```
 
-### Peer-01 (218.38.136.33)
+### Peer-01 (<PEER_01_IP>)
 ```bash
 # Create and add test file
 echo "Test file from Peer-01" > /tmp/test2.txt
@@ -24,7 +24,7 @@ docker exec ipfs ipfs add /tmp/test2.txt
 docker exec ipfs-cluster ipfs-cluster-ctl pin add QmX3oVdJRjDXR3UHb7JpZCXUBbzC6Jnofr2yArjHyy4vHr
 ```
 
-### Peer-02 (218.38.136.34)
+### Peer-02 (<PEER_02_IP>)
 ```bash
 # Create and add test file
 echo "Test file from Peer-02" > /tmp/test3.txt
@@ -130,13 +130,13 @@ docker exec ipfs ipfs swarm connect /ip4/<IP_ADDRESS>/tcp/4001/p2p/<PEER_ID>
 
 # Example for our cluster:
 # Connect to Bootstrap Node
-docker exec ipfs ipfs swarm connect /ip4/211.239.117.217/tcp/4001/p2p/12D3KooWSv57nfbit9pKb2BbmBRwRsWTnaHc4rk1NccuC1QBMGAT
+docker exec ipfs ipfs swarm connect /ip4/<BOOTSTRAP_NODE_IP>/tcp/4001/p2p/12D3KooWSv57nfbit9pKb2BbmBRwRsWTnaHc4rk1NccuC1QBMGAT
 
 # Connect to Peer-01
-docker exec ipfs ipfs swarm connect /ip4/218.38.136.33/tcp/4001/p2p/12D3KooWFRUStGsNyi8YGnjLDjWZDb8XLy2iz3HnhvozFobdDtPJ
+docker exec ipfs ipfs swarm connect /ip4/<PEER_01_IP>/tcp/4001/p2p/12D3KooWFRUStGsNyi8YGnjLDjWZDb8XLy2iz3HnhvozFobdDtPJ
 
 # Connect to Peer-02
-docker exec ipfs ipfs swarm connect /ip4/218.38.136.34/tcp/4001/p2p/12D3KooWDAru6Qgr9qyaNcrdf9VBtHKQUTbSRtdaWSimMtENZYqT
+docker exec ipfs ipfs swarm connect /ip4/<PEER_02_IP>/tcp/4001/p2p/12D3KooWDAru6Qgr9qyaNcrdf9VBtHKQUTbSRtdaWSimMtENZYqT
 ```
 
 ### Disconnect from Peers
@@ -156,23 +156,23 @@ docker exec ipfs ipfs swarm peers -v
 
 ### Our Cluster's Swarm Connections
 ```bash
-# Bootstrap Node (211.239.117.217)
+# Bootstrap Node (<BOOTSTRAP_NODE_IP>)
 docker exec ipfs ipfs swarm peers
 # Should show connections to:
-# - /ip4/218.38.136.33/tcp/4001/p2p/12D3KooWFRUStGsNyi8YGnjLDjWZDb8XLy2iz3HnhvozFobdDtPJ
-# - /ip4/218.38.136.34/tcp/4001/p2p/12D3KooWDAru6Qgr9qyaNcrdf9VBtHKQUTbSRtdaWSimMtENZYqT
+# - /ip4/<PEER_01_IP>/tcp/4001/p2p/12D3KooWFRUStGsNyi8YGnjLDjWZDb8XLy2iz3HnhvozFobdDtPJ
+# - /ip4/<PEER_02_IP>/tcp/4001/p2p/12D3KooWDAru6Qgr9qyaNcrdf9VBtHKQUTbSRtdaWSimMtENZYqT
 
-# Peer-01 (218.38.136.33)
+# Peer-01 (<PEER_01_IP>)
 docker exec ipfs ipfs swarm peers
 # Should show connections to:
-# - /ip4/211.239.117.217/tcp/4001/p2p/12D3KooWSv57nfbit9pKb2BbmBRwRsWTnaHc4rk1NccuC1QBMGAT
-# - /ip4/218.38.136.34/tcp/4001/p2p/12D3KooWDAru6Qgr9qyaNcrdf9VBtHKQUTbSRtdaWSimMtENZYqT
+# - /ip4/<BOOTSTRAP_NODE_IP>/tcp/4001/p2p/12D3KooWSv57nfbit9pKb2BbmBRwRsWTnaHc4rk1NccuC1QBMGAT
+# - /ip4/<PEER_02_IP>/tcp/4001/p2p/12D3KooWDAru6Qgr9qyaNcrdf9VBtHKQUTbSRtdaWSimMtENZYqT
 
-# Peer-02 (218.38.136.34)
+# Peer-02 (<PEER_02_IP>)
 docker exec ipfs ipfs swarm peers
 # Should show connections to:
-# - /ip4/211.239.117.217/tcp/4001/p2p/12D3KooWSv57nfbit9pKb2BbmBRwRsWTnaHc4rk1NccuC1QBMGAT
-# - /ip4/218.38.136.33/tcp/4001/p2p/12D3KooWFRUStGsNyi8YGnjLDjWZDb8XLy2iz3HnhvozFobdDtPJ
+# - /ip4/<BOOTSTRAP_NODE_IP>/tcp/4001/p2p/12D3KooWSv57nfbit9pKb2BbmBRwRsWTnaHc4rk1NccuC1QBMGAT
+# - /ip4/<PEER_01_IP>/tcp/4001/p2p/12D3KooWFRUStGsNyi8YGnjLDjWZDb8XLy2iz3HnhvozFobdDtPJ
 ```
 
 ### Troubleshooting Swarm Connections

@@ -8,7 +8,7 @@
       "/ip4/0.0.0.0/udp/9096/quic"
     ],
     "announce_multiaddress": [
-      "/ip4/218.38.136.34/tcp/9096"
+      "/ip4/<PEER_02_IP>/tcp/9096"
     ],
     "no_announce_multiaddress": [],
     "enable_relay_hop": true,
@@ -42,7 +42,7 @@
     "pin_only_on_untrusted_peers": false,
     "disable_repinning": true,
     "peer_addresses": [
-      "/ip4/211.239.117.217/tcp/9096/p2p/12D3KooWSv57nfbit9pKb2BbmBRwRsWTnaHc4rk1NccuC1QBMGAT"
+      "/ip4/<BOOTSTRAP_NODE_IP>/tcp/9096/p2p/12D3KooWSv57nfbit9pKb2BbmBRwRsWTnaHc4rk1NccuC1QBMGAT"
     ]
   },
   "consensus": {

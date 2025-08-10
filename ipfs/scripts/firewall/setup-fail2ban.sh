@@ -88,15 +88,15 @@ print_status "Creating whitelist for trusted IPs..."
 sudo tee /etc/fail2ban/jail.d/whitelist.conf > /dev/null << EOL
 [DEFAULT]
 ignoreip = 127.0.0.1/8 ::1
-           211.239.117.217
-           218.38.136.33
-           218.38.136.34
+           <BOOTSTRAP_NODE_IP>
+           <PEER_01_IP>
+           <PEER_02_IP>
 EOL
 
 # Add IPFS nodes to allowed list
-211.239.117.217
-218.38.136.33
-218.38.136.34
+<BOOTSTRAP_NODE_IP>
+<PEER_01_IP>
+<PEER_02_IP>
 
 # Restart fail2ban
 print_status "Restarting fail2ban service..."

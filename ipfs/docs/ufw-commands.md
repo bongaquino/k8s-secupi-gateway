@@ -61,7 +61,7 @@ sudo ufw allow from <UAT_BASTION_IP> to any port 22 comment 'UAT-Bastion'
 
 ## Current Port Access Configuration
 
-### Bootstrap Node (211.239.117.217)
+### Bootstrap Node (<BOOTSTRAP_NODE_IP>)
 ```bash
 # Public Access
 sudo ufw allow 80/tcp   # HTTP - Public access
@@ -78,7 +78,7 @@ sudo ufw allow from <PEER_01_IP> to any port 9094,9095,9096,4001  # Peer-01
 sudo ufw allow from <PEER_02_IP> to any port 9094,9095,9096,4001  # Peer-02
 ```
 
-### Peer Nodes (218.38.136.33 & 218.38.136.34)
+### Peer Nodes (<PEER_01_IP> & <PEER_02_IP>)
 ```bash
 # HTTP/HTTPS - LOCKED (No public access)
 # Ports 80 and 443 are not allowed from any external IP

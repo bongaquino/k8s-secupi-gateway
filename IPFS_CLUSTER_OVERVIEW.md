@@ -75,10 +75,10 @@ Internet → AWS Route53 → Bootstrap Node (<BOOTSTRAP_IP>)
 
 ## 🏢 Integration Points
 
-- **Backend Integration:** AWS ECS → IPFS API (`https://ipfs.bongaquino.co.kr`)
-- **Frontend Access:** AWS Amplify → IPFS Gateway (`https://gateway.bongaquino.co.kr`)
+- **Backend Integration:** AWS ECS → IPFS API (`https://ipfs.example.com`)
+- **Frontend Access:** AWS Amplify → IPFS Gateway (`https://gateway.example.com`)
 - **Load Balancer:** AWS ALB → ECS → IPFS Cluster
-- **NAT Gateway IP:** `13.250.68.194` (Whitelisted for backend access)
+- **NAT Gateway IP:** `<NAT_GATEWAY_IP>` (Whitelisted for backend access)
 
 ## 🧪 Testing & Verification Commands
 
@@ -111,19 +111,19 @@ curl https://gateway.example.com/ipfs/<CID>
 ## 📋 Authorized Access List
 
 ### Team Members
-- **Bong (Admin):** `112.200.104.154`
-- **Alex (DevOps):** `119.94.172.143`
-- **Franz (Developer):** `157.20.143.170`, `157.20.143.172`, `157.20.143.171`
-- **Drew (Developer):** `112.205.173.97`
-- **JB (Developer):** `103.125.151.254`
-- **Rafa (Developer):** `65.93.75.199`
-- **Karl (Developer):** `119.92.3.131`
+- **Admin:** <ADMIN_IP>
+- **DevOps:** <DEVOPS_IP>
+- **Developer 1:** <DEV_IP_1>, <DEV_IP_2>, <DEV_IP_3>
+- **Developer 2:** <DEV_IP_4>
+- **Developer 3:** <DEV_IP_5>
+- **Developer 4:** <DEV_IP_6>
+- **Developer 5:** <DEV_IP_7>
 
 ### Infrastructure IPs
-- **Backend Server:** `52.77.36.120`
-- **UAT Bastion:** `18.139.136.149`
-- **ECS NAT Gateway:** `13.250.68.194`
-- **ALB IPs:** `54.254.84.88`, `13.228.96.207`
+- **Backend Server:** `<BACKEND_SERVER_IP>`
+- **UAT Bastion:** `<UAT_BASTION_IP>`
+- **ECS NAT Gateway:** `<NAT_GATEWAY_IP>`
+- **ALB IPs:** `<ALB_IP_1>`, `<ALB_IP_2>`
 
 ## 🎯 Management Commands
 

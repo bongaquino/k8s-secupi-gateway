@@ -11,8 +11,8 @@ const environments: Record<Environment, EnvironmentConfig> = {
     IPFS_URL: "https://bongaquino-tyk-gateway-3rvca.ondigitalocean.app/ipfs",
   },
   staging: {
-    API_URL: "http://167.172.92.97:8080/api",
-    IPFS_URL: "http://167.172.92.97:8080/ipfs",
+    API_URL: "http://<API_SERVER_IP>:8080/api",
+    IPFS_URL: "http://<API_SERVER_IP>:8080/ipfs",
   },
   local: {
     API_URL: "http://localhost:3000/api",

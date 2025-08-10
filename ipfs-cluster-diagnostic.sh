@@ -11,9 +11,9 @@ NC='\033[0m'
 
 # Node IPs
 BOOTSTRAP="27.255.70.17"
-PEER1="218.38.136.33"
-PEER2="218.38.136.34" 
-PEER3="211.239.117.217"
+PEER1="<PEER_01_IP>"
+PEER2="<PEER_02_IP>" 
+PEER3="<BOOTSTRAP_NODE_IP>"
 
 echo "================================================================================================"
 echo "                    IPFS CLUSTER REAL-TIME DIAGNOSTIC SCAN"
@@ -156,7 +156,7 @@ echo "════════════════════════�
 echo "Testing inter-node IPFS port connectivity..."
 
 ssh ipfs@$BOOTSTRAP '
-    for target in 218.38.136.33 218.38.136.34 211.239.117.217; do
+    for target in <PEER_01_IP> <PEER_02_IP> <BOOTSTRAP_NODE_IP>; do
         echo -n "Bootstrap → $target:4001: "
         if nc -zv $target 4001 2>/dev/null; then
             echo "✓ OPEN"
@@ -173,8 +173,8 @@ echo "════════════════════════�
 echo "Note: SSL certificates are only on Bootstrap Node as it is the only public-facing endpoint"
 echo ""
 
-echo "IPFS API (ipfs.bongaquino.co.kr):"
-CERT_CHECK=$(openssl s_client -connect ipfs.bongaquino.co.kr:443 -servername ipfs.bongaquino.co.kr < /dev/null 2>/dev/null | openssl x509 -text -noout 2>/dev/null)
+echo "IPFS API (ipfs.example.com):"
+CERT_CHECK=$(openssl s_client -connect ipfs.example.com:443 -servername ipfs.example.com < /dev/null 2>/dev/null | openssl x509 -text -noout 2>/dev/null)
 if [ -n "$CERT_CHECK" ]; then
     echo "$CERT_CHECK" | grep "Subject:"
     echo "$CERT_CHECK" | grep "Not After"
@@ -184,8 +184,8 @@ else
 fi
 
 echo ""
-echo "IPFS Gateway (gateway.bongaquino.co.kr):"
-CERT_CHECK2=$(openssl s_client -connect gateway.bongaquino.co.kr:443 -servername gateway.bongaquino.co.kr < /dev/null 2>/dev/null | openssl x509 -text -noout 2>/dev/null)
+echo "IPFS Gateway (gateway.example.com):"
+CERT_CHECK2=$(openssl s_client -connect gateway.example.com:443 -servername gateway.example.com < /dev/null 2>/dev/null | openssl x509 -text -noout 2>/dev/null)
 if [ -n "$CERT_CHECK2" ]; then
     echo "$CERT_CHECK2" | grep "Subject:"
     echo "$CERT_CHECK2" | grep "Not After"

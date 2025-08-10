@@ -7,8 +7,8 @@ YELLOW='\033[1;33m'
 NC='\033[0m'
 
 # Node IPs
-BOOTSTRAP_NODE="211.239.117.217"
-PEER_NODE="218.38.136.34"
+BOOTSTRAP_NODE="<BOOTSTRAP_NODE_IP>"
+PEER_NODE="<PEER_02_IP>"
 
 print_status() {
     echo -e "${YELLOW}[*] $1${NC}"

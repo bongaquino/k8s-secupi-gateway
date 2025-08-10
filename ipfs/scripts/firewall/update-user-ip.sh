@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Node IPs
-BOOTSTRAP_NODE="211.239.117.217"
-PEER_01="218.38.136.33"
-PEER_02="218.38.136.34"
+BOOTSTRAP_NODE="<BOOTSTRAP_NODE_IP>"
+PEER_01="<PEER_01_IP>"
+PEER_02="<PEER_02_IP>"
 
 # Check if required arguments are provided
 if [ "$#" -ne 4 ]; then

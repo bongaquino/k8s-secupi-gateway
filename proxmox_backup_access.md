@@ -68,13 +68,13 @@ curl -k -H "Authorization: PVEAPIToken=backup@pve!backup-token=<API_TOKEN_VALUE>
 ### Backup Verification Commands
 ```bash
 # Check system status
-ssh -i ~/.ssh/proxmox_backup root@proxmox.bongaquino.co.kr "systemctl status pveproxy pvedaemon"
+ssh -i ~/.ssh/proxmox_backup root@proxmox.example.com "systemctl status pveproxy pvedaemon"
 
 # Verify storage
-ssh -i ~/.ssh/proxmox_backup root@proxmox.bongaquino.co.kr "pvesm status"
+ssh -i ~/.ssh/proxmox_backup root@proxmox.example.com "pvesm status"
 
 # Check VM states
-ssh -i ~/.ssh/proxmox_backup root@proxmox.bongaquino.co.kr "qm list && pct list"
+ssh -i ~/.ssh/proxmox_backup root@proxmox.example.com "qm list && pct list"
 ```
 
 ## Security Notes
@@ -90,7 +90,7 @@ ssh -i ~/.ssh/proxmox_backup root@proxmox.bongaquino.co.kr "qm list && pct list"
 ### SSH Issues
 ```bash
 # Verbose SSH connection for debugging
-ssh -i ~/.ssh/proxmox_backup -v root@proxmox.bongaquino.co.kr
+ssh -i ~/.ssh/proxmox_backup -v root@proxmox.example.com
 
 # Check SSH key permissions
 chmod 600 ~/.ssh/proxmox_backup
@@ -100,8 +100,8 @@ chmod 644 ~/.ssh/proxmox_backup.pub
 ### API Issues
 ```bash
 # Test API connectivity
-curl -k https://proxmox.bongaquino.co.kr:8006/api2/json/version
+curl -k https://proxmox.example.com:8006/api2/json/version
 
 # Verify token permissions
-ssh -i ~/.ssh/proxmox_backup root@proxmox.bongaquino.co.kr "pveum user token list backup@pve"
+ssh -i ~/.ssh/proxmox_backup root@proxmox.example.com "pveum user token list backup@pve"
 ```

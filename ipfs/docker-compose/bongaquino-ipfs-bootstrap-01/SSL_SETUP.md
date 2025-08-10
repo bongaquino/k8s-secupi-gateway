@@ -6,11 +6,11 @@ This document describes the SSL certificate configuration for the IPFS Bootstrap
 ## Certificate Details
 - **Type**: Wildcard SSL Certificate
 <<<<<<< HEAD
-- **Domain**: `*.bongaquino.co.kr`
-- **Coverage**: All subdomains under bongaquino.co.kr
+- **Domain**: `*.example.com`
+- **Coverage**: All subdomains under example.com
 =======
-- **Domain**: `*.bongaquino.com`
-- **Coverage**: All subdomains under bongaquino.com
+- **Domain**: `*.example.com`
+- **Coverage**: All subdomains under example.com
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 - **Issuer**: GlobalSign GCC R6 AlphaSSL CA 2025
 - **Valid From**: July 10, 2025
@@ -21,23 +21,23 @@ This document describes the SSL certificate configuration for the IPFS Bootstrap
 ```
 <<<<<<< HEAD
 bongaquino-ipfs/docker-compose/bongaquino-ipfs-bootstrap-02/nginx/ssl/
-├── wildcard.bongaquino.co.kr.pem (Certificate)
-└── wildcard.bongaquino.co.kr.key (Private Key)
+├── wildcard.example.com.pem (Certificate)
+└── wildcard.example.com.key (Private Key)
 =======
 bongaquino-ipfs/docker-compose/bongaquino-ipfs-bootstrap-02/nginx/ssl/
-├── wildcard.bongaquino.com.pem (Certificate)
-└── wildcard.bongaquino.com.key (Private Key)
+├── wildcard.example.com.pem (Certificate)
+└── wildcard.example.com.key (Private Key)
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 ```
 
 ## Nginx Configuration
 The wildcard certificate is configured for both IPFS services:
 <<<<<<< HEAD
-- **ipfs.bongaquino.co.kr** - IPFS API endpoint
-- **gateway.bongaquino.co.kr** - IPFS Gateway endpoint
+- **ipfs.example.com** - IPFS API endpoint
+- **gateway.example.com** - IPFS Gateway endpoint
 =======
-- **ipfs.bongaquino.com** - IPFS API endpoint
-- **gateway.bongaquino.com** - IPFS Gateway endpoint
+- **ipfs.example.com** - IPFS API endpoint
+- **gateway.example.com** - IPFS Gateway endpoint
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 ## SSL Security Settings
@@ -57,11 +57,11 @@ volumes:
 ## Access URLs
 After deployment, the following SSL-secured endpoints will be available:
 <<<<<<< HEAD
-- **IPFS API**: https://ipfs.bongaquino.co.kr/api/v0/
-- **IPFS Gateway**: https://gateway.bongaquino.co.kr/ipfs/
+- **IPFS API**: https://ipfs.example.com/api/v0/
+- **IPFS Gateway**: https://gateway.example.com/ipfs/
 =======
-- **IPFS API**: https://ipfs.bongaquino.com/api/v0/
-- **IPFS Gateway**: https://gateway.bongaquino.com/ipfs/
+- **IPFS API**: https://ipfs.example.com/api/v0/
+- **IPFS Gateway**: https://gateway.example.com/ipfs/
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 ## Security Notes
@@ -80,21 +80,21 @@ When the certificate expires (August 11, 2026):
 ```bash
 # Check certificate validity
 <<<<<<< HEAD
-openssl x509 -in nginx/ssl/wildcard.bongaquino.co.kr.pem -noout -dates
+openssl x509 -in nginx/ssl/wildcard.example.com.pem -noout -dates
 
 # Check certificate details
-openssl x509 -in nginx/ssl/wildcard.bongaquino.co.kr.pem -text -noout
+openssl x509 -in nginx/ssl/wildcard.example.com.pem -text -noout
 
 # Test SSL configuration (after deployment)
-openssl s_client -connect ipfs.bongaquino.co.kr:443 -servername ipfs.bongaquino.co.kr
+openssl s_client -connect ipfs.example.com:443 -servername ipfs.example.com
 =======
-openssl x509 -in nginx/ssl/wildcard.bongaquino.com.pem -noout -dates
+openssl x509 -in nginx/ssl/wildcard.example.com.pem -noout -dates
 
 # Check certificate details
-openssl x509 -in nginx/ssl/wildcard.bongaquino.com.pem -text -noout
+openssl x509 -in nginx/ssl/wildcard.example.com.pem -text -noout
 
 # Test SSL configuration (after deployment)
-openssl s_client -connect ipfs.bongaquino.com:443 -servername ipfs.bongaquino.com
+openssl s_client -connect ipfs.example.com:443 -servername ipfs.example.com
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 ```
 

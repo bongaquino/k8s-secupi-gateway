@@ -268,8 +268,8 @@ ssh -i ~/.ssh/id_rsa ipfs@<PEER_02_IP> "sudo ufw status verbose"
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 #### Team Member IPs
-- **112.200.100.154** - Bong's IP
-- **119.94.162.43** - Alex's IP
+- **<TEAM_IP_1>** - Team IP
+- **<TEAM_IP_2>** - Team IP
 - **157.20.143.170** - Franz's IP
 - **49.145.0.190** - Aldric's IP
 - **112.198.104.175** - JB (IP changed due to new ISP - 2025-06-11)

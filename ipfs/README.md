@@ -207,20 +207,20 @@ This repository contains scripts and configurations for deploying an IPFS cluste
   - /dev/sdm3: root (/) (876GB)
 
 ### Server IP Addresses
-1. Bootstrap Node: 211.239.117.217
-2. Peer-01 Node: 218.38.136.33
-3. Peer-02 Node: 218.38.136.34
+1. Bootstrap Node: <BOOTSTRAP_NODE_IP>
+2. Peer-01 Node: <PEER_01_IP>
+3. Peer-02 Node: <PEER_02_IP>
 
 ## Domain Management
 
 ### Domain Configuration
 1. Bootstrap Node Domains:
 <<<<<<< HEAD
-   - `ipfs.bongaquino.co.kr` - Private API endpoint (403 Forbidden for public access)
-   - `gateway.bongaquino.co.kr` - Public gateway endpoint
+   - `ipfs.example.com` - Private API endpoint (403 Forbidden for public access)
+   - `gateway.example.com` - Public gateway endpoint
 =======
-   - `ipfs.bongaquino.com` - Private API endpoint (403 Forbidden for public access)
-   - `gateway.bongaquino.com` - Public gateway endpoint
+   - `ipfs.example.com` - Private API endpoint (403 Forbidden for public access)
+   - `gateway.example.com` - Public gateway endpoint
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 ### SSL Configuration
@@ -249,11 +249,11 @@ This repository contains scripts and configurations for deploying an IPFS cluste
 
 4. Access Control:
 <<<<<<< HEAD
-   - `ipfs.bongaquino.co.kr` is restricted (403 Forbidden)
-   - `gateway.bongaquino.co.kr` is publicly accessible
+   - `ipfs.example.com` is restricted (403 Forbidden)
+   - `gateway.example.com` is publicly accessible
 =======
-   - `ipfs.bongaquino.com` is restricted (403 Forbidden)
-   - `gateway.bongaquino.com` is publicly accessible
+   - `ipfs.example.com` is restricted (403 Forbidden)
+   - `gateway.example.com` is publicly accessible
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
    - Both domains use the same SSL certificate
 
@@ -264,30 +264,30 @@ This repository contains scripts and configurations for deploying an IPFS cluste
 bongaquino-ipfs/
 ├── README.md                          # Project documentation
 ├── docker-compose/                    # Docker Compose configurations
-│   ├── bongaquino-ipfs-bootstrap-01/  # Bootstrap node (211.239.117.217)
+│   ├── bongaquino-ipfs-bootstrap-01/  # Bootstrap node (<BOOTSTRAP_NODE_IP>)
 │   │   ├── docker-compose.yml         # Container configuration
 │   │   └── .env                       # Environment variables
 │   ├── bongaquino-ipfs-bootstrap-02/  # New isolated bootstrap node (27.255.70.17)
 │   │   ├── docker-compose.yml         # Container configuration
 │   │   └── .env                       # Environment variables
-│   ├── bongaquino-ipfs-peer-01/       # Peer node 1 (218.38.136.33)
+│   ├── bongaquino-ipfs-peer-01/       # Peer node 1 (<PEER_01_IP>)
 │   │   ├── docker-compose.yml         # Container configuration
 │   │   └── .env                       # Environment variables
-│   └── bongaquino-ipfs-peer-02/       # Peer node 2 (218.38.136.34)
+│   └── bongaquino-ipfs-peer-02/       # Peer node 2 (<PEER_02_IP>)
 =======
 bongaquino-ipfs/
 ├── README.md                          # Project documentation
 ├── docker-compose/                    # Docker Compose configurations
-│   ├── bongaquino-ipfs-bootstrap-01/  # Bootstrap node (211.239.117.217)
+│   ├── bongaquino-ipfs-bootstrap-01/  # Bootstrap node (<BOOTSTRAP_NODE_IP>)
 │   │   ├── docker-compose.yml         # Container configuration
 │   │   └── .env                       # Environment variables
 │   ├── bongaquino-ipfs-bootstrap-02/  # New isolated bootstrap node (27.255.70.17)
 │   │   ├── docker-compose.yml         # Container configuration
 │   │   └── .env                       # Environment variables
-│   ├── bongaquino-ipfs-peer-01/       # Peer node 1 (218.38.136.33)
+│   ├── bongaquino-ipfs-peer-01/       # Peer node 1 (<PEER_01_IP>)
 │   │   ├── docker-compose.yml         # Container configuration
 │   │   └── .env                       # Environment variables
-│   └── bongaquino-ipfs-peer-02/       # Peer node 2 (218.38.136.34)
+│   └── bongaquino-ipfs-peer-02/       # Peer node 2 (<PEER_02_IP>)
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 │       ├── docker-compose.yml         # Container configuration
 │       └── .env                       # Environment variables
@@ -310,10 +310,10 @@ bongaquino-ipfs/
 1. Configure SSH access:
    ```bash
    # Test connection to bootstrap node
-   ssh -i ~/.ssh/id_rsa ipfs@211.239.117.217 'echo "Connection successful"'
+   ssh -i ~/.ssh/id_rsa ipfs@<BOOTSTRAP_NODE_IP> 'echo "Connection successful"'
    
    # Test connection to peer nodes
-   for node in 218.38.136.33 218.38.136.34; do
+   for node in <PEER_01_IP> <PEER_02_IP>; do
      ssh -i ~/.ssh/id_rsa ipfs@$node 'echo "Connection successful"'
    done
    ```
@@ -352,7 +352,7 @@ bongaquino-ipfs/
 4. Verify security measures:
    ```bash
    # Check fail2ban status on all nodes
-   for node in 211.239.117.217 218.38.136.33 218.38.136.34; do
+   for node in <BOOTSTRAP_NODE_IP> <PEER_01_IP> <PEER_02_IP>; do
      echo "=== Node: $node ==="
      ssh ipfs@$node 'sudo fail2ban-client status'
    done
@@ -422,15 +422,15 @@ To ensure that Peer-01 and Peer-02 can connect to the bootstrap node and each ot
   "Peers": [
     {
       "ID": "12D3KooWRJRahRo8iUx9P68v3GjdiCo71A6fuYzhtcr3nrzoRmtp",
-      "Addrs": ["/ip4/211.239.117.217/tcp/4001"]
+      "Addrs": ["/ip4/<BOOTSTRAP_NODE_IP>/tcp/4001"]
     },
     {
       "ID": "12D3KooWNSghb6wztPUwpTntpWvaCoR9BsDkZJAne8iy5XS6SFhv",
-      "Addrs": ["/ip4/218.38.136.33/tcp/4001"]
+      "Addrs": ["/ip4/<PEER_01_IP>/tcp/4001"]
     },
     {
       "ID": "12D3KooWMovcPAJTwNgdDnB3F4jfcuY6NpGFExkU9Jhd2m6jUKGu",
-      "Addrs": ["/ip4/218.38.136.34/tcp/4001"]
+      "Addrs": ["/ip4/<PEER_02_IP>/tcp/4001"]
     }
   ]
 }
@@ -455,7 +455,7 @@ To modify the peering configuration for IPFS nodes, follow these steps:
    - You can modify the `config` file directly using a text editor or use the `ipfs config` command to update it.
    - For example, to update the peering configuration, you can use:
      ```bash
-     docker exec ipfs ipfs config --json Peering.Peers '[{"ID":"12D3KooWRJRahRo8iUx9P68v3GjdiCo71A6fuYzhtcr3nrzoRmtp","Addrs":["/ip4/211.239.117.217/tcp/4001"]},{"ID":"12D3KooWNSghb6wztPUwpTntpWvaCoR9BsDkZJAne8iy5XS6SFhv","Addrs":["/ip4/218.38.136.33/tcp/4001"]},{"ID":"12D3KooWMovcPAJTwNgdDnB3F4jfcuY6NpGFExkU9Jhd2m6jUKGu","Addrs":["/ip4/218.38.136.34/tcp/4001"]}]'
+     docker exec ipfs ipfs config --json Peering.Peers '[{"ID":"12D3KooWRJRahRo8iUx9P68v3GjdiCo71A6fuYzhtcr3nrzoRmtp","Addrs":["/ip4/<BOOTSTRAP_NODE_IP>/tcp/4001"]},{"ID":"12D3KooWNSghb6wztPUwpTntpWvaCoR9BsDkZJAne8iy5XS6SFhv","Addrs":["/ip4/<PEER_01_IP>/tcp/4001"]},{"ID":"12D3KooWMovcPAJTwNgdDnB3F4jfcuY6NpGFExkU9Jhd2m6jUKGu","Addrs":["/ip4/<PEER_02_IP>/tcp/4001"]}]'
      ```
 
 This section provides clear instructions on how to locate and modify the peering configuration for your IPFS nodes. 
