@@ -88,7 +88,7 @@ ssh -i ~/.ssh/id_rsa ipfs@<PEER_01_IP>
 <<<<<<< HEAD
 ssh -i ~/.ssh/bongaquino-ipfs-backend.pem ubuntu@<BACKEND_SERVER_IP>
 =======
-ssh -i ~/.ssh/koneksi-ipfs-backend.pem ubuntu@<BACKEND_SERVER_IP>
+ssh -i ~/.ssh/backend-key.pem ubuntu@<BACKEND_SERVER_IP>
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 ssh -i /home/ubuntu/.ssh/id_rsa_backend ipfs@<PEER_01_IP>
 
@@ -139,7 +139,7 @@ ssh -i ~/.ssh/id_rsa ipfs@<PEER_02_IP>
 <<<<<<< HEAD
 ssh -i ~/.ssh/bongaquino-ipfs-backend.pem ubuntu@<BACKEND_SERVER_IP>
 =======
-ssh -i ~/.ssh/koneksi-ipfs-backend.pem ubuntu@<BACKEND_SERVER_IP>
+ssh -i ~/.ssh/backend-key.pem ubuntu@<BACKEND_SERVER_IP>
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 ssh -i /home/ubuntu/.ssh/id_rsa_backend ipfs@<PEER_02_IP>
 
@@ -260,11 +260,11 @@ ssh -i ~/.ssh/id_rsa ipfs@<PEER_02_IP> "sudo ufw status verbose"
 - **<PEER_02_IP>** - Peer-02
 - **<UAT_BASTION_IP>** - bongaquino-UAT-Bastion
 =======
-- **<BACKEND_SERVER_IP>** - Koneksi Staging Backend
+- **<BACKEND_SERVER_IP>** - Staging Backend
 - **<BOOTSTRAP_NODE_IP>** - Bootstrap Node
 - **<PEER_01_IP>** - Peer-01
 - **<PEER_02_IP>** - Peer-02
-- **<UAT_BASTION_IP>** - Koneksi-UAT-Bastion
+- **<UAT_BASTION_IP>** - UAT-Bastion
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 #### Team Member IPs

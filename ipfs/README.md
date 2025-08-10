@@ -231,7 +231,7 @@ This repository contains scripts and configurations for deploying an IPFS cluste
 
 2. Nginx Configuration:
 <<<<<<< HEAD
-   - Located at: `docker-compose/bongaquino-ipfs-kr-bootstrap-01/nginx/conf.d/default.conf`
+   - Located at: `docker-compose/bongaquino-ipfs-bootstrap-01/nginx/conf.d/default.conf`
 =======
    - Located at: `docker-compose/bongaquino-ipfs-bootstrap-01/nginx/conf.d/default.conf`
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
@@ -264,18 +264,18 @@ This repository contains scripts and configurations for deploying an IPFS cluste
 bongaquino-ipfs/
 ├── README.md                          # Project documentation
 ├── docker-compose/                    # Docker Compose configurations
-│   ├── bongaquino-ipfs-kr-bootstrap-01/  # Bootstrap node (211.239.117.217)
+│   ├── bongaquino-ipfs-bootstrap-01/  # Bootstrap node (211.239.117.217)
 │   │   ├── docker-compose.yml         # Container configuration
 │   │   └── .env                       # Environment variables
-│   ├── bongaquino-ipfs-kr-bootstrap-02/  # New isolated bootstrap node (27.255.70.17)
+│   ├── bongaquino-ipfs-bootstrap-02/  # New isolated bootstrap node (27.255.70.17)
 │   │   ├── docker-compose.yml         # Container configuration
 │   │   └── .env                       # Environment variables
-│   ├── bongaquino-ipfs-kr-peer-01/       # Peer node 1 (218.38.136.33)
+│   ├── bongaquino-ipfs-peer-01/       # Peer node 1 (218.38.136.33)
 │   │   ├── docker-compose.yml         # Container configuration
 │   │   └── .env                       # Environment variables
-│   └── bongaquino-ipfs-kr-peer-02/       # Peer node 2 (218.38.136.34)
+│   └── bongaquino-ipfs-peer-02/       # Peer node 2 (218.38.136.34)
 =======
-koneksi-ipfs/
+bongaquino-ipfs/
 ├── README.md                          # Project documentation
 ├── docker-compose/                    # Docker Compose configurations
 │   ├── bongaquino-ipfs-bootstrap-01/  # Bootstrap node (211.239.117.217)

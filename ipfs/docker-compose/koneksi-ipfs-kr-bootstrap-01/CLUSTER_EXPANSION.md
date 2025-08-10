@@ -14,10 +14,10 @@ This guide explains how to add new peer nodes to the isolated IPFS cluster start
 ```bash
 # Copy the peer-01 configuration as a template
 <<<<<<< HEAD
-cp -r ../bongaquino-ipfs-kr-peer-01 ../bongaquino-ipfs-kr-new-peer-01
+cp -r ../bongaquino-ipfs-peer-01 ../bongaquino-ipfs-new-peer-01
 
 # Update the configuration for the new peer
-cd ../bongaquino-ipfs-kr-new-peer-01
+cd ../bongaquino-ipfs-new-peer-01
 =======
 cp -r ../bongaquino-ipfs-peer-01 ../bongaquino-ipfs-new-peer-01
 
@@ -47,7 +47,7 @@ cd ../bongaquino-ipfs-new-peer-01
 ```bash
 # SSH to bootstrap node
 <<<<<<< HEAD
-ssh admin_user@27.255.70.17
+ssh admin@27.255.70.17
 =======
 ssh koneksi01@27.255.70.17
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
@@ -92,7 +92,7 @@ sudo ufw reload
 ```bash
 # SSH to bootstrap node
 <<<<<<< HEAD
-ssh admin_user@27.255.70.17
+ssh admin@27.255.70.17
 =======
 ssh koneksi01@27.255.70.17
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
@@ -117,9 +117,9 @@ docker exec ipfs ipfs config --json Peering.Peers '[
 ```bash
 # Copy configuration to new peer server
 <<<<<<< HEAD
-scp -r bongaquino-ipfs-kr-new-peer-01 user@NEW_PEER_IP:/home/user/bongaquino-ipfs/docker-compose/
+scp -r bongaquino-ipfs-new-peer-01 user@NEW_PEER_IP:/home/user/bongaquino-ipfs/docker-compose/
 =======
-scp -r bongaquino-ipfs-new-peer-01 user@NEW_PEER_IP:/home/user/koneksi-ipfs/docker-compose/
+scp -r bongaquino-ipfs-new-peer-01 user@NEW_PEER_IP:/home/user/bongaquino-ipfs/docker-compose/
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 ```
 
@@ -130,9 +130,9 @@ ssh user@NEW_PEER_IP
 
 # Navigate to configuration directory
 <<<<<<< HEAD
-cd /home/user/bongaquino-ipfs/docker-compose/bongaquino-ipfs-kr-new-peer-01
+cd /home/user/bongaquino-ipfs/docker-compose/bongaquino-ipfs-new-peer-01
 =======
-cd /home/user/koneksi-ipfs/docker-compose/bongaquino-ipfs-new-peer-01
+cd /home/user/bongaquino-ipfs/docker-compose/bongaquino-ipfs-new-peer-01
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 # Make scripts executable

@@ -77,7 +77,7 @@ This project provides a complete **IPFS private cluster deployment** with **HAPr
 <<<<<<< HEAD
 cd bongaquino-ipfs/private-cluster-project
 =======
-cd koneksi-ipfs/private-cluster-project
+cd bongaquino-ipfs/private-cluster-project
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 # Make deployment script executable

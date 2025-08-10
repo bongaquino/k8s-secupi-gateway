@@ -20,11 +20,11 @@ This document describes the SSL certificate configuration for the IPFS Bootstrap
 ## File Locations
 ```
 <<<<<<< HEAD
-bongaquino-ipfs/docker-compose/bongaquino-ipfs-kr-bootstrap-02/nginx/ssl/
+bongaquino-ipfs/docker-compose/bongaquino-ipfs-bootstrap-02/nginx/ssl/
 ├── wildcard.bongaquino.co.kr.pem (Certificate)
 └── wildcard.bongaquino.co.kr.key (Private Key)
 =======
-koneksi-ipfs/docker-compose/bongaquino-ipfs-bootstrap-02/nginx/ssl/
+bongaquino-ipfs/docker-compose/bongaquino-ipfs-bootstrap-02/nginx/ssl/
 ├── wildcard.bongaquino.com.pem (Certificate)
 └── wildcard.bongaquino.com.key (Private Key)
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
