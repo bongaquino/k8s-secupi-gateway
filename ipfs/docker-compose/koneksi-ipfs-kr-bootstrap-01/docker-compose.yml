@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  ipfs:
+    image: ipfs/kubo:latest
+    container_name: ipfs
+    restart: unless-stopped
+    volumes:
+      - /data/ipfs:/data/ipfs
+      - ./start-ipfs.sh:/start-ipfs.sh
+    ports:
+      - "4001:4001"
+    networks:
+      - ipfs_network
+    entrypoint: ["/bin/sh", "/start-ipfs.sh"]
+
+  ipfs-cluster:
+    build:
+      context: .
+      dockerfile: Dockerfile.cluster
+    container_name: ipfs-cluster
+    restart: unless-stopped
+    environment:
+      - CLUSTER_IPFSHTTP_NODEMULTIADDRESS=/dns4/ipfs/tcp/5001
+      - CLUSTER_CRDT_TRUSTALLPEERS=true
+      - CLUSTER_CRDT_DATACENTER=kr-bootstrap-02
+      - CLUSTER_CRDT_CLUSTERNAME=koneksi-ipfs-cluster
+      - CLUSTER_BOOTSTRAP_NODE=true
+      - CLUSTER_SECRET=0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+      - CLUSTER_PEERNAME=kr-bootstrap-02
+      - CLUSTER_MONITORPINGINTERVAL=2s
+      - CLUSTER_RESTAPI_HTTPLISTENMULTIADDRESS=/ip4/0.0.0.0/tcp/9094
+      - CLUSTER_RESTAPI_HTTPANNOUNCEMULTIADDRESS=/ip4/27.255.70.17/tcp/9094
+      - CLUSTER_SWARM_LISTENMULTIADDRESS=/ip4/0.0.0.0/tcp/9096
+      - CLUSTER_SWARM_ANNOUNCE=/ip4/27.255.70.17/tcp/9096
+      - CLUSTER_DEBUG=true
+    networks:
+      - ipfs_network
+    volumes:
+      - /data/ipfs-cluster:/data/ipfs-cluster
+    ports:
+      - "9094:9094"
+      - "9095:9095"
+      - "9096:9096"
+    depends_on:
+      - ipfs
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-bootstrap
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/nginx/ssl
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    depends_on:
+      - ipfs
+    networks:
+      - ipfs_network
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot-bootstrap
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+networks:
+  ipfs_network:
+    driver: bridge 

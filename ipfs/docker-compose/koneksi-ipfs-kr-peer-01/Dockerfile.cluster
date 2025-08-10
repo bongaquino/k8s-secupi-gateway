@@ -1,0 +1,6 @@
+FROM ipfs/ipfs-cluster:latest
+
+COPY start_ipfs_cluster.sh /usr/local/bin/start_ipfs_cluster.sh
+RUN chmod +x /usr/local/bin/start_ipfs_cluster.sh
+
+ENTRYPOINT ["/usr/local/bin/start_ipfs_cluster.sh"] 

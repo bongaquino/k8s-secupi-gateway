@@ -1,0 +1,14 @@
+[Unit]
+Description=IPFS Pin Verification Service
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+User=koneksi01
+WorkingDirectory=/home/koneksi01/koneksi-ipfs/docker-compose/koneksi-ipfs-kr-bootstrap-02
+ExecStart=/bin/bash verify-pins.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target 

@@ -1,0 +1,9 @@
+{
+  "name": "mongodb-data-generator",
+  "version": "1.0.0",
+  "description": "Real-time data generator for MongoDB",
+  "main": "data-generator.js",
+  "dependencies": {
+    "mongodb": "^4.17.0"
+  }
+} 
