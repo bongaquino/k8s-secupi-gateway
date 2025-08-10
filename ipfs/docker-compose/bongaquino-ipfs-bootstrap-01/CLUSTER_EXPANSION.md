@@ -49,7 +49,7 @@ cd ../bongaquino-ipfs-new-peer-01
 <<<<<<< HEAD
 ssh admin@27.255.70.17
 =======
-ssh koneksi01@27.255.70.17
+ssh admin@27.255.70.17
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 # Get the peer ID
@@ -94,7 +94,7 @@ sudo ufw reload
 <<<<<<< HEAD
 ssh admin@27.255.70.17
 =======
-ssh koneksi01@27.255.70.17
+ssh admin@27.255.70.17
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 # Update the disable-external-peers.sh script to include new peer
@@ -117,9 +117,9 @@ docker exec ipfs ipfs config --json Peering.Peers '[
 ```bash
 # Copy configuration to new peer server
 <<<<<<< HEAD
-scp -r bongaquino-ipfs-new-peer-01 user@NEW_PEER_IP:/home/user/bongaquino-ipfs/docker-compose/
+scp -r bongaquino-ipfs-new-peer-01 user@NEW_PEER_IP:/home/user/ipfs/docker-compose/
 =======
-scp -r bongaquino-ipfs-new-peer-01 user@NEW_PEER_IP:/home/user/bongaquino-ipfs/docker-compose/
+scp -r bongaquino-ipfs-new-peer-01 user@NEW_PEER_IP:/home/user/ipfs/docker-compose/
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 ```
 
@@ -130,9 +130,9 @@ ssh user@NEW_PEER_IP
 
 # Navigate to configuration directory
 <<<<<<< HEAD
-cd /home/user/bongaquino-ipfs/docker-compose/bongaquino-ipfs-new-peer-01
+cd /home/user/ipfs/docker-compose/bongaquino-ipfs-new-peer-01
 =======
-cd /home/user/bongaquino-ipfs/docker-compose/bongaquino-ipfs-new-peer-01
+cd /home/user/ipfs/docker-compose/bongaquino-ipfs-new-peer-01
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 # Make scripts executable

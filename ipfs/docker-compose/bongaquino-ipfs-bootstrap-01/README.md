@@ -5,7 +5,7 @@
 <<<<<<< HEAD
 - **Username:** admin
 =======
-- **Username:** koneksi01
+- **Username:** admin
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 - **Password:** !Z2x3c*()
 - **Node Type:** Bootstrap Node (Secondary)
@@ -22,7 +22,7 @@ This is a new isolated IPFS cluster bootstrap node that will create a completely
 <<<<<<< HEAD
 ssh admin@27.255.70.17
 =======
-ssh koneksi01@27.255.70.17
+ssh admin@27.255.70.17
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 # Password: !Z2x3c*()
 
@@ -36,7 +36,7 @@ sudo apt install -y docker.io docker-compose curl wget git ufw fail2ban
 <<<<<<< HEAD
 sudo usermod -aG docker admin
 =======
-sudo usermod -aG docker koneksi01
+sudo usermod -aG docker admin
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 # Log out and log back in for group changes to take effect
@@ -79,14 +79,14 @@ cd /home/admin/bongaquino-ipfs/docker-compose
 # Copy configuration files (from your local machine)
 scp -r bongaquino-ipfs-bootstrap-02 admin@27.255.70.17:/home/admin/bongaquino-ipfs/docker-compose/
 =======
-sudo chown -R koneksi01:koneksi01 /data/ipfs /data/ipfs-cluster
+sudo chown -R admin:admin /data/ipfs /data/ipfs-cluster
 
 # Create project directory
-mkdir -p /home/koneksi01/bongaquino-ipfs/docker-compose
-cd /home/koneksi01/bongaquino-ipfs/docker-compose
+mkdir -p /home/admin/bongaquino-ipfs/docker-compose
+cd /home/admin/bongaquino-ipfs/docker-compose
 
 # Copy configuration files (from your local machine)
-scp -r bongaquino-ipfs-bootstrap-02 koneksi01@27.255.70.17:/home/koneksi01/bongaquino-ipfs/docker-compose/
+scp -r bongaquino-ipfs-bootstrap-02 admin@27.255.70.17:/home/admin/bongaquino-ipfs/docker-compose/
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 ```
 
@@ -98,7 +98,7 @@ scp -r bongaquino-ipfs-bootstrap-02 koneksi01@27.255.70.17:/home/koneksi01/bonga
 <<<<<<< HEAD
 cd /home/admin/bongaquino-ipfs/docker-compose/bongaquino-ipfs-bootstrap-02
 =======
-cd /home/koneksi01/bongaquino-ipfs/docker-compose/bongaquino-ipfs-bootstrap-02
+cd /home/admin/bongaquino-ipfs/docker-compose/bongaquino-ipfs-bootstrap-02
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 # Make scripts executable
