@@ -2,9 +2,15 @@
 
 # Define server configurations
 servers=(
+<<<<<<< HEAD
+    "211.239.117.217:bongaquino-ipfs-kr-bootstrap-01"
+    "218.38.136.33:bongaquino-ipfs-kr-peer-01"
+    "218.38.136.34:bongaquino-ipfs-kr-peer-02"
+=======
     "211.239.117.217:koneksi-ipfs-kr-bootstrap-01"
     "218.38.136.33:koneksi-ipfs-kr-peer-01"
     "218.38.136.34:koneksi-ipfs-kr-peer-02"
+>>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 )
 
 # Base directory for the configurations
@@ -14,7 +20,11 @@ BASE_DIR="docker-compose"
 copy_to_server() {
     local server=$1
     local config_dir=$2
+<<<<<<< HEAD
+    local remote_dir="/home/ipfs/bongaquino-ipfs/$BASE_DIR/$config_dir"
+=======
     local remote_dir="/home/ipfs/koneksi-ipfs/$BASE_DIR/$config_dir"
+>>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
     echo "Copying $config_dir configuration to $server..."
     

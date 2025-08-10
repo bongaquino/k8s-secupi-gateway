@@ -3,7 +3,11 @@ set -e
 
 echo "[+] Starting IPFS Cluster Service..."
 echo "[+] Node: private-cluster-01 (Bootstrap Node)"
+<<<<<<< HEAD
+echo "[+] Cluster Name: bongaquino-private-ipfs-cluster"
+=======
 echo "[+] Cluster Name: koneksi-private-ipfs-cluster"
+>>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 # Wait for IPFS to be ready
 echo "[+] Waiting for IPFS to be ready..."

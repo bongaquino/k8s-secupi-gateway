@@ -13,10 +13,17 @@ This guide explains how to add new peer nodes to the isolated IPFS cluster start
 ### Create Peer Node Directory
 ```bash
 # Copy the peer-01 configuration as a template
+<<<<<<< HEAD
+cp -r ../bongaquino-ipfs-kr-peer-01 ../bongaquino-ipfs-kr-new-peer-01
+
+# Update the configuration for the new peer
+cd ../bongaquino-ipfs-kr-new-peer-01
+=======
 cp -r ../koneksi-ipfs-kr-peer-01 ../koneksi-ipfs-kr-new-peer-01
 
 # Update the configuration for the new peer
 cd ../koneksi-ipfs-kr-new-peer-01
+>>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 ```
 
 ### Update Configuration Files
@@ -39,7 +46,11 @@ cd ../koneksi-ipfs-kr-new-peer-01
 ### Get Bootstrap Peer ID
 ```bash
 # SSH to bootstrap node
+<<<<<<< HEAD
+ssh bongaquino01@27.255.70.17
+=======
 ssh koneksi01@27.255.70.17
+>>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 # Get the peer ID
 docker exec ipfs-cluster ipfs-cluster-ctl id
@@ -80,7 +91,11 @@ sudo ufw reload
 ### Update Bootstrap Node
 ```bash
 # SSH to bootstrap node
+<<<<<<< HEAD
+ssh bongaquino01@27.255.70.17
+=======
 ssh koneksi01@27.255.70.17
+>>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 # Update the disable-external-peers.sh script to include new peer
 # Edit the Peering.Peers configuration to add new peer IPFS ID and address
@@ -101,7 +116,11 @@ docker exec ipfs ipfs config --json Peering.Peers '[
 ### Copy Configuration
 ```bash
 # Copy configuration to new peer server
+<<<<<<< HEAD
+scp -r bongaquino-ipfs-kr-new-peer-01 user@NEW_PEER_IP:/home/user/bongaquino-ipfs/docker-compose/
+=======
 scp -r koneksi-ipfs-kr-new-peer-01 user@NEW_PEER_IP:/home/user/koneksi-ipfs/docker-compose/
+>>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 ```
 
 ### Deploy Services
@@ -110,7 +129,11 @@ scp -r koneksi-ipfs-kr-new-peer-01 user@NEW_PEER_IP:/home/user/koneksi-ipfs/dock
 ssh user@NEW_PEER_IP
 
 # Navigate to configuration directory
+<<<<<<< HEAD
+cd /home/user/bongaquino-ipfs/docker-compose/bongaquino-ipfs-kr-new-peer-01
+=======
 cd /home/user/koneksi-ipfs/docker-compose/koneksi-ipfs-kr-new-peer-01
+>>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 # Make scripts executable
 chmod +x *.sh

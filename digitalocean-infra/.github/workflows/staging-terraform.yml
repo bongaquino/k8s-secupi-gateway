@@ -20,7 +20,7 @@ permissions:
 
 env:
   TF_WORKSPACE: staging
-  TF_CLOUD_ORGANIZATION: ardata-tech
+  TF_CLOUD_ORGANIZATION: bongaquino-tech
 
 jobs:
   terraform:

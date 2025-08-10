@@ -3,7 +3,7 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to Ardata Staging App!', environment: process.env.NODE_ENV });
+  res.json({ message: 'Welcome to bongaquino Staging App!', environment: process.env.NODE_ENV });
 });
 
 app.listen(port, () => {

@@ -155,7 +155,7 @@ export function ChatWidget() {
         )}
       >
         <img
-          src="/hauska-white.svg"
+          src="/bongaquino-white.svg"
           alt="Chat"
           className="w-7 h-7 sm:w-9 sm:h-9"
         />
@@ -185,17 +185,17 @@ export function ChatWidget() {
       >
         <div className="flex items-center gap-2">
           <img
-            src="/hauska-dark.svg"
-            alt="Hauska Design API"
+            src="/bongaquino-dark.svg"
+            alt="bongaquino Design API"
             className="w-9 h-9 dark:hidden"
           />
           <img
-            src="/hauska-white.svg"
-            alt="Hauska Design API"
+            src="/bongaquino-white.svg"
+            alt="bongaquino Design API"
             className="w-9 h-9 hidden dark:block"
           />
           <div>
-            <h3 className="font-semibold">Hauska Design Assistant</h3>
+            <h3 className="font-semibold">bongaquino Design Assistant</h3>
             <p className="text-xs text-muted-foreground">
               Powered by Perplexity
             </p>
@@ -234,19 +234,19 @@ export function ChatWidget() {
             <div className="flex flex-1 mt-32 flex-col items-center justify-center  text-center space-y-4 text-muted-foreground">
               <div className="w-16 h-16 rounded-full bg-blue-500/10 flex items-center justify-center">
                 <img
-                  src="/hauska-dark.svg"
-                  alt="Hauska"
+                  src="/bongaquino-dark.svg"
+                  alt="bongaquino"
                   className="w-10 h-10 dark:hidden"
                 />
                 <img
-                  src="/hauska-white.svg"
-                  alt="Hauska"
+                  src="/bongaquino-white.svg"
+                  alt="bongaquino"
                   className="w-10 h-10 hidden dark:block"
                 />
               </div>
               <div className="max-w-[320px]">
                 <p className="font-medium mb-1">
-                  Welcome to Hauska Design Assistant!
+                  Welcome to bongaquino Design Assistant!
                 </p>
                 <p className="text-sm">
                   Ask me anything about design transformations.

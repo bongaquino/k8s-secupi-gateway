@@ -13,7 +13,7 @@ export default function Footer() {
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="text-sm text-muted-foreground order-2 md:order-1">
-            © {new Date().getFullYear()} Hauska. All rights reserved.
+            © {new Date().getFullYear()} bongaquino. All rights reserved.
           </div>
 
           <div className="flex items-center order-1 md:order-2">

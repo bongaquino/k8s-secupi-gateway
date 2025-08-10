@@ -215,8 +215,13 @@ This repository contains scripts and configurations for deploying an IPFS cluste
 
 ### Domain Configuration
 1. Bootstrap Node Domains:
+<<<<<<< HEAD
+   - `ipfs.bongaquino.co.kr` - Private API endpoint (403 Forbidden for public access)
+   - `gateway.bongaquino.co.kr` - Public gateway endpoint
+=======
    - `ipfs.koneksi.co.kr` - Private API endpoint (403 Forbidden for public access)
    - `gateway.koneksi.co.kr` - Public gateway endpoint
+>>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 ### SSL Configuration
 1. SSL Certificates:
@@ -225,7 +230,11 @@ This repository contains scripts and configurations for deploying an IPFS cluste
    - Auto-renewal is configured every 12 hours
 
 2. Nginx Configuration:
+<<<<<<< HEAD
+   - Located at: `docker-compose/bongaquino-ipfs-kr-bootstrap-01/nginx/conf.d/default.conf`
+=======
    - Located at: `docker-compose/koneksi-ipfs-kr-bootstrap-01/nginx/conf.d/default.conf`
+>>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
    - Handles both HTTP and HTTPS traffic
    - Implements access control for private endpoints
 
@@ -239,13 +248,33 @@ This repository contains scripts and configurations for deploying an IPFS cluste
    ```
 
 4. Access Control:
+<<<<<<< HEAD
+   - `ipfs.bongaquino.co.kr` is restricted (403 Forbidden)
+   - `gateway.bongaquino.co.kr` is publicly accessible
+=======
    - `ipfs.koneksi.co.kr` is restricted (403 Forbidden)
    - `gateway.koneksi.co.kr` is publicly accessible
+>>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
    - Both domains use the same SSL certificate
 
 ## Repository Structure
 
 ```
+<<<<<<< HEAD
+bongaquino-ipfs/
+├── README.md                          # Project documentation
+├── docker-compose/                    # Docker Compose configurations
+│   ├── bongaquino-ipfs-kr-bootstrap-01/  # Bootstrap node (211.239.117.217)
+│   │   ├── docker-compose.yml         # Container configuration
+│   │   └── .env                       # Environment variables
+│   ├── bongaquino-ipfs-kr-bootstrap-02/  # New isolated bootstrap node (27.255.70.17)
+│   │   ├── docker-compose.yml         # Container configuration
+│   │   └── .env                       # Environment variables
+│   ├── bongaquino-ipfs-kr-peer-01/       # Peer node 1 (218.38.136.33)
+│   │   ├── docker-compose.yml         # Container configuration
+│   │   └── .env                       # Environment variables
+│   └── bongaquino-ipfs-kr-peer-02/       # Peer node 2 (218.38.136.34)
+=======
 koneksi-ipfs/
 ├── README.md                          # Project documentation
 ├── docker-compose/                    # Docker Compose configurations
@@ -259,6 +288,7 @@ koneksi-ipfs/
 │   │   ├── docker-compose.yml         # Container configuration
 │   │   └── .env                       # Environment variables
 │   └── koneksi-ipfs-kr-peer-02/       # Peer node 2 (218.38.136.34)
+>>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 │       ├── docker-compose.yml         # Container configuration
 │       └── .env                       # Environment variables
 └── scripts/                           # Deployment and maintenance scripts

@@ -8,10 +8,10 @@ if (db.system.users.find({ user: 'root' }).count() === 0) {
   });
 }
 
-db = db.getSiblingDB('hauska');
+db = db.getSiblingDB('bongaquino');
 
 db.createUser({
-  user: 'hauska_user',
-  pwd: 'hauska_password',
-  roles: [{ role: 'readWrite', db: 'hauska' }]
+  user: 'bongaquino_user',
+  pwd: 'bongaquino_password',
+  roles: [{ role: 'readWrite', db: 'bongaquino' }]
 });

@@ -3,57 +3,57 @@
 ## Current SSH Access Configuration (Updated: 2025-01-27)
 
 ### Node Information
-- **Bootstrap Node:** 211.239.117.217
-- **Peer-01:** 218.38.136.33
-- **Peer-02:** 218.38.136.34
-- **Backend Server:** 52.77.36.120 (Koneksi Staging Backend)
-- **UAT Bastion:** 18.139.136.149 (Koneksi-UAT-Bastion)
+- **Bootstrap Node:** <BOOTSTRAP_NODE_IP>
+- **Peer-01:** <PEER_01_IP>
+- **Peer-02:** <PEER_02_IP>
+- **Backend Server:** <BACKEND_SERVER_IP> (Staging Backend)
+- **UAT Bastion:** <UAT_BASTION_IP> (UAT-Bastion)
 
 ## SSH Access Matrix
 
-### Bootstrap Node (211.239.117.217)
+### Bootstrap Node (<BOOTSTRAP_NODE_IP>)
 - ✅ **Public SSH Access:** Open to all (Anywhere)
-- ✅ **Peer-01:** 218.38.136.33
-- ✅ **Peer-02:** 218.38.136.34
-- ✅ **Backend Server:** 52.77.36.120
-- ✅ **UAT Bastion:** 18.139.136.149
+- ✅ **Peer-01:** <PEER_01_IP>
+- ✅ **Peer-02:** <PEER_02_IP>
+- ✅ **Backend Server:** <BACKEND_SERVER_IP>
+- ✅ **UAT Bastion:** <UAT_BASTION_IP>
 
-### Peer-01 (218.38.136.33)
-- ✅ **Bong's IP:** 112.200.100.154
-- ✅ **Bootstrap Node:** 211.239.117.217
-- ✅ **Peer-02:** 218.38.136.34
-- ✅ **Backend Server:** 52.77.36.120
-- ✅ **UAT Bastion:** 18.139.136.149
+### Peer-01 (<PEER_01_IP>)
+- ✅ **Admin IP:** <ADMIN_IP>
+- ✅ **Bootstrap Node:** <BOOTSTRAP_NODE_IP>
+- ✅ **Peer-02:** <PEER_02_IP>
+- ✅ **Backend Server:** <BACKEND_SERVER_IP>
+- ✅ **UAT Bastion:** <UAT_BASTION_IP>
 
-### Peer-02 (218.38.136.34)
-- ✅ **Bong's IP:** 112.200.100.154
-- ✅ **Bootstrap Node:** 211.239.117.217
-- ✅ **Peer-01:** 218.38.136.33
-- ✅ **Backend Server:** 52.77.36.120
-- ✅ **UAT Bastion:** 18.139.136.149
+### Peer-02 (<PEER_02_IP>)
+- ✅ **Admin IP:** <ADMIN_IP>
+- ✅ **Bootstrap Node:** <BOOTSTRAP_NODE_IP>
+- ✅ **Peer-01:** <PEER_01_IP>
+- ✅ **Backend Server:** <BACKEND_SERVER_IP>
+- ✅ **UAT Bastion:** <UAT_BASTION_IP>
 
 ## SSH Commands by Node
 
-### 1. Bootstrap Node (211.239.117.217)
+### 1. Bootstrap Node (<BOOTSTRAP_NODE_IP>)
 
 #### SSH Access
 ```bash
 # Direct SSH access (from any IP)
-ssh ipfs@211.239.117.217
+ssh ipfs@<BOOTSTRAP_NODE_IP>
 
 # SSH via backend server
-ssh -i ~/.ssh/koneksi-ipfs-backend.pem ubuntu@52.77.36.120
-ssh -i /home/ubuntu/.ssh/id_rsa_backend ipfs@211.239.117.217
+ssh -i ~/.ssh/backend-key.pem ubuntu@<BACKEND_SERVER_IP>
+ssh -i /home/ubuntu/.ssh/id_rsa_backend ipfs@<BOOTSTRAP_NODE_IP>
 
 # SSH via UAT bastion
-ssh -i ~/.ssh/id_rsa ipfs@18.139.136.149
-ssh -i /home/ubuntu/.ssh/id_rsa ipfs@211.239.117.217
+ssh -i ~/.ssh/id_rsa ipfs@<UAT_BASTION_IP>
+ssh -i /home/ubuntu/.ssh/id_rsa ipfs@<BOOTSTRAP_NODE_IP>
 ```
 
 #### Adding and Pinning Files
 ```bash
 # SSH into bootstrap node
-ssh ipfs@211.239.117.217
+ssh ipfs@<BOOTSTRAP_NODE_IP>
 
 # Create test file
 echo "Test file from Bootstrap Node" > /tmp/test1.txt
@@ -77,30 +77,34 @@ docker exec ipfs ipfs cat QmX3oVdJRjDXR3UHb7JpZCXUBbzC6Jnofr2yArjHyy4vHr
 docker exec ipfs ipfs cat Qmati74KFqK8NqvHWLKcMjRtysm3bFd7b4kXb3Agtj6C8s
 ```
 
-### 2. Peer-01 (218.38.136.33)
+### 2. Peer-01 (<PEER_01_IP>)
 
 #### SSH Access
 ```bash
 # Direct SSH access (from whitelisted IPs only)
-ssh -i ~/.ssh/id_rsa ipfs@218.38.136.33
+ssh -i ~/.ssh/id_rsa ipfs@<PEER_01_IP>
 
 # SSH via backend server
-ssh -i ~/.ssh/koneksi-ipfs-backend.pem ubuntu@52.77.36.120
-ssh -i /home/ubuntu/.ssh/id_rsa_backend ipfs@218.38.136.33
+<<<<<<< HEAD
+ssh -i ~/.ssh/bongaquino-ipfs-backend.pem ubuntu@<BACKEND_SERVER_IP>
+=======
+ssh -i ~/.ssh/koneksi-ipfs-backend.pem ubuntu@<BACKEND_SERVER_IP>
+>>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
+ssh -i /home/ubuntu/.ssh/id_rsa_backend ipfs@<PEER_01_IP>
 
 # SSH via UAT bastion
-ssh -i ~/.ssh/id_rsa ipfs@18.139.136.149
-ssh -i /home/ubuntu/.ssh/id_rsa ipfs@218.38.136.33
+ssh -i ~/.ssh/id_rsa ipfs@<UAT_BASTION_IP>
+ssh -i /home/ubuntu/.ssh/id_rsa ipfs@<PEER_01_IP>
 
 # SSH via bootstrap node
-ssh -i ~/.ssh/id_rsa ipfs@211.239.117.217
-ssh -i /home/ipfs/.ssh/id_rsa ipfs@218.38.136.33
+ssh -i ~/.ssh/id_rsa ipfs@<BOOTSTRAP_NODE_IP>
+ssh -i /home/ipfs/.ssh/id_rsa ipfs@<PEER_01_IP>
 ```
 
 #### Adding and Pinning Files
 ```bash
 # SSH into peer-01
-ssh -i ~/.ssh/id_rsa ipfs@218.38.136.33
+ssh -i ~/.ssh/id_rsa ipfs@<PEER_01_IP>
 
 # Create test file
 echo "Test file from Peer-01" > /tmp/test2.txt
@@ -124,30 +128,34 @@ docker exec ipfs ipfs cat QmX3oVdJRjDXR3UHb7JpZCXUBbzC6Jnofr2yArjHyy4vHr
 docker exec ipfs ipfs cat Qmati74KFqK8NqvHWLKcMjRtysm3bFd7b4kXb3Agtj6C8s
 ```
 
-### 3. Peer-02 (218.38.136.34)
+### 3. Peer-02 (<PEER_02_IP>)
 
 #### SSH Access
 ```bash
 # Direct SSH access (from whitelisted IPs only)
-ssh -i ~/.ssh/id_rsa ipfs@218.38.136.34
+ssh -i ~/.ssh/id_rsa ipfs@<PEER_02_IP>
 
 # SSH via backend server
-ssh -i ~/.ssh/koneksi-ipfs-backend.pem ubuntu@52.77.36.120
-ssh -i /home/ubuntu/.ssh/id_rsa_backend ipfs@218.38.136.34
+<<<<<<< HEAD
+ssh -i ~/.ssh/bongaquino-ipfs-backend.pem ubuntu@<BACKEND_SERVER_IP>
+=======
+ssh -i ~/.ssh/koneksi-ipfs-backend.pem ubuntu@<BACKEND_SERVER_IP>
+>>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
+ssh -i /home/ubuntu/.ssh/id_rsa_backend ipfs@<PEER_02_IP>
 
 # SSH via UAT bastion
-ssh -i ~/.ssh/id_rsa ipfs@18.139.136.149
-ssh -i /home/ubuntu/.ssh/id_rsa ipfs@218.38.136.34
+ssh -i ~/.ssh/id_rsa ipfs@<UAT_BASTION_IP>
+ssh -i /home/ubuntu/.ssh/id_rsa ipfs@<PEER_02_IP>
 
 # SSH via bootstrap node
-ssh -i ~/.ssh/id_rsa ipfs@211.239.117.217
-ssh -i /home/ipfs/.ssh/id_rsa ipfs@218.38.136.34
+ssh -i ~/.ssh/id_rsa ipfs@<BOOTSTRAP_NODE_IP>
+ssh -i /home/ipfs/.ssh/id_rsa ipfs@<PEER_02_IP>
 ```
 
 #### Adding and Pinning Files
 ```bash
 # SSH into peer-02
-ssh -i ~/.ssh/id_rsa ipfs@218.38.136.34
+ssh -i ~/.ssh/id_rsa ipfs@<PEER_02_IP>
 
 # Create test file
 echo "Test file from Peer-02" > /tmp/test3.txt
@@ -176,37 +184,37 @@ docker exec ipfs ipfs cat Qmati74KFqK8NqvHWLKcMjRtysm3bFd7b4kXb3Agtj6C8s
 ### Bootstrap Node
 ```bash
 # Check cluster status
-ssh ipfs@211.239.117.217 "docker exec ipfs-cluster ipfs-cluster-ctl status"
+ssh ipfs@<BOOTSTRAP_NODE_IP> "docker exec ipfs-cluster ipfs-cluster-ctl status"
 
 # Check peer connections
-ssh ipfs@211.239.117.217 "docker exec ipfs-cluster ipfs-cluster-ctl peers ls"
+ssh ipfs@<BOOTSTRAP_NODE_IP> "docker exec ipfs-cluster ipfs-cluster-ctl peers ls"
 
 # Check swarm connections
-ssh ipfs@211.239.117.217 "docker exec ipfs ipfs swarm peers"
+ssh ipfs@<BOOTSTRAP_NODE_IP> "docker exec ipfs ipfs swarm peers"
 ```
 
 ### Peer-01
 ```bash
 # Check cluster status
-ssh -i ~/.ssh/id_rsa ipfs@218.38.136.33 "docker exec ipfs-cluster ipfs-cluster-ctl status"
+ssh -i ~/.ssh/id_rsa ipfs@<PEER_01_IP> "docker exec ipfs-cluster ipfs-cluster-ctl status"
 
 # Check peer connections
-ssh -i ~/.ssh/id_rsa ipfs@218.38.136.33 "docker exec ipfs-cluster ipfs-cluster-ctl peers ls"
+ssh -i ~/.ssh/id_rsa ipfs@<PEER_01_IP> "docker exec ipfs-cluster ipfs-cluster-ctl peers ls"
 
 # Check swarm connections
-ssh -i ~/.ssh/id_rsa ipfs@218.38.136.33 "docker exec ipfs ipfs swarm peers"
+ssh -i ~/.ssh/id_rsa ipfs@<PEER_01_IP> "docker exec ipfs ipfs swarm peers"
 ```
 
 ### Peer-02
 ```bash
 # Check cluster status
-ssh -i ~/.ssh/id_rsa ipfs@218.38.136.34 "docker exec ipfs-cluster ipfs-cluster-ctl status"
+ssh -i ~/.ssh/id_rsa ipfs@<PEER_02_IP> "docker exec ipfs-cluster ipfs-cluster-ctl status"
 
 # Check peer connections
-ssh -i ~/.ssh/id_rsa ipfs@218.38.136.34 "docker exec ipfs-cluster ipfs-cluster-ctl peers ls"
+ssh -i ~/.ssh/id_rsa ipfs@<PEER_02_IP> "docker exec ipfs-cluster ipfs-cluster-ctl peers ls"
 
 # Check swarm connections
-ssh -i ~/.ssh/id_rsa ipfs@218.38.136.34 "docker exec ipfs ipfs swarm peers"
+ssh -i ~/.ssh/id_rsa ipfs@<PEER_02_IP> "docker exec ipfs ipfs swarm peers"
 ```
 
 ## 5. Troubleshooting Commands
@@ -227,17 +235,17 @@ ssh ipfs@<NODE_IP> "docker logs ipfs-cluster"
 ### Check Network Connectivity
 ```bash
 # Test port connectivity
-ssh ipfs@<NODE_IP> "nc -zv 211.239.117.217 4001"  # Bootstrap node
-ssh ipfs@<NODE_IP> "nc -zv 218.38.136.33 4001"    # Peer-01
-ssh ipfs@<NODE_IP> "nc -zv 218.38.136.34 4001"    # Peer-02
+ssh ipfs@<NODE_IP> "nc -zv <BOOTSTRAP_NODE_IP> 4001"  # Bootstrap node
+ssh ipfs@<NODE_IP> "nc -zv <PEER_01_IP> 4001"    # Peer-01
+ssh ipfs@<NODE_IP> "nc -zv <PEER_02_IP> 4001"    # Peer-02
 ```
 
 ### Check UFW Status
 ```bash
 # Check UFW status on all nodes
-ssh ipfs@211.239.117.217 "sudo ufw status verbose"
-ssh -i ~/.ssh/id_rsa ipfs@218.38.136.33 "sudo ufw status verbose"
-ssh -i ~/.ssh/id_rsa ipfs@218.38.136.34 "sudo ufw status verbose"
+ssh ipfs@<BOOTSTRAP_NODE_IP> "sudo ufw status verbose"
+ssh -i ~/.ssh/id_rsa ipfs@<PEER_01_IP> "sudo ufw status verbose"
+ssh -i ~/.ssh/id_rsa ipfs@<PEER_02_IP> "sudo ufw status verbose"
 ```
 
 ## 6. IP Whitelisting
@@ -245,11 +253,19 @@ ssh -i ~/.ssh/id_rsa ipfs@218.38.136.34 "sudo ufw status verbose"
 ### Current Whitelisted IPs for SSH Access
 
 #### Infrastructure IPs
-- **52.77.36.120** - Koneksi Staging Backend
-- **211.239.117.217** - Bootstrap Node
-- **218.38.136.33** - Peer-01
-- **218.38.136.34** - Peer-02
-- **18.139.136.149** - Koneksi-UAT-Bastion
+<<<<<<< HEAD
+- **<BACKEND_SERVER_IP>** - bongaquino Staging Backend
+- **<BOOTSTRAP_NODE_IP>** - Bootstrap Node
+- **<PEER_01_IP>** - Peer-01
+- **<PEER_02_IP>** - Peer-02
+- **<UAT_BASTION_IP>** - bongaquino-UAT-Bastion
+=======
+- **<BACKEND_SERVER_IP>** - Koneksi Staging Backend
+- **<BOOTSTRAP_NODE_IP>** - Bootstrap Node
+- **<PEER_01_IP>** - Peer-01
+- **<PEER_02_IP>** - Peer-02
+- **<UAT_BASTION_IP>** - Koneksi-UAT-Bastion
+>>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 #### Team Member IPs
 - **112.200.100.154** - Bong's IP
@@ -266,14 +282,14 @@ ssh -i ~/.ssh/id_rsa ipfs@218.38.136.34 "sudo ufw status verbose"
 ### Adding New IPs for SSH Access
 ```bash
 # Add SSH access for new IP to all nodes
-ssh -i ~/.ssh/id_rsa ipfs@211.239.117.217 "sudo ufw allow from <NEW_IP> to any port 22 comment 'New User Access'"
-ssh -i ~/.ssh/id_rsa ipfs@218.38.136.33 "sudo ufw allow from <NEW_IP> to any port 22 comment 'New User Access'"
-ssh -i ~/.ssh/id_rsa ipfs@218.38.136.34 "sudo ufw allow from <NEW_IP> to any port 22 comment 'New User Access'"
+ssh -i ~/.ssh/id_rsa ipfs@<BOOTSTRAP_NODE_IP> "sudo ufw allow from <NEW_IP> to any port 22 comment 'New User Access'"
+ssh -i ~/.ssh/id_rsa ipfs@<PEER_01_IP> "sudo ufw allow from <NEW_IP> to any port 22 comment 'New User Access'"
+ssh -i ~/.ssh/id_rsa ipfs@<PEER_02_IP> "sudo ufw allow from <NEW_IP> to any port 22 comment 'New User Access'"
 
 # Reload UFW on all nodes
-ssh -i ~/.ssh/id_rsa ipfs@211.239.117.217 "sudo ufw reload"
-ssh -i ~/.ssh/id_rsa ipfs@218.38.136.33 "sudo ufw reload"
-ssh -i ~/.ssh/id_rsa ipfs@218.38.136.34 "sudo ufw reload"
+ssh -i ~/.ssh/id_rsa ipfs@<BOOTSTRAP_NODE_IP> "sudo ufw reload"
+ssh -i ~/.ssh/id_rsa ipfs@<PEER_01_IP> "sudo ufw reload"
+ssh -i ~/.ssh/id_rsa ipfs@<PEER_02_IP> "sudo ufw reload"
 ```
 
 ## 7. Security Notes
@@ -302,6 +318,6 @@ ssh -i ~/.ssh/id_rsa ipfs@218.38.136.34 "sudo ufw reload"
 5. Port 9096 must be open for IPFS cluster communication
 6. All nodes must be able to reach each other
 7. External access is restricted to whitelisted IPs
-8. Backend server (52.77.36.120) has special access to all nodes
-9. UAT Bastion (18.139.136.149) has access to all nodes for management
+8. Backend server (<BACKEND_SERVER_IP>) has special access to all nodes
+9. UAT Bastion (<UAT_BASTION_IP>) has access to all nodes for management
 10. Bootstrap node has public SSH access for web interface management 

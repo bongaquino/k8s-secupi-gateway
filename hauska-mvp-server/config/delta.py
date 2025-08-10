@@ -10,7 +10,7 @@ class DeltaStorageConfig:
             "api_base_url": "https://api.delta.storage",
             "api_key": self.env.get("DELTA_API_KEY"),
             "directory_id": self.env.get("DELTA_DIRECTORY_ID"),
-            "edge_base_url": "https://delta-edge.ardata.tech/gw"
+            "edge_base_url": "https://delta-edge.bongaquino.tech/gw"
         }
         return config
 

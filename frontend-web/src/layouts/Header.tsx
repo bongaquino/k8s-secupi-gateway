@@ -2,7 +2,7 @@ import { Clock, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import Logo from "../assets/images/koneksi-logo.png";
+import Logo from "../assets/images/bongaquino-logo.png";
 
 const Header = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -31,7 +31,7 @@ const Header = () => {
         <div className="items-center border-b border-gray-200 h-20 flex md:hidden">
           <img
             src={Logo}
-            alt="Koneksi Logo"
+            alt="bongaquino Logo"
             className="w-[150px] cursor-pointer"
           />
         </div>

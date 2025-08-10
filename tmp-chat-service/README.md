@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 # Bong Aquino Chat Service
 
 Bong Aquino Chat Service is a backend application designed to handle user authentication, chat functionalities, and profile management. It uses MongoDB for data storage, Redis for caching, and integrates with OpenAI for chat responses.
+=======
+# bongaquino MVP Server
+
+bongaquino MVP Server is a backend application designed to handle user authentication, chat functionalities, and profile management. It uses MongoDB for data storage, Redis for caching, and integrates with OpenAI for chat responses.
+>>>>>>> cf0aa0cf11519393076a3c3392daf57b45dae265
 
 ## Features
 - User registration and authentication
@@ -18,7 +24,11 @@ Ensure you have the following installed on your system:
 ### 1. Clone the Repository
 ```bash
 git clone <repository-url>
+<<<<<<< HEAD
 cd bongaquino-chat-service
+=======
+cd bongaquino-mvp-server
+>>>>>>> cf0aa0cf11519393076a3c3392daf57b45dae265
 ```
 
 ### 2. Configure Environment Variables

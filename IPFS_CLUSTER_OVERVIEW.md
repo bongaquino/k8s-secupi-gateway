@@ -1,4 +1,4 @@
-# KONEKSI PRIVATE IPFS CLUSTER - TECHNICAL OVERVIEW
+# PRIVATE IPFS CLUSTER - TECHNICAL OVERVIEW
 
 ## 🏗️ Architecture Summary
 
@@ -11,17 +11,17 @@
 
 | Role | IP Address | Hostname | Storage | Purpose |
 |------|------------|----------|---------|---------|
-| Bootstrap | `27.255.70.17` | kr-bootstrap-01 | Standard | Primary Gateway & API |
-| Peer-01 | `218.38.136.33` | kr-peer-01 | 14.6TB XFS | Storage Node |
-| Peer-02 | `218.38.136.34` | kr-peer-02 | 125TB RAID-6 | High-Capacity Storage |
-| Peer-03 | `211.239.117.217` | kr-peer-03 | Standard | Storage Node |
+| Bootstrap | `<BOOTSTRAP_IP>` | kr-bootstrap-01 | Standard | Primary Gateway & API |
+| Peer-01 | `<PEER_01_IP>` | kr-peer-01 | 14.6TB XFS | Storage Node |
+| Peer-02 | `<PEER_02_IP>` | kr-peer-02 | 125TB RAID-6 | High-Capacity Storage |
+| Peer-03 | `<PEER_03_IP>` | kr-peer-03 | Standard | Storage Node |
 
 ## 🔗 Public Endpoints
 
-- **IPFS API:** `https://ipfs.koneksi.co.kr` (Port 5001)
-- **IPFS Gateway:** `https://gateway.koneksi.co.kr` (Port 8080)
+- **IPFS API:** `https://ipfs.example.com` (Port 5001)
+- **IPFS Gateway:** `https://gateway.example.com` (Port 8080)
 - **DNS Provider:** AWS Route53
-- **SSL/TLS:** Wildcard Certificate (`*.koneksi.co.kr`)
+- **SSL/TLS:** Wildcard Certificate (`*.example.com`)
 
 ## 🔐 Security Features
 
@@ -41,7 +41,7 @@
 ## 🌍 Network Topology
 
 ```
-Internet → AWS Route53 → Bootstrap Node (27.255.70.17)
+Internet → AWS Route53 → Bootstrap Node (<BOOTSTRAP_IP>)
                        ↓
                     Nginx (SSL Termination + IP Filter)
                        ↓
@@ -75,8 +75,8 @@ Internet → AWS Route53 → Bootstrap Node (27.255.70.17)
 
 ## 🏢 Integration Points
 
-- **Backend Integration:** AWS ECS → IPFS API (`https://ipfs.koneksi.co.kr`)
-- **Frontend Access:** AWS Amplify → IPFS Gateway (`https://gateway.koneksi.co.kr`)
+- **Backend Integration:** AWS ECS → IPFS API (`https://ipfs.bongaquino.co.kr`)
+- **Frontend Access:** AWS Amplify → IPFS Gateway (`https://gateway.bongaquino.co.kr`)
 - **Load Balancer:** AWS ALB → ECS → IPFS Cluster
 - **NAT Gateway IP:** `13.250.68.194` (Whitelisted for backend access)
 
@@ -84,28 +84,28 @@ Internet → AWS Route53 → Bootstrap Node (27.255.70.17)
 
 ### Cluster Status Check
 ```bash
-ssh ipfs@27.255.70.17 "docker exec ipfs-cluster ipfs-cluster-ctl peers ls"
+ssh ipfs@<BOOTSTRAP_IP> "docker exec ipfs-cluster ipfs-cluster-ctl peers ls"
 ```
 
 ### Security Verification
 ```bash
-ssh ipfs@27.255.70.17 "docker exec ipfs ipfs swarm peers"
+ssh ipfs@<BOOTSTRAP_IP> "docker exec ipfs ipfs swarm peers"
 # Should show exactly 3 internal peers only
 ```
 
 ### Storage Check
 ```bash
-ssh ipfs@27.255.70.17 "df -h /data"
+ssh ipfs@<BOOTSTRAP_IP> "df -h /data"
 ```
 
 ### API Test
 ```bash
-curl -X POST -F file=@testfile.txt https://ipfs.koneksi.co.kr/api/v0/add
+curl -X POST -F file=@testfile.txt https://ipfs.example.com/api/v0/add
 ```
 
 ### Gateway Test
 ```bash
-curl https://gateway.koneksi.co.kr/ipfs/<CID>
+curl https://gateway.example.com/ipfs/<CID>
 ```
 
 ## 📋 Authorized Access List
@@ -129,10 +129,10 @@ curl https://gateway.koneksi.co.kr/ipfs/<CID>
 
 ### SSH Access
 ```bash
-ssh ipfs@27.255.70.17     # Bootstrap node
-ssh ipfs@211.239.117.217  # Peer-03
-ssh ipfs@218.38.136.33    # Peer-01
-ssh ipfs@218.38.136.34    # Peer-02
+ssh ipfs@<BOOTSTRAP_IP>     # Bootstrap node
+ssh ipfs@<PEER_03_IP>  # Peer-03
+ssh ipfs@<PEER_01_IP>    # Peer-01
+ssh ipfs@<PEER_02_IP>    # Peer-02
 ```
 
 ### Key Monitoring Commands

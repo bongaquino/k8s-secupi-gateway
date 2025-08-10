@@ -50,7 +50,7 @@ services:
       - network
 
   api-server:
-    image: hauska/api-server:latest
+    image: bongaquino/api-server:latest
     container_name: api-server
     build:
       context: .

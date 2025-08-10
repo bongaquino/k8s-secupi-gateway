@@ -41,17 +41,17 @@ cat IPFS_CLUSTER_OVERVIEW.md
 
 **Upload a test file:**
 ```bash
-curl -X POST -F file=@their-test-file.txt https://ipfs.koneksi.co.kr/api/v0/add
+curl -X POST -F file=@their-test-file.txt https://ipfs.example.com/api/v0/add
 ```
 
 **Retrieve content via gateway:**
 ```bash
-curl https://gateway.koneksi.co.kr/ipfs/<returned-CID>
+curl https://gateway.example.com/ipfs/<returned-CID>
 ```
 
 **Show cluster replication:**
 ```bash
-ssh ipfs@27.255.70.17 "docker exec ipfs-cluster ipfs-cluster-ctl status <CID>"
+ssh ipfs@<NODE_IP> "docker exec ipfs-cluster ipfs-cluster-ctl status <CID>"
 ```
 
 ### 4. Security Deep Dive (5-10 minutes)
@@ -59,18 +59,18 @@ ssh ipfs@27.255.70.17 "docker exec ipfs-cluster ipfs-cluster-ctl status <CID>"
 
 **Firewall rules:**
 ```bash
-ssh ipfs@27.255.70.17 "sudo ufw status numbered"
+ssh ipfs@<NODE_IP> "sudo ufw status numbered"
 ```
 
 **Private swarm verification:**
 ```bash
-ssh ipfs@27.255.70.17 "docker exec ipfs ipfs swarm peers"
+ssh ipfs@<NODE_IP> "docker exec ipfs ipfs swarm peers"
 # Should show exactly 3 internal peers only
 ```
 
 **SSH security:**
 ```bash
-ssh ipfs@27.255.70.17 "sudo sshd -T | grep -E '(PasswordAuthentication|PermitRootLogin)'"
+ssh ipfs@<NODE_IP> "sudo sshd -T | grep -E '(PasswordAuthentication|PermitRootLogin)'"
 ```
 
 ## 🗣️ Common Questions & Answers
@@ -78,7 +78,7 @@ ssh ipfs@27.255.70.17 "sudo sshd -T | grep -E '(PasswordAuthentication|PermitRoo
 ### Q: "How do we know it's truly private?"
 **A:** Show the swarm peers command - only 3 internal IPs, no external connections.
 ```bash
-ssh ipfs@27.255.70.17 "docker exec ipfs ipfs swarm peers | wc -l"
+ssh ipfs@<NODE_IP> "docker exec ipfs ipfs swarm peers | wc -l"
 # Should return exactly: 3
 ```
 
@@ -98,29 +98,29 @@ ssh ipfs@27.255.70.17 "docker exec ipfs-cluster ipfs-cluster-ctl peers ls"
 ### Q: "What about SSL/TLS security?"
 **A:** Show certificate details:
 ```bash
-openssl s_client -connect ipfs.koneksi.co.kr:443 -servername ipfs.koneksi.co.kr < /dev/null 2>/dev/null | openssl x509 -text -noout | grep -A 2 "Subject Alternative Name"
+openssl s_client -connect ipfs.example.com:443 -servername ipfs.example.com < /dev/null 2>/dev/null | openssl x509 -text -noout | grep -A 2 "Subject Alternative Name"
 ```
 
 ### Q: "How much storage is available?"
 **A:** Show real-time storage across all nodes:
 ```bash
-ssh ipfs@218.38.136.33 "df -h /data"   # 14.6TB
-ssh ipfs@218.38.136.34 "df -h /data"   # 125TB RAID-6
-ssh ipfs@211.239.117.217 "df -h /data" # Standard
-ssh ipfs@27.255.70.17 "df -h /data"    # Bootstrap
+ssh ipfs@<PEER_01_IP> "df -h /data"   # Large Storage
+ssh ipfs@<PEER_02_IP> "df -h /data"   # RAID Storage
+ssh ipfs@<BOOTSTRAP_NODE_IP> "df -h /data" # Standard
+ssh ipfs@<NODE_IP> "df -h /data"    # Bootstrap
 ```
 
 ### Q: "Can we monitor the cluster?"
 **A:** Show monitoring capabilities:
 ```bash
 # Cluster health
-ssh ipfs@27.255.70.17 "docker exec ipfs-cluster ipfs-cluster-ctl peers ls"
+ssh ipfs@<NODE_IP> "docker exec ipfs-cluster ipfs-cluster-ctl peers ls"
 
 # Container status
-ssh ipfs@27.255.70.17 "docker ps --format 'table {{.Names}}\t{{.Status}}'"
+ssh ipfs@<NODE_IP> "docker ps --format 'table {{.Names}}\t{{.Status}}'"
 
 # Recent activity
-ssh ipfs@27.255.70.17 "docker exec ipfs-cluster ipfs-cluster-ctl pin ls | tail -10"
+ssh ipfs@<NODE_IP> "docker exec ipfs-cluster ipfs-cluster-ctl pin ls | tail -10"
 ```
 
 ## 📝 Documentation to Provide

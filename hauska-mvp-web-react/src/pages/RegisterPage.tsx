@@ -143,7 +143,7 @@ export function RegisterPage() {
               Transform Your Architectural Designs with AI
             </h1>
             <p className="text-base sm:text-lg text-muted-foreground">
-              Join Hauska.io and unlock the power of AI-driven design
+              Join bongaquino.io and unlock the power of AI-driven design
               transformation
             </p>
           </div>

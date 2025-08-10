@@ -1,7 +1,12 @@
 #!/bin/bash
 
+<<<<<<< HEAD
+domains=(ipfs.bongaquino.co.kr gateway.bongaquino.co.kr)
+email="bong@bongaquino.tech" # Adding a valid address is strongly recommended
+=======
 domains=(ipfs.koneksi.co.kr gateway.koneksi.co.kr)
 email="bong@ardata.tech" # Adding a valid address is strongly recommended
+>>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 staging=0 # Set to 1 if you're testing your setup to avoid hitting request limits
 
 data_path="./certbot"

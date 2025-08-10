@@ -1,7 +1,7 @@
 {
   "name": "bongaquino-staging-app",
   "version": "1.0.0",
-  "description": "A simple Node.js application for the Ardata staging environment.",
+  "description": "A simple Node.js application for the bongaquino staging environment.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"

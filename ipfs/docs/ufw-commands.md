@@ -1,13 +1,13 @@
 # UFW (Uncomplicated Firewall) Commands
 
-## Current Cluster Configuration (Updated: 2025-01-27)
+## Current Cluster Configuration
 
 ### Node Information
-- **Bootstrap Node:** 211.239.117.217
-- **Peer-01:** 218.38.136.33
-- **Peer-02:** 218.38.136.34
-- **Backend Server:** 52.77.36.120 (Koneksi Staging Backend)
-- **UAT Bastion:** 18.139.136.149 (Koneksi-UAT-Bastion)
+- **Bootstrap Node:** <BOOTSTRAP_NODE_IP>
+- **Peer-01:** <PEER_01_IP>
+- **Peer-02:** <PEER_02_IP>
+- **Backend Server:** <BACKEND_SERVER_IP> (Staging Backend)
+- **UAT Bastion:** <UAT_BASTION_IP> (UAT-Bastion)
 
 ## Basic Commands
 
@@ -29,34 +29,34 @@ sudo ufw disable
 
 ## Current SSH Access Configuration
 
-### Bootstrap Node (211.239.117.217)
+### Bootstrap Node (<BOOTSTRAP_NODE_IP>)
 ```bash
 # SSH Access Rules
 sudo ufw allow 22/tcp                    # Public SSH access
-sudo ufw allow from 218.38.136.33 to any port 22  # Peer-01
-sudo ufw allow from 218.38.136.34 to any port 22  # Peer-02
-sudo ufw allow from 52.77.36.120 to any port 22   # Koneksi Staging Backend
-sudo ufw allow from 18.139.136.149 to any port 22 comment 'Koneksi-UAT-Bastion'
+sudo ufw allow from <PEER_01_IP> to any port 22  # Peer-01
+sudo ufw allow from <PEER_02_IP> to any port 22  # Peer-02
+sudo ufw allow from <BACKEND_SERVER_IP> to any port 22   # Staging Backend
+sudo ufw allow from <UAT_BASTION_IP> to any port 22 comment 'UAT-Bastion'
 ```
 
-### Peer-01 (218.38.136.33)
+### Peer-01 (<PEER_01_IP>)
 ```bash
 # SSH Access Rules
-sudo ufw allow from 112.200.100.154 to any port 22  # Bong's IP
-sudo ufw allow from 211.239.117.217 to any port 22  # Bootstrap Node
-sudo ufw allow from 218.38.136.34 to any port 22    # Peer-02
-sudo ufw allow from 52.77.36.120 to any port 22     # Koneksi Staging Backend
-sudo ufw allow from 18.139.136.149 to any port 22 comment 'Koneksi-UAT-Bastion'
+sudo ufw allow from <ADMIN_IP> to any port 22  # Admin IP
+sudo ufw allow from <BOOTSTRAP_NODE_IP> to any port 22  # Bootstrap Node
+sudo ufw allow from <PEER_02_IP> to any port 22    # Peer-02
+sudo ufw allow from <BACKEND_SERVER_IP> to any port 22     # Staging Backend
+sudo ufw allow from <UAT_BASTION_IP> to any port 22 comment 'UAT-Bastion'
 ```
 
-### Peer-02 (218.38.136.34)
+### Peer-02 (<PEER_02_IP>)
 ```bash
 # SSH Access Rules
-sudo ufw allow from 112.200.100.154 to any port 22  # Bong's IP
-sudo ufw allow from 211.239.117.217 to any port 22  # Bootstrap Node
-sudo ufw allow from 218.38.136.33 to any port 22    # Peer-01
-sudo ufw allow from 52.77.36.120 to any port 22     # Koneksi Staging Backend
-sudo ufw allow from 18.139.136.149 to any port 22 comment 'Koneksi-UAT-Bastion'
+sudo ufw allow from <ADMIN_IP> to any port 22  # Admin IP
+sudo ufw allow from <BOOTSTRAP_NODE_IP> to any port 22  # Bootstrap Node
+sudo ufw allow from <PEER_01_IP> to any port 22    # Peer-01
+sudo ufw allow from <BACKEND_SERVER_IP> to any port 22     # Staging Backend
+sudo ufw allow from <UAT_BASTION_IP> to any port 22 comment 'UAT-Bastion'
 ```
 
 ## Current Port Access Configuration
@@ -68,14 +68,14 @@ sudo ufw allow 80/tcp   # HTTP - Public access
 sudo ufw allow 443/tcp  # HTTPS - Public access
 
 # Cluster Ports (5001, 8080) - Restricted Access
-sudo ufw allow from 52.77.36.120 to any port 5001,8080/tcp  # Backend Server
-sudo ufw allow from 211.239.117.217 to any port 5001,8080/tcp  # Self
-sudo ufw allow from 218.38.136.33 to any port 5001,8080/tcp  # Peer-01
-sudo ufw allow from 218.38.136.34 to any port 5001,8080/tcp  # Peer-02
+sudo ufw allow from <BACKEND_SERVER_IP> to any port 5001,8080/tcp  # Backend Server
+sudo ufw allow from <BOOTSTRAP_NODE_IP> to any port 5001,8080/tcp  # Self
+sudo ufw allow from <PEER_01_IP> to any port 5001,8080/tcp  # Peer-01
+sudo ufw allow from <PEER_02_IP> to any port 5001,8080/tcp  # Peer-02
 
 # IPFS Cluster Ports (9094-9096, 4001) - Cluster Only
-sudo ufw allow from 218.38.136.33 to any port 9094,9095,9096,4001  # Peer-01
-sudo ufw allow from 218.38.136.34 to any port 9094,9095,9096,4001  # Peer-02
+sudo ufw allow from <PEER_01_IP> to any port 9094,9095,9096,4001  # Peer-01
+sudo ufw allow from <PEER_02_IP> to any port 9094,9095,9096,4001  # Peer-02
 ```
 
 ### Peer Nodes (218.38.136.33 & 218.38.136.34)
@@ -84,51 +84,51 @@ sudo ufw allow from 218.38.136.34 to any port 9094,9095,9096,4001  # Peer-02
 # Ports 80 and 443 are not allowed from any external IP
 
 # Cluster Ports (5001, 8080) - Cluster Only
-sudo ufw allow from 211.239.117.217 to any port 5001,8080  # Bootstrap Node
-sudo ufw allow from <peer_ip> to any port 5001,8080        # Other Peer
+sudo ufw allow from <BOOTSTRAP_NODE_IP> to any port 5001,8080  # Bootstrap Node
+sudo ufw allow from <OTHER_PEER_IP> to any port 5001,8080        # Other Peer
 
 # IPFS Cluster Ports (9094-9096, 4001) - Cluster Only
-sudo ufw allow from 211.239.117.217 to any port 9094,9095,9096,4001  # Bootstrap Node
-sudo ufw allow from <peer_ip> to any port 9094,9095,9096,4001        # Other Peer
+sudo ufw allow from <BOOTSTRAP_NODE_IP> to any port 9094,9095,9096,4001  # Bootstrap Node
+sudo ufw allow from <OTHER_PEER_IP> to any port 9094,9095,9096,4001        # Other Peer
 ```
 
 ## Whitelisted IPs for General Access
 
-### HostCenter Management
+### Hosting Provider Management
 ```bash
-sudo ufw allow from 110.10.81.170 to any  # HostCenter Monitoring IP
-sudo ufw allow from 121.125.68.226 to any  # HostCenter Management IP
+sudo ufw allow from <HOSTING_MONITORING_IP> to any  # Hosting Provider Monitoring IP
+sudo ufw allow from <HOSTING_MANAGEMENT_IP> to any  # Hosting Provider Management IP
 ```
 
 ### Team Member IPs
 ```bash
-sudo ufw allow from 112.200.100.154 to any  # Bong's IP
-sudo ufw allow from 119.94.162.43 to any    # Alex's IP
-sudo ufw allow from 157.20.143.170 to any   # Franz's IP
-sudo ufw allow from 49.145.0.190 to any     # Aldric's IP
-sudo ufw allow from 112.198.104.175 to any  # JB - IP changed due to new ISP - 2025-06-11
-sudo ufw allow from 64.224.110.64 to any    # ASHER - Initial IP whitelist - 2025-06-11
+sudo ufw allow from <ADMIN_IP> to any  # Admin IP
+sudo ufw allow from <TEAM_MEMBER_1_IP> to any    # Team Member 1 IP
+sudo ufw allow from <TEAM_MEMBER_2_IP> to any   # Team Member 2 IP
+sudo ufw allow from <TEAM_MEMBER_3_IP> to any     # Team Member 3 IP
+sudo ufw allow from <TEAM_MEMBER_4_IP> to any  # Team Member 4 IP
+sudo ufw allow from <TEAM_MEMBER_5_IP> to any    # Team Member 5 IP
 ```
 
 ### Infrastructure IPs
 ```bash
-sudo ufw allow from 52.77.36.120 to any     # Koneksi Staging Backend
-sudo ufw allow from 211.239.117.217 to any  # Bootstrap Node
-sudo ufw allow from 218.38.136.33 to any    # Peer-01
-sudo ufw allow from 218.38.136.34 to any    # Peer-02
-sudo ufw allow from 18.139.136.149 to any   # Koneksi-UAT-Bastion
+sudo ufw allow from <BACKEND_SERVER_IP> to any     # Staging Backend
+sudo ufw allow from <BOOTSTRAP_NODE_IP> to any  # Bootstrap Node
+sudo ufw allow from <PEER_01_IP> to any    # Peer-01
+sudo ufw allow from <PEER_02_IP> to any    # Peer-02
+sudo ufw allow from <UAT_BASTION_IP> to any   # UAT-Bastion
 ```
 
 ## Security Configuration Summary
 
-### Bootstrap Node (211.239.117.217)
+### Bootstrap Node (<BOOTSTRAP_NODE_IP>)
 - ✅ **SSH:** Public access + cluster nodes + backend + UAT bastion
 - ✅ **HTTP/HTTPS:** Public access for web interface
 - ✅ **Ports 5001/8080:** Only cluster nodes and backend
 - ✅ **Cluster Ports:** Only peer nodes
 - ✅ **Default Policy:** Deny incoming, allow outgoing
 
-### Peer Nodes (218.38.136.33 & 218.38.136.34)
+### Peer Nodes (<PEER_01_IP> & <PEER_02_IP>)
 - ✅ **SSH:** Only whitelisted IPs + cluster nodes + backend + UAT bastion
 - 🔒 **HTTP/HTTPS:** Completely locked - no public access
 - 🔒 **Ports 5001/8080:** Only cluster nodes
@@ -143,10 +143,10 @@ sudo ufw allow from 18.139.136.149 to any   # Koneksi-UAT-Bastion
 sudo ufw allow 22/tcp
 
 # Allow SSH from specific IP
-sudo ufw allow from 192.168.1.100 to any port 22
+sudo ufw allow from <SPECIFIC_IP> to any port 22
 
 # Allow SSH with comment
-sudo ufw allow from 18.139.136.149 to any port 22 comment 'Koneksi-UAT-Bastion'
+sudo ufw allow from <UAT_BASTION_IP> to any port 22 comment 'UAT-Bastion'
 ```
 
 ### Allow HTTP/HTTPS
@@ -170,10 +170,10 @@ sudo ufw allow 8000:8080/tcp
 ### Allow Specific IP Addresses
 ```bash
 # Allow all traffic from specific IP
-sudo ufw allow from 192.168.1.100
+sudo ufw allow from <SPECIFIC_IP>
 
 # Allow specific port from specific IP
-sudo ufw allow from 192.168.1.100 to any port 3306
+sudo ufw allow from <SPECIFIC_IP> to any port 3306
 ```
 
 ## Removing Rules
@@ -193,10 +193,10 @@ sudo ufw delete 1
 sudo ufw delete allow 22/tcp
 
 # Remove allow rule for specific IP
-sudo ufw delete allow from 192.168.1.100
+sudo ufw delete allow from <SPECIFIC_IP>
 
 # Remove IPFS cluster rule
-sudo ufw delete allow from 218.38.136.33 to any port 4001,5001,8080,9094,9096 proto tcp
+sudo ufw delete allow from <PEER_IP> to any port 4001,5001,8080,9094,9096 proto tcp
 ```
 
 ## Advanced Rules

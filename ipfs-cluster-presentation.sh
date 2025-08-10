@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "================================================================================================"
-echo "                    KONEKSI PRIVATE IPFS CLUSTER - TECHNICAL DETAILS"
+echo "                    bongaquino PRIVATE IPFS CLUSTER - TECHNICAL DETAILS"
 echo "================================================================================================"
 echo ""
 
@@ -20,10 +20,10 @@ echo ""
 
 echo "🔗 PUBLIC ENDPOINTS"
 echo "════════════════════════════════════════════════════════════════════════════════════════════"
-echo "IPFS API:     https://ipfs.koneksi.co.kr     (Port 5001)"
-echo "IPFS Gateway: https://gateway.koneksi.co.kr  (Port 8080)"
+echo "IPFS API:     https://ipfs.bongaquino.co.kr     (Port 5001)"
+echo "IPFS Gateway: https://gateway.bongaquino.co.kr  (Port 8080)"
 echo "DNS Provider: AWS Route53"
-echo "SSL/TLS:      Wildcard Certificate (*.koneksi.co.kr)"
+echo "SSL/TLS:      Wildcard Certificate (*.bongaquino.co.kr)"
 echo ""
 
 echo "🔐 SECURITY CONFIGURATION"
@@ -76,7 +76,7 @@ sudo ufw-docker list 2>/dev/null | head -10 || echo 'UFW-Docker rules active (de
 
 echo ''
 echo '📋 Nginx IP Whitelist (Sample):'
-grep -A 5 'IP Whitelist' /home/ipfs/koneksi-ipfs/docker-compose/koneksi-ipfs-kr-bootstrap-01/nginx.conf | head -10
+grep -A 5 'IP Whitelist' /home/ipfs/bongaquino-ipfs/docker-compose/bongaquino-ipfs-kr-bootstrap-01/nginx.conf | head -10
 "
 
 echo ""
@@ -120,8 +120,8 @@ done
 echo ""
 echo "🏢 INTEGRATION POINTS"
 echo "════════════════════════════════════════════════════════════════════════════════════════════"
-echo "Backend Integration: ECS Service -> IPFS API (https://ipfs.koneksi.co.kr)"
-echo "Frontend Access:     Amplify App -> IPFS Gateway (https://gateway.koneksi.co.kr)"
+echo "Backend Integration: ECS Service -> IPFS API (https://ipfs.bongaquino.co.kr)"
+echo "Frontend Access:     Amplify App -> IPFS Gateway (https://gateway.bongaquino.co.kr)"
 echo "Load Balancer:       AWS ALB -> ECS -> IPFS Cluster"
 echo "NAT Gateway IP:      13.250.68.194 (Whitelisted for backend access)"
 echo ""
@@ -179,13 +179,13 @@ echo ""
 echo "🎯 API ENDPOINTS FOR TESTING"
 echo "════════════════════════════════════════════════════════════════════════════════════════════"
 echo "IPFS API Test:"
-echo "  curl -X POST -F file=@yourfile.txt https://ipfs.koneksi.co.kr/api/v0/add"
+echo "  curl -X POST -F file=@yourfile.txt https://ipfs.bongaquino.co.kr/api/v0/add"
 echo ""
 echo "Gateway Test:"
-echo "  curl https://gateway.koneksi.co.kr/ipfs/<CID>"
+echo "  curl https://gateway.bongaquino.co.kr/ipfs/<CID>"
 echo ""
 echo "Cluster Status:"
-echo "  curl https://ipfs.koneksi.co.kr/api/v0/id"
+echo "  curl https://ipfs.bongaquino.co.kr/api/v0/id"
 echo ""
 
 echo "📋 TECHNICAL SPECIFICATIONS SUMMARY"

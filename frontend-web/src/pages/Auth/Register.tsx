@@ -7,7 +7,7 @@ import { Eye, EyeClosed } from "lucide-react";
 import { toast } from "sonner";
 import { useRegister } from "../../hooks/useAuth";
 import { useAuth } from "../../contexts/AuthContext";
-import Logo from "../../assets/images/koneksi-logo.png";
+import Logo from "../../assets/images/bongaquino-logo.png";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -115,7 +115,7 @@ const Register = () => {
   return (
     <div className="flex flex-col justify-center min-h-screen space-y-6 py-12">
       <div className="text-center flex flex-col items-center gap-3">
-        <img src={Logo} alt="Koneksi Logo" className="w-[200px] mx-auto" />
+        <img src={Logo} alt="bongaquino Logo" className="w-[200px] mx-auto" />
         <h1 className="text-xl md:text-2xl font-semibold text-primary mt-2">
           Ransomware Protection Solution v1.0.0
         </h1>

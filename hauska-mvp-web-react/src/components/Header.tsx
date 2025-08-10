@@ -47,21 +47,21 @@ export default function Header({
     <header className="flex justify-between items-center mb-8">
       <div className="flex items-center gap-2">
         <img
-          src="/hauska-io-dark.png"
-          alt="Hauska Design API"
+          src="/bongaquino-io-dark.png"
+          alt="bongaquino Design API"
           className="w-40 sm:w-48 dark:hidden"
         />
         <img
-          src="/hauska-io-white.png"
-          alt="Hauska Design API"
+          src="/bongaquino-io-white.png"
+          alt="bongaquino Design API"
           className="w-40 sm:w-48 hidden dark:block"
         />
         {/* <h1 className="block sm:hidden text-2xl  font-bold text-black dark:text-white">
-          Hauska
+          bongaquino
         </h1>
         <div className="hidden sm:block">
           <h1 className="text-2xl md:text-3xl font-bold text-black dark:text-white">
-            Hauska Design API
+            bongaquino Design API
           </h1>
           <p className="text-sm text-muted-foreground mt-1">
             Transform Your Designs with AI

@@ -344,7 +344,11 @@ The following IPs have been whitelisted in the firewall for all nodes in the clu
 - JB's IP: 169.150.218.66
 - Franz's IP: 157.20.143.170
 - Aldric's IP: 49.145.0.190
+<<<<<<< HEAD
+- bongaquino Staging Backend: 52.77.36.120
+=======
 - Koneksi Staging Backend: 52.77.36.120
+>>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 - Alex's IP: 119.94.162.43
 - Bong's IP: 112.200.100.154
 
@@ -358,7 +362,11 @@ The following IPs have been whitelisted in the firewall for all nodes in the clu
   - Allow from 169.150.218.66 (JB's IP) to Anywhere
   - Allow from 157.20.143.170 (Franz's IP) to Anywhere
   - Allow from 49.145.0.190 (Aldric's IP) to Anywhere
+<<<<<<< HEAD
+  - Allow from 52.77.36.120 (bongaquino Staging Backend) to Anywhere
+=======
   - Allow from 52.77.36.120 (Koneksi Staging Backend) to Anywhere
+>>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
   - Allow from 119.94.162.43 (Alex's IP) to Anywhere
   - Allow from 112.200.100.154 (Bong's IP) to Anywhere
 
@@ -371,7 +379,11 @@ The following IPs have been whitelisted in the firewall for all nodes in the clu
   - Allow from 169.150.218.66 (JB's IP) to Anywhere
   - Allow from 157.20.143.170 (Franz's IP) to Anywhere
   - Allow from 49.145.0.190 (Aldric's IP) to Anywhere
+<<<<<<< HEAD
+  - Allow from 52.77.36.120 (bongaquino Staging Backend) to Anywhere
+=======
   - Allow from 52.77.36.120 (Koneksi Staging Backend) to Anywhere
+>>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
   - Allow from 119.94.162.43 (Alex's IP) to Anywhere
   - Allow from 112.200.100.154 (Bong's IP) to Anywhere
 
@@ -384,7 +396,11 @@ The following IPs have been whitelisted in the firewall for all nodes in the clu
   - Allow from 169.150.218.66 (JB's IP) to Anywhere
   - Allow from 157.20.143.170 (Franz's IP) to Anywhere
   - Allow from 49.145.0.190 (Aldric's IP) to Anywhere
+<<<<<<< HEAD
+  - Allow from 52.77.36.120 (bongaquino Staging Backend) to Anywhere
+=======
   - Allow from 52.77.36.120 (Koneksi Staging Backend) to Anywhere
+>>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
   - Allow from 119.94.162.43 (Alex's IP) to Anywhere
   - Allow from 112.200.100.154 (Bong's IP) to Anywhere
 
@@ -404,7 +420,11 @@ The following IPs have been whitelisted in the firewall for all nodes in the clu
      sudo ufw allow from 169.150.218.66 to any comment 'JB IP'
      sudo ufw allow from 157.20.143.170 to any comment 'Franz IP'
      sudo ufw allow from 49.145.0.190 to any comment 'Aldric IP'
+<<<<<<< HEAD
+     sudo ufw allow from 52.77.36.120 to any comment 'bongaquino Staging Backend'
+=======
      sudo ufw allow from 52.77.36.120 to any comment 'Koneksi Staging Backend'
+>>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
      sudo ufw allow from 119.94.162.43 to any comment 'Alex IP'
      sudo ufw allow from 112.200.100.154 to any comment 'Bong IP'
      ```

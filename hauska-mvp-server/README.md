@@ -1,6 +1,6 @@
 # Bong Aquino MVP Server
 
-Hauska MVP Server is a backend application designed to handle user authentication, chat functionalities, and profile management. It uses MongoDB for data storage, Redis for caching, and integrates with OpenAI for chat responses.
+bongaquino MVP Server is a backend application designed to handle user authentication, chat functionalities, and profile management. It uses MongoDB for data storage, Redis for caching, and integrates with OpenAI for chat responses.
 
 ## Features
 - User registration and authentication

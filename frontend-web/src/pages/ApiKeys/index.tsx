@@ -288,7 +288,7 @@ const ApiKeys = () => {
           <DialogHeader>
             <DialogTitle>Create New API Key</DialogTitle>
             <DialogDescription>
-              Create a new API key to access Koneksi services
+              Create a new API key to access bongaquino services
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">

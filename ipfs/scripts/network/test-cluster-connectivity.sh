@@ -10,8 +10,13 @@ NC='\033[0m'
 BOOTSTRAP_NODE="211.239.117.217"
 PEER_01="218.38.136.33"
 PEER_02="218.38.136.34"
+<<<<<<< HEAD
+IPFS_API_DOMAIN="ipfs.bongaquino.co.kr"
+IPFS_GATEWAY_DOMAIN="gateway.bongaquino.co.kr"
+=======
 IPFS_API_DOMAIN="ipfs.koneksi.co.kr"
 IPFS_GATEWAY_DOMAIN="gateway.koneksi.co.kr"
+>>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 # Required ports
 PORTS="4001 9094 9096"

@@ -38,7 +38,7 @@ function AppContent({ isDarkMode }: { isDarkMode: boolean }) {
     {
       target: "body", // full-page overlay, centered
       content:
-        "Welcome to Hauska! This brief tour will guide you through the key features of your workspace.",
+        "Welcome to bongaquino! This brief tour will guide you through the key features of your workspace.",
       placement: "center", // optional, but reinforces center alignment
       disableBeacon: true, // ensures the step opens automatically
     },

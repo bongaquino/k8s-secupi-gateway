@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "bongaquino-web",
+=======
+  "name": "bongaquino-web",
+>>>>>>> 3a2910ec791e639dfad87b9f2172f54f9e80bc98
   "private": true,
   "version": "0.0.0",
   "type": "module",

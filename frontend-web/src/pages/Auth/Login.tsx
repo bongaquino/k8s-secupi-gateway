@@ -11,7 +11,7 @@ import {
 } from "../../hooks/useAuth";
 import { useAuth } from "../../contexts/AuthContext";
 import { toast } from "sonner";
-import Logo from "../../assets/images/koneksi-logo.png";
+import Logo from "../../assets/images/bongaquino-logo.png";
 import { InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { InputOTP } from "@/components/ui/input-otp";
 
@@ -152,7 +152,7 @@ const Login = () => {
   return (
     <div className="flex flex-col justify-center min-h-screen space-y-6 py-12">
       <div className="text-center flex flex-col items-center gap-3">
-        <img src={Logo} alt="Koneksi Logo" className="w-[200px] mx-auto" />
+        <img src={Logo} alt="bongaquino Logo" className="w-[200px] mx-auto" />
         <h1 className="text-xl md:text-2xl font-semibold text-primary mt-2">
           Ransomware Protection Solution v1.0.0
         </h1>

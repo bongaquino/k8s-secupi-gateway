@@ -7,8 +7,8 @@ interface EnvironmentConfig {
 
 const environments: Record<Environment, EnvironmentConfig> = {
   production: {
-    API_URL: "https://koneksi-tyk-gateway-3rvca.ondigitalocean.app/api",
-    IPFS_URL: "https://koneksi-tyk-gateway-3rvca.ondigitalocean.app/ipfs",
+    API_URL: "https://bongaquino-tyk-gateway-3rvca.ondigitalocean.app/api",
+    IPFS_URL: "https://bongaquino-tyk-gateway-3rvca.ondigitalocean.app/ipfs",
   },
   staging: {
     API_URL: "http://167.172.92.97:8080/api",

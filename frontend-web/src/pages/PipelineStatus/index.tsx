@@ -5,7 +5,7 @@ import { PipelineExecutionStatus, PipelineStageStatus, type PipelineStatus } fro
 const mockPipelineData = [
   {
     id: "1",
-    pipelineName: "koneksi-staging-deploy-pipeline",
+    pipelineName: "bongaquino-staging-deploy-pipeline",
     status: "FAILED" as PipelineStatus,
     environment: "STAGING",
     timestamp: "Today at 21:04",
@@ -14,7 +14,7 @@ const mockPipelineData = [
         id: "deploy-stage",
         stageName: "Deploy",
         status: "FAILED" as PipelineStatus,
-        pipelineName: "koneksi-staging-deploy-pipeline",
+        pipelineName: "bongaquino-staging-deploy-pipeline",
         environment: "STAGING",
         timestamp: "Today at 21:04"
       }
@@ -22,7 +22,7 @@ const mockPipelineData = [
   },
   {
     id: "2", 
-    pipelineName: "koneksi-uat-backend-pipeline",
+    pipelineName: "bongaquino-uat-backend-pipeline",
     status: "SUCCEEDED" as PipelineStatus,
     environment: "UAT",
     timestamp: "Today at 20:30",
@@ -31,7 +31,7 @@ const mockPipelineData = [
         id: "build-stage",
         stageName: "Build", 
         status: "SUCCEEDED" as PipelineStatus,
-        pipelineName: "koneksi-uat-backend-pipeline",
+        pipelineName: "bongaquino-uat-backend-pipeline",
         environment: "UAT",
         timestamp: "Today at 20:30"
       },
@@ -39,7 +39,7 @@ const mockPipelineData = [
         id: "deploy-stage",
         stageName: "Deploy",
         status: "SUCCEEDED" as PipelineStatus, 
-        pipelineName: "koneksi-uat-backend-pipeline",
+        pipelineName: "bongaquino-uat-backend-pipeline",
         environment: "UAT",
         timestamp: "Today at 20:30"
       }

@@ -1,6 +1,6 @@
-# ARData Staging App
+# bongaquino Staging App
 
-This is a simple Node.js application for testing the ARData DO App Platform Staging Environment.
+This is a simple Node.js application for testing the bongaquino DO App Platform Staging Environment.
 
 ## Setup
 

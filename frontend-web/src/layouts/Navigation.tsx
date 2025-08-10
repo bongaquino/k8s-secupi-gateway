@@ -23,7 +23,7 @@ import { Drawer, DrawerContent } from "../components/ui/drawer";
 import { menuItems, developerMenuItems } from "../lib/constants";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import Logo from "../assets/images/koneksi-logo.png";
+import Logo from "../assets/images/bongaquino-logo.png";
 
 interface NavigationProps {
   currentPage: string;
@@ -52,7 +52,7 @@ const Navigation = ({ currentPage, setCurrentPage }: NavigationProps) => {
 
   const handleItemClick = (pageName: string) => {
     if (pageName === "api-reference") {
-      window.open("https://koneksi.readme.io/", "_blank");
+      window.open("https://bongaquino.readme.io/", "_blank");
       return;
     }
 
@@ -79,7 +79,7 @@ const Navigation = ({ currentPage, setCurrentPage }: NavigationProps) => {
         <div className="flex items-center px-4 border-b border-gray-200 h-20">
           <img
             src={Logo}
-            alt="Koneksi Logo"
+            alt="bongaquino Logo"
             className="w-[180] cursor-pointer"
             onClick={() => handleItemClick("file-explorer")}
           />
@@ -246,7 +246,7 @@ const Navigation = ({ currentPage, setCurrentPage }: NavigationProps) => {
           </div>
           <div
             className="flex flex-col gap-1.5 items-center justify-center cursor-pointer text-gray-500 hover:text-gray-700 transition-colors"
-            onClick={() => window.open("https://koneksi.readme.io/", "_blank")}
+            onClick={() => window.open("https://bongaquino.readme.io/", "_blank")}
           >
             <BookOpen className="h-5 w-5" />
             <span className="text-xs">API Docs</span>

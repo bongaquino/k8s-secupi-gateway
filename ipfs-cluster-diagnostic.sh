@@ -173,8 +173,8 @@ echo "════════════════════════�
 echo "Note: SSL certificates are only on Bootstrap Node as it is the only public-facing endpoint"
 echo ""
 
-echo "IPFS API (ipfs.koneksi.co.kr):"
-CERT_CHECK=$(openssl s_client -connect ipfs.koneksi.co.kr:443 -servername ipfs.koneksi.co.kr < /dev/null 2>/dev/null | openssl x509 -text -noout 2>/dev/null)
+echo "IPFS API (ipfs.bongaquino.co.kr):"
+CERT_CHECK=$(openssl s_client -connect ipfs.bongaquino.co.kr:443 -servername ipfs.bongaquino.co.kr < /dev/null 2>/dev/null | openssl x509 -text -noout 2>/dev/null)
 if [ -n "$CERT_CHECK" ]; then
     echo "$CERT_CHECK" | grep "Subject:"
     echo "$CERT_CHECK" | grep "Not After"
@@ -184,8 +184,8 @@ else
 fi
 
 echo ""
-echo "IPFS Gateway (gateway.koneksi.co.kr):"
-CERT_CHECK2=$(openssl s_client -connect gateway.koneksi.co.kr:443 -servername gateway.koneksi.co.kr < /dev/null 2>/dev/null | openssl x509 -text -noout 2>/dev/null)
+echo "IPFS Gateway (gateway.bongaquino.co.kr):"
+CERT_CHECK2=$(openssl s_client -connect gateway.bongaquino.co.kr:443 -servername gateway.bongaquino.co.kr < /dev/null 2>/dev/null | openssl x509 -text -noout 2>/dev/null)
 if [ -n "$CERT_CHECK2" ]; then
     echo "$CERT_CHECK2" | grep "Subject:"
     echo "$CERT_CHECK2" | grep "Not After"
