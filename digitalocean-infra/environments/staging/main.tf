@@ -6,14 +6,14 @@ provider "digitalocean" {
 module "compute" {
   source = "../../modules/compute"
 
-  name           = "bongaquino-staging"
+  name           = "ardata-staging"
   image          = var.droplet_image
   region         = var.region
   size           = var.droplet_size
   instance_count = var.droplet_count
   ssh_keys       = var.ssh_keys
   vpc_uuid       = var.vpc_uuid
-  tags           = ["staging", "bongaquino"]
+  tags           = ["staging", "ardata"]
 
   monitoring = true
   backups    = false

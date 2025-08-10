@@ -9,7 +9,7 @@ resource "digitalocean_app" "app" {
       instance_size_slug = var.api_instance_size
 
       github {
-        repo           = "bongaquino/${var.app_name}"
+        repo           = "ardata-tech/${var.app_name}"
         branch         = "main"
         deploy_on_push = true
       }
