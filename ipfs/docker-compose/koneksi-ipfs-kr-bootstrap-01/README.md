@@ -3,7 +3,7 @@
 ## Server Details
 - **IP Address:** 27.255.70.17
 <<<<<<< HEAD
-- **Username:** bongaquino01
+- **Username:** admin_user
 =======
 - **Username:** koneksi01
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
@@ -20,7 +20,7 @@ This is a new isolated IPFS cluster bootstrap node that will create a completely
 ```bash
 # SSH into the new server
 <<<<<<< HEAD
-ssh bongaquino01@27.255.70.17
+ssh admin_user@27.255.70.17
 =======
 ssh koneksi01@27.255.70.17
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
@@ -34,7 +34,7 @@ sudo apt install -y docker.io docker-compose curl wget git ufw fail2ban
 
 # Add user to docker group
 <<<<<<< HEAD
-sudo usermod -aG docker bongaquino01
+sudo usermod -aG docker admin_user
 =======
 sudo usermod -aG docker koneksi01
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
@@ -70,14 +70,14 @@ sudo ufw default allow outgoing
 # Create IPFS directory structure
 sudo mkdir -p /data/ipfs /data/ipfs-cluster
 <<<<<<< HEAD
-sudo chown -R bongaquino01:bongaquino01 /data/ipfs /data/ipfs-cluster
+sudo chown -R admin_user:admin_user /data/ipfs /data/ipfs-cluster
 
 # Create project directory
-mkdir -p /home/bongaquino01/bongaquino-ipfs/docker-compose
-cd /home/bongaquino01/bongaquino-ipfs/docker-compose
+mkdir -p /home/admin_user/bongaquino-ipfs/docker-compose
+cd /home/admin_user/bongaquino-ipfs/docker-compose
 
 # Copy configuration files (from your local machine)
-scp -r bongaquino-ipfs-kr-bootstrap-02 bongaquino01@27.255.70.17:/home/bongaquino01/bongaquino-ipfs/docker-compose/
+scp -r bongaquino-ipfs-kr-bootstrap-02 admin_user@27.255.70.17:/home/admin_user/bongaquino-ipfs/docker-compose/
 =======
 sudo chown -R koneksi01:koneksi01 /data/ipfs /data/ipfs-cluster
 
@@ -86,7 +86,7 @@ mkdir -p /home/koneksi01/koneksi-ipfs/docker-compose
 cd /home/koneksi01/koneksi-ipfs/docker-compose
 
 # Copy configuration files (from your local machine)
-scp -r koneksi-ipfs-kr-bootstrap-02 koneksi01@27.255.70.17:/home/koneksi01/koneksi-ipfs/docker-compose/
+scp -r bongaquino-ipfs-bootstrap-02 koneksi01@27.255.70.17:/home/koneksi01/koneksi-ipfs/docker-compose/
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 ```
 
@@ -96,9 +96,9 @@ scp -r koneksi-ipfs-kr-bootstrap-02 koneksi01@27.255.70.17:/home/koneksi01/konek
 ```bash
 # Navigate to the configuration directory
 <<<<<<< HEAD
-cd /home/bongaquino01/bongaquino-ipfs/docker-compose/bongaquino-ipfs-kr-bootstrap-02
+cd /home/admin_user/bongaquino-ipfs/docker-compose/bongaquino-ipfs-kr-bootstrap-02
 =======
-cd /home/koneksi01/koneksi-ipfs/docker-compose/koneksi-ipfs-kr-bootstrap-02
+cd /home/koneksi01/koneksi-ipfs/docker-compose/bongaquino-ipfs-bootstrap-02
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 # Make scripts executable

@@ -40,7 +40,7 @@ services:
 <<<<<<< HEAD
       - CLUSTER_CRDT_CLUSTERNAME=bongaquino-private-ipfs-cluster
 =======
-      - CLUSTER_CRDT_CLUSTERNAME=koneksi-private-ipfs-cluster
+      - CLUSTER_CRDT_CLUSTERNAME=bongaquino-private-ipfs-cluster
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
       - CLUSTER_BOOTSTRAP_NODE=true
       - CLUSTER_SECRET=a1b2c3d4e5f6789012345678901234567890123456789012345678901234567890

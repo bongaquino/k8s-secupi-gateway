@@ -356,7 +356,7 @@ For issues or questions:
 ## License
 
 <<<<<<< HEAD
-This project is part of the bongaquino IPFS infrastructure.
+This project is part of the IPFS infrastructure.
 =======
 This project is part of the Koneksi IPFS infrastructure.
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff

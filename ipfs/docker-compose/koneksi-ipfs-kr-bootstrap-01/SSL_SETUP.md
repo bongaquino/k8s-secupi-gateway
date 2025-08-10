@@ -9,8 +9,8 @@ This document describes the SSL certificate configuration for the IPFS Bootstrap
 - **Domain**: `*.bongaquino.co.kr`
 - **Coverage**: All subdomains under bongaquino.co.kr
 =======
-- **Domain**: `*.koneksi.co.kr`
-- **Coverage**: All subdomains under koneksi.co.kr
+- **Domain**: `*.bongaquino.com`
+- **Coverage**: All subdomains under bongaquino.com
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 - **Issuer**: GlobalSign GCC R6 AlphaSSL CA 2025
 - **Valid From**: July 10, 2025
@@ -24,9 +24,9 @@ bongaquino-ipfs/docker-compose/bongaquino-ipfs-kr-bootstrap-02/nginx/ssl/
 ├── wildcard.bongaquino.co.kr.pem (Certificate)
 └── wildcard.bongaquino.co.kr.key (Private Key)
 =======
-koneksi-ipfs/docker-compose/koneksi-ipfs-kr-bootstrap-02/nginx/ssl/
-├── wildcard.koneksi.co.kr.pem (Certificate)
-└── wildcard.koneksi.co.kr.key (Private Key)
+koneksi-ipfs/docker-compose/bongaquino-ipfs-bootstrap-02/nginx/ssl/
+├── wildcard.bongaquino.com.pem (Certificate)
+└── wildcard.bongaquino.com.key (Private Key)
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 ```
 
@@ -36,8 +36,8 @@ The wildcard certificate is configured for both IPFS services:
 - **ipfs.bongaquino.co.kr** - IPFS API endpoint
 - **gateway.bongaquino.co.kr** - IPFS Gateway endpoint
 =======
-- **ipfs.koneksi.co.kr** - IPFS API endpoint
-- **gateway.koneksi.co.kr** - IPFS Gateway endpoint
+- **ipfs.bongaquino.com** - IPFS API endpoint
+- **gateway.bongaquino.com** - IPFS Gateway endpoint
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 ## SSL Security Settings
@@ -60,8 +60,8 @@ After deployment, the following SSL-secured endpoints will be available:
 - **IPFS API**: https://ipfs.bongaquino.co.kr/api/v0/
 - **IPFS Gateway**: https://gateway.bongaquino.co.kr/ipfs/
 =======
-- **IPFS API**: https://ipfs.koneksi.co.kr/api/v0/
-- **IPFS Gateway**: https://gateway.koneksi.co.kr/ipfs/
+- **IPFS API**: https://ipfs.bongaquino.com/api/v0/
+- **IPFS Gateway**: https://gateway.bongaquino.com/ipfs/
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 ## Security Notes
@@ -88,13 +88,13 @@ openssl x509 -in nginx/ssl/wildcard.bongaquino.co.kr.pem -text -noout
 # Test SSL configuration (after deployment)
 openssl s_client -connect ipfs.bongaquino.co.kr:443 -servername ipfs.bongaquino.co.kr
 =======
-openssl x509 -in nginx/ssl/wildcard.koneksi.co.kr.pem -noout -dates
+openssl x509 -in nginx/ssl/wildcard.bongaquino.com.pem -noout -dates
 
 # Check certificate details
-openssl x509 -in nginx/ssl/wildcard.koneksi.co.kr.pem -text -noout
+openssl x509 -in nginx/ssl/wildcard.bongaquino.com.pem -text -noout
 
 # Test SSL configuration (after deployment)
-openssl s_client -connect ipfs.koneksi.co.kr:443 -servername ipfs.koneksi.co.kr
+openssl s_client -connect ipfs.bongaquino.com:443 -servername ipfs.bongaquino.com
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 ```
 

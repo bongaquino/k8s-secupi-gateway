@@ -40,7 +40,7 @@ services:
 <<<<<<< HEAD
       - CLUSTER_CRDT_CLUSTERNAME=bongaquino-private-ipfs-cluster
 =======
-      - CLUSTER_CRDT_CLUSTERNAME=koneksi-private-ipfs-cluster
+      - CLUSTER_CRDT_CLUSTERNAME=bongaquino-private-ipfs-cluster
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
       - CLUSTER_BOOTSTRAP_NODE=false
       - CLUSTER_BOOTSTRAP_PEERS=/ip4/172.21.0.10/tcp/9096/p2p/BOOTSTRAP_PEER_ID
