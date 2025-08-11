@@ -1,0 +1,23 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+*.tfplan
+
+# Large Terraform provider binaries
+terraform-provider-*
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# SSL private keys
+*.key
+*.p12
+
+# Logs
+*.log

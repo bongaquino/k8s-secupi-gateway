@@ -20,7 +20,7 @@ Professional-grade Infrastructure as Code (IaC) for managing DigitalOcean resour
 ### Setup & Deploy
 ```bash
 # Clone repository
-git clone https://github.com/bongaquino/digitalocean-infra.git
+git clone https://github.com/example/digitalocean-infra.git
 cd digitalocean-infra
 
 # Configure DigitalOcean token
@@ -93,16 +93,16 @@ terraform output
 ### Staging App Configuration
 ```hcl
 # Deploy Node.js application
-resource "digitalocean_app" "bongaquino_staging" {
+resource "digitalocean_app" "example_staging" {
   spec {
-    name   = "bongaquino-staging-app"
+    name   = "example-staging-app"
     region = "nyc1"
     
     service {
       name         = "web"
       source_dir   = "/"
       github {
-        repo   = "bongaquino/bongaquino-staging-app"
+        repo   = "example/example-staging-app"
         branch = "main"
       }
       
@@ -141,7 +141,7 @@ variable "region" {
 variable "project_name" {
   description = "Project identifier"
   type        = string
-  default     = "bongaquino"
+  default     = "example"
 }
 
 variable "environment" {
@@ -320,7 +320,7 @@ doctl monitoring metrics droplet
 ## 📞 Support & Resources
 
 - **📖 DigitalOcean Docs**: [Official Documentation](https://docs.digitalocean.com)
-- **🐛 Issues**: [GitHub Issues](https://github.com/bongaquino/digitalocean-infra/issues)
+- **🐛 Issues**: [GitHub Issues](https://github.com/example/digitalocean-infra/issues)
 - **💬 Community**: [DigitalOcean Community](https://www.digitalocean.com/community)
 - **📧 Contact**: admin@example.com
 
@@ -328,7 +328,7 @@ doctl monitoring metrics droplet
 
 <div align="center">
 
-**Powered by [DigitalOcean](https://digitalocean.com) • Built with ❤️ by [Bong Aquino](https://github.com/bongaquino)**
+**Powered by [DigitalOcean](https://digitalocean.com) • Built with ❤️ by [Bong Aquino](https://github.com/example)**
 
 *Cloud Infrastructure | Simple • Scalable • Secure*
 

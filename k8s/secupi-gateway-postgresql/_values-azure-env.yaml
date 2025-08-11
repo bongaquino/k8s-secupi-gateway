@@ -1,0 +1,15 @@
+## Gateway image settings
+#
+clusterSizeType: mid
+image:
+  imagePullSecrets:
+    - name: secupi-registry
+  repository: registry.gitlab.com/secupi/secupi-distribution
+
+## SecuPi Gateway related configuration
+#
+gateway:
+  env:
+    GATEWAY_SERVER_HOST: null # must replace with real value e.g <ACCOUNT>.<REGION>.snowflakecomputing.com
+    SECUPI_BOOT_URL: null # must replace with real value e.g https://XXX.YYY.ZZZ.AAA/api/boot/download/XXXXXXXX/secupi-boot-XXXXXX.jar
+    EXTRA_OPTS: "-XX:+ExitOnOutOfMemoryError -Dsecupi.agent.abortStartupOnFailure=true -XX:MaxRAMPercentage=75.0"
