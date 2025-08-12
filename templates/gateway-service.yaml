@@ -5,9 +5,9 @@ metadata:
   labels:
     {{- include "secupi-gateway.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.gateway.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
+    - port: {{ .Values.gateway.port }}
       targetPort: http
       protocol: TCP
       name: http

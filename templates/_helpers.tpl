@@ -52,9 +52,23 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Create the name of the service account to use
 */}}
 {{- define "secupi-gateway.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "secupi-gateway.fullname" .) .Values.serviceAccount.name }}
+{{- if .Values.gateway.serviceAccount.create }}
+{{- default (include "secupi-gateway.fullname" .) .Values.gateway.serviceAccount.name }}
 {{- else }}
-{{- default "default" .Values.serviceAccount.name }}
+{{- default "default" .Values.gateway.serviceAccount.name }}
 {{- end }}
+{{- end }}
+
+{{/*
+Create the name of the Hazelcast service
+*/}}
+{{- define "secupi_gateway_hz_service.name" -}}
+{{- printf "%s-hz" (include "secupi-gateway.fullname" .) }}
+{{- end }}
+
+{{/*
+Get the Kubernetes DNS domain
+*/}}
+{{- define "kubernetes_dnsdomain" -}}
+{{- .Values.kubernetesDNSDomain | default "cluster.local" }}
 {{- end }}

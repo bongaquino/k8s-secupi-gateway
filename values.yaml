@@ -19,6 +19,12 @@ image:
     - name: secupi-registry
   repository: registry.gitlab.com/secupi/secupi-distribution
 
+database:
+  host: "postgres-service"
+  port: 5432
+  name: "postgresdb"
+  secretName: "postgres-secret"
+
 kubernetesDNSDomain: null
 
 # openshift configuration
@@ -93,6 +99,8 @@ gateway:
     GATEWAY_HAZELCAST_SERVICE_DNS_NAME: "{{ include \"secupi_gateway_hz_service.name\" . }}.{{ .Release.Namespace }}.svc.{{ include \"kubernetes_dnsdomain\" . }}"
     GATEWAY_SSL_ENABLED: "false"
     GATEWAY_PORT: "5432"
+    # CRITICAL: Add this for PostgreSQL MD5 authentication
+    # GATEWAY_AUTH_METHOD: "md5"
     #EXTRA_OPTS: "-Dsecupi.agent.host=https://webapps -Dsecupi.agent.ssl.hostnameVerifier.enabled=false -Dsecupi.agent.ssl.autoTrust.enabled=true -Dsecupi.agent.redis.timeout=15000"
     GATEWAY_TYPE: "postgresql"
     KEYSTORE_SSL_STOREPASS: "test123456"

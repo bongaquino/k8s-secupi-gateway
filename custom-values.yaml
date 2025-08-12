@@ -6,7 +6,24 @@ image:
   imagePullPolicy: Always
   imagePullSecrets:
     - name: secupiregistry
-  repository: registry.gitlab.com/secupi/secupi-distribution
+  repository: registry.gitlab.com/secupi/secupi-distribution/secupi-gateway
+
+service:
+  type: NodePort
+  port: 5432
+
+autoscaling:
+  enabled: false
+
+serviceAccount:
+  create: true
+  name: ""
+
+database:
+  host: "postgres-service"
+  port: 5432
+  name: "postgresdb"
+  secretName: "postgres-secret"
 
 gateway:
   resources:
@@ -25,13 +42,18 @@ gateway:
   port: 5432
   
   env:
-    GATEWAY_SERVER_HOST: "10.99.65.202"
-    SECUPI_BOOT_URL: "https://damkil.azure.secupi.com/api/boot/download/1e81d3dee43740fbbcbd669a2c3ca3a7/secupi-boot-ea9abf50-9ebf-4e28-9a54-f56d75dec2e5.jar"
-    GATEWAY_HAZELCAST_SERVICE_DNS_NAME: "{{ include \"secupi_gateway_hz_service.name\" . }}.{{ .Release.Namespace }}.svc.{{ include \"kubernetes_dnsdomain\" . }}"
-    GATEWAY_SSL_ENABLED: "true"
+    GATEWAY_SERVER_HOST: "postgres-service"
+    GATEWAY_SERVER_PORT: "5432"
+    GATEWAY_SERVER_USER: "postgres"
+    GATEWAY_SERVER_PASSWORD: "strongpassword123"
+    GATEWAY_SERVER_DB: "postgresdb"
+    GATEWAY_AUTH_METHOD: "md5"
     GATEWAY_PORT: "5432"
+    GATEWAY_INTERFACE_PORT: "5432"
+    SECUPI_BOOT_URL: "https://damkil.azure.secupi.com/api/boot/download/1e81d3dee43740fbbcbd669a2c3ca3a7/secupi-boot-ea9abf50-9ebf-4e28-9a54-f56d75dec2e5.jar"
+    EXTRA_OPTS: "-Dlog4j2.formatMsgNoLookups=true -Dsecupi.agent.ssl.hostnameVerifier.enabled=false -Dsecupi.agent.ssl.autoTrust.enabled=true"
     GATEWAY_TYPE: "postgresql"
+    GATEWAY_SSL_ENABLED: "false"
     KEYSTORE_SSL_STOREPASS: "test123456"
-    KEYSTORE_SSL_PATH: "/opt/secupi/etc/keystore.jks"
     KEYSTORE_SSL_ALIAS: "1"
-    GATEWAY_TRUST_ALL_BACKENDS: "true"
+    GATEWAY_HAZELCAST_SERVICE_DNS_NAME: "secupi-gateway-hz.default.svc.cluster.local"
