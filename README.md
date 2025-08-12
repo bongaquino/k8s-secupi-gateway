@@ -1,493 +1,272 @@
-# Secupi Gateway with PostgreSQL
+# SecuPi Gateway with PostgreSQL SSL Configuration
 
-A production-ready implementation of Secupi Gateway for PostgreSQL database protection with email masking capabilities. Designed for Kubernetes deployment using Minikube.
+This repository contains the complete setup for deploying SecuPi Gateway with PostgreSQL using SSL encryption and data masking capabilities in Kubernetes.
 
-## Overview
+## 🏗️ Architecture Overview
 
-This implementation provides transparent data masking for PostgreSQL databases through Secupi Gateway. The gateway operates as a database proxy, intercepting client connections and automatically masking sensitive data such as email addresses before returning results to clients.
-
-## Features
-
-- **Email Masking**: Automatically masks email addresses in query results
-- **PostgreSQL Compatibility**: Full support for PostgreSQL protocol and authentication
-- **Kubernetes Native**: Designed for container orchestration environments
-- **Resource Efficient**: Optimized resource allocation for development and testing environments
-- **Production Ready**: Uses official Secupi Gateway image v7.0.0.59
-
-## Architecture
-
-- **PostgreSQL Database**: Stores customer data with email addresses
-- **Secupi Gateway**: Proxies connections and masks sensitive data
-- **pgAdmin**: Web interface for database management
-- **Kubernetes**: Orchestration platform using Minikube
-
-## Prerequisites
-
-- Minikube installed and running
-- kubectl configured
-- Helm installed
-- Docker registry access to `registry.gitlab.com/secupi/secupi-distribution/secupi-gateway`
-
-## Minikube Setup
-
-```bash
-# Start Minikube
-minikube start
-
-# Enable ingress addon (optional)
-minikube addons enable ingress
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Client App    │───▶│  SecuPi Gateway │───▶│   PostgreSQL    │
+│                 │    │   (Data Mask)   │    │   (SSL Enabled) │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+      SSL verify-full         SSL require           SSL enabled
 ```
 
-## Database Setup
+## 📋 Components
+
+- **PostgreSQL 16**: Database server with SSL encryption
+- **SecuPi Gateway**: Data masking proxy with SSL termination
+- **SSL Certificates**: Custom certificates for secure communication
+- **Client Pod**: Testing container with PostgreSQL client tools
+
+## 🚀 Quick Start
+
+### 1. Deploy the Infrastructure
 
 ```bash
-# Apply PostgreSQL components
-kubectl apply -f postgres-secret.yaml
-kubectl apply -f postgres-storage.yaml
-kubectl apply -f postgres-deployment.yaml
-kubectl apply -f postgres-service.yaml
+# Deploy persistent volumes, secrets, and services
+kubectl apply -f all-in-one.yaml -n default
+
+# Deploy SSL-enabled PostgreSQL
+kubectl apply -f postgres-deployment.yaml -n default
 
 # Wait for PostgreSQL to be ready
-kubectl wait --for=condition=Ready pod -l app=postgres --timeout=60s
-
-# Create test data
-kubectl apply -f postgres-client-pod.yaml
-kubectl wait --for=condition=Ready pod postgres-client --timeout=60s
-
-# Insert test data with email addresses
-kubectl exec postgres-client -- psql "host=postgres-service port=5432 user=postgres dbname=postgresdb" -c "
-CREATE TABLE IF NOT EXISTS customers (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(100),
-    email VARCHAR(100),
-    phone VARCHAR(20)
-);"
-
-kubectl exec postgres-client -- psql "host=postgres-service port=5432 user=postgres dbname=postgresdb" -c "
-INSERT INTO customers (name, email, phone) VALUES 
-('John Doe', 'john.doe@example.com', '+1-555-0101'),
-('Jane Smith', 'jane.smith@company.com', '+1-555-0102'),
-('Bob Johnson', 'bob.johnson@test.org', '+1-555-0103')
-ON CONFLICT DO NOTHING;"
+kubectl wait --for=condition=ready pod -l app=postgres -n default --timeout=120s
 ```
 
-## Gateway Setup
+### 2. Initialize the Database
 
 ```bash
-# Install Secupi Gateway using Helm
-helm install secupi-gateway . -f custom-values.yaml
-
-# Wait for gateway to be ready
-kubectl wait --for=condition=Ready pod -l app.kubernetes.io/name=secupi-gateway-postgresql --timeout=60s
+# Initialize database with sample data
+cat init-db.sql | kubectl exec -i $(kubectl get pods -l app=postgres -o jsonpath='{.items[0].metadata.name}') -n default -- bash -c 'PGPASSWORD=strongpassword123 psql -U postgres -d customersdb'
 ```
 
-## Testing Email Masking
+### 3. Setup SSL Certificates
 
-### Direct Database Connection (Unmasked Data)
 ```bash
-kubectl exec postgres-client -- psql "host=postgres-service port=5432 user=postgres dbname=postgresdb" -c "SELECT * FROM customers LIMIT 3;"
+# Create SSL certificates secret for PostgreSQL
+kubectl create secret generic postgres-ssl-certs \
+  --from-file=server.crt=server.crt \
+  --from-file=server.key=server.key \
+  --from-file=client.crt=client.crt \
+  --from-file=client.key=client.key \
+  --namespace=default
+
+# Create fixed gateway keystore with correct hostname
+kubectl exec $(kubectl get pods -l app=secupi-gateway-gateway -o jsonpath='{.items[0].metadata.name}') -n default -- \
+  keytool -genkeypair -alias 1 -keyalg RSA -keysize 2048 \
+  -keystore /tmp/gateway-fixed.jks -storepass test123456 -keypass test123456 \
+  -dname "CN=secupi-gateway-gateway.default.svc.cluster.local,O=SecuPi Software,L=City,ST=State,C=US" \
+  -validity 365
+
+# Copy and update the keystore
+kubectl cp default/$(kubectl get pods -l app=secupi-gateway-gateway -o jsonpath='{.items[0].metadata.name}'):/tmp/gateway-fixed.jks ./gateway-fixed.jks
+
+kubectl delete secret secupi-gateway-gateway-keystore -n default
+kubectl create secret generic secupi-gateway-gateway-keystore --from-file=keystore.jks=gateway-fixed.jks -n default
+
+# Restart gateway to pick up new certificate
+kubectl rollout restart deployment secupi-gateway-gateway -n default
+kubectl wait --for=condition=ready pod -l app=secupi-gateway-gateway -n default --timeout=120s
 ```
 
-**Expected Output:**
-```
- id |    name     |           email            |    phone    
-----+-------------+----------------------------+-------------
-  1 | John Doe    | john.doe@example.com      | +1-555-0101
-  2 | Jane Smith  | jane.smith@company.com    | +1-555-0102
-  3 | Bob Johnson | bob.johnson@test.org      | +1-555-0103
-```
+### 4. Setup Client SSL Configuration
 
-### Secupi Gateway Connection (Masked Data)
-
-Connect to the database through Secupi Gateway to see masked results:
 ```bash
-kubectl exec postgres-client -- bash -c 'PGPASSWORD=strongpassword123 psql "postgresql://postgres@secupi-gateway:5432/postgresdb?sslmode=disable" -c "SELECT id, email FROM customers LIMIT 3;"'
+# Create .postgresql directory in client pod
+kubectl exec postgres-client -- mkdir -p /root/.postgresql
+
+# Extract and copy gateway certificate for SSL verification
+kubectl exec $(kubectl get pods -l app=secupi-gateway-gateway -o jsonpath='{.items[0].metadata.name}') -n default -- \
+  keytool -exportcert -alias 1 -keystore /opt/secupi/etc/keystore.jks -storepass test123456 -rfc | \
+  kubectl exec -i postgres-client -- bash -c 'cat > /root/.postgresql/root.crt'
 ```
 
-Expected output with email masking enabled:
-```
- id |         email          
-----+------------------------
-  1 | XXXXXXXX@example.com
-  2 | XXXXXXXXXX@company.com
-  3 | XXXXXXXXXXX@email.com
-(3 rows)
-```
+## 🔒 SSL Connection Examples
 
-### Direct PostgreSQL Connection (Unmasked Data)
+### Direct PostgreSQL Connection (No Masking)
 
-For comparison, connect directly to PostgreSQL to see original data:
 ```bash
-kubectl exec postgres-client -- bash -c 'PGPASSWORD=strongpassword123 psql -h postgres-service -U postgres -d postgresdb -c "SELECT id, email FROM customers LIMIT 3;"'
+# SSL verify-ca mode
+kubectl exec postgres-client -- bash -c 'PGPASSWORD=strongpassword123 psql "postgresql://postgres@postgres-service:5432/customersdb?sslmode=verify-ca" -c "SELECT id, email FROM customers LIMIT 3;"'
+
+# SSL verify-full mode  
+kubectl exec postgres-client -- bash -c 'PGPASSWORD=strongpassword123 psql "postgresql://postgres@postgres-service.default.svc.cluster.local:5432/customersdb?sslmode=verify-full" -c "SELECT id, email FROM customers LIMIT 3;"'
 ```
 
-Output showing original email addresses:
+**Output:** Real email addresses (no masking)
 ```
  id |         email          
 ----+------------------------
   1 | john.doe@example.com
   2 | jane.smith@company.com
   3 | bob.johnson@email.com
-(3 rows)
 ```
 
-## Configuration Requirements
-
-### Authentication Configuration
-The gateway requires MD5 authentication method for PostgreSQL connections:
-```yaml
-env:
-  GATEWAY_AUTH_METHOD: "md5"
-```
-
-### Connection Parameters
-Use the following connection string format for reliable connections:
-```bash
-postgresql://postgres@secupi-gateway:5432/postgresdb?sslmode=disable
-```
-
-## SSL Configuration
-
-### SSL Status
-
-The current implementation uses Secupi Gateway version 7.0.0.59 with SSL disabled for optimal compatibility:
-
-- **Gateway Status**: Email masking functional with current SSL configuration
-- **Authentication**: MD5 authentication method configured for PostgreSQL
-- **Resource Allocation**: Memory limits optimized for Minikube deployment
-- **SSL Setting**: Currently disabled (`GATEWAY_SSL_ENABLED: "false"`) for stable operation
-
-### SSL Certificate Generation
-
-For environments requiring SSL encryption, self-signed certificates can be generated and deployed to the gateway pods.
-
-#### Generate Self-Signed Certificate
-
-Create a self-signed certificate for the Secupi Gateway:
+### SecuPi Gateway Connection (With Masking)
 
 ```bash
-# Generate private key
-openssl genrsa -out secupi.key 2048
+# SSL disabled (for testing)
+kubectl exec postgres-client -- bash -c 'PGPASSWORD=strongpassword123 psql "postgresql://postgres@secupi-gateway-gateway:5432/customersdb?sslmode=disable" -c "SELECT id, email FROM customers LIMIT 3;"'
 
-# Generate certificate signing request
-openssl req -new -key secupi.key -out secupi.csr -subj "/C=US/ST=State/L=City/O=Organization/CN=secupi-gateway"
-
-# Generate self-signed certificate
-openssl x509 -req -days 365 -in secupi.csr -signkey secupi.key -out secupi.crt
-
-# Create PKCS12 keystore
-openssl pkcs12 -export -out keystore.p12 -inkey secupi.key -in secupi.crt -password pass:secupi123
+# SSL verify-full mode (RECOMMENDED)
+kubectl exec postgres-client -- bash -c 'PGPASSWORD=strongpassword123 psql "postgresql://postgres@secupi-gateway-gateway.default.svc.cluster.local:5432/customersdb?sslmode=verify-full" -c "SELECT id, email FROM customers LIMIT 3;"'
 ```
 
-#### Deploy Certificate to Kubernetes
-
-Create a Kubernetes secret containing the SSL certificates:
-
-```bash
-# Create SSL certificate secret
-kubectl create secret generic secupi-ssl-certs \
-  --from-file=secupi.key=secupi.key \
-  --from-file=secupi.crt=secupi.crt \
-  --from-file=keystore.p12=keystore.p12
-
-# Verify secret creation
-kubectl get secret secupi-ssl-certs -o yaml
+**Output:** Masked email addresses (data protection active)
+```
+ id |         email          
+----+------------------------
+  1 | XXXXXXXX@example.com
+  2 | XXXXXXXXXX@company.com
+  3 | XXXXXXXXXXX@email.com
 ```
 
-#### Gateway SSL Configuration
+## 📁 File Structure
 
-To enable SSL on the gateway, update the environment variables:
+```
+k8s-secupi-gateway/
+├── README.md                    # This documentation
+├── all-in-one.yaml             # PV, PVC, Secret, Service, Client Pod
+├── postgres-deployment.yaml    # SSL-enabled PostgreSQL deployment
+├── custom-values.yaml          # SecuPi Gateway Helm values
+├── init-db.sql                 # Database initialization script
+├── server.crt                  # PostgreSQL server certificate
+├── server.key                  # PostgreSQL server private key
+├── client.crt                  # PostgreSQL client certificate
+├── client.key                  # PostgreSQL client private key
+├── gateway.crt                 # Gateway certificate (original)
+├── gateway.key                 # Gateway private key (original)
+├── gateway.jks                 # Gateway Java keystore (original)
+└── gateway-fixed.jks           # Fixed gateway keystore with correct hostname
+```
 
+## 🔧 Configuration Details
+
+### PostgreSQL SSL Configuration
+
+The PostgreSQL deployment includes:
+- SSL enabled with custom certificates
+- SSL mode: `ssl=on`
+- Certificate files mounted in `/var/lib/postgresql/ssl/`
+- Authentication method: `md5`
+
+### SecuPi Gateway Configuration
+
+Key environment variables:
 ```yaml
-env:
-  GATEWAY_SSL_ENABLED: "true"
-  KEYSTORE_SSL_PATH: "/opt/secupi/etc/keystore.jks"
-  KEYSTORE_SSL_STOREPASS: "secupi123"
-  KEYSTORE_SSL_ALIAS: "secupi-gateway"
-```
-
-#### Certificate Deployment to Pods
-
-The SSL certificates are automatically mounted to gateway pods through volume mounts defined in the deployment template. The deployment includes the following volume configuration:
-
-```yaml
-volumes:
-  - name: ssl-certs
-    secret:
-      secretName: secupi-ssl-certs
-  - name: ssl-storage
-    emptyDir: {}
-```
-
-Volume mounts in the container:
-
-```yaml
-volumeMounts:
-  - name: ssl-certs
-    mountPath: /tmp/ssl-certs
-    readOnly: true
-  - name: ssl-storage
-    mountPath: /opt/secupi/etc
-```
-
-The certificates are available at the following paths within the pod:
-
-- **Private Key**: `/opt/secupi/etc/secupi.key`
-- **Certificate**: `/opt/secupi/etc/secupi.crt`
-- **PKCS12 Keystore**: `/opt/secupi/etc/keystore.p12`
-- **JKS Keystore**: `/opt/secupi/etc/keystore.jks` (converted during pod initialization)
-
-The deployment uses an init container to copy certificates from the secret mount to the application directory and convert the PKCS12 keystore to JKS format required by the gateway.
-
-#### SSL Connection String
-
-When SSL is enabled, use the following connection format:
-
-```bash
-# SSL connection with certificate verification
-psql "postgresql://postgres@secupi-gateway:5432/postgresdb?sslmode=require"
-
-# SSL connection with full certificate verification
-psql "postgresql://postgres@secupi-gateway:5432/postgresdb?sslmode=verify-full"
-```
-
-### Current Working Environment Variables
-
-```yaml
-# Core Gateway Configuration
-GATEWAY_SERVER_HOST: "postgres-service"
-GATEWAY_SERVER_PORT: "5432"
-GATEWAY_SERVER_USER: "postgres"
-GATEWAY_SERVER_PASSWORD: "strongpassword123"
-GATEWAY_SERVER_DB: "postgresdb"
-GATEWAY_AUTH_METHOD: "md5"              # CRITICAL: Required for authentication
-GATEWAY_PORT: "5432"
-GATEWAY_INTERFACE_PORT: "5432"
-GATEWAY_TYPE: "postgresql"
-GATEWAY_SSL_ENABLED: "false"            # Disabled for stability
-
-# Secupi Configuration
-SECUPI_BOOT_URL: "https://damkil.azure.secupi.com/api/boot/download/1e81d3dee43740fbbcbd669a2c3ca3a7/secupi-boot-ea9abf50-9ebf-4e28-9a54-f56d75dec2e5.jar"
-EXTRA_OPTS: "-Dlog4j2.formatMsgNoLookups=true -Dsecupi.agent.ssl.hostnameVerifier.enabled=false -Dsecupi.agent.ssl.autoTrust.enabled=true"
-
-# SSL Configuration (when needed)
+GATEWAY_SSL_ENABLED: "true"
+GATEWAY_SSL_MODE: "verify-full"
+GATEWAY_BACKEND_SSL_MODE: "require"
+KEYSTORE_SSL_PATH: "/opt/secupi/etc/keystore.jks"
 KEYSTORE_SSL_STOREPASS: "test123456"
 KEYSTORE_SSL_ALIAS: "1"
-GATEWAY_HAZELCAST_SERVICE_DNS_NAME: "secupi-gateway-hz.default.svc.cluster.local"
 ```
 
-### Version Access Issue
+### SSL Certificate Requirements
 
-The implementation attempted to use version 7.0.0.59 as specified in the requirements, but the Secupi server returned:
-```
-preferred version was not allowed by server will use version: 7.0.0.42
-```
+For `verify-full` SSL mode to work:
+1. Certificate CN must match the service hostname
+2. Certificate must be properly signed
+3. Root CA certificate must be available to client
+4. Private key must be accessible to server
 
-This indicates that:
-- Version 7.0.0.59 exists on the server
-- The current account does not have access to version 7.0.0.59
-- The server forces the use of version 7.0.0.42
+## 🐛 Troubleshooting
 
-### SSL Testing Results
+### Common SSL Issues
 
-**Current Connection Modes:**
-- ✅ `sslmode=prefer` - Works (falls back to plain connection)
-- ❌ `sslmode=require` - Fails (server does not support SSL)
-- ❌ `sslmode=verify-full` - Fails (server does not support SSL)
+1. **Certificate verify failed**
+   - Ensure certificate CN matches hostname
+   - Check root certificate is properly copied to client
 
-## Status
+2. **No peer certificate available**
+   - Verify keystore is properly mounted
+   - Check gateway SSL configuration
 
-### ✅ Working Features
-- Email masking functionality
-- PostgreSQL proxying
-- Data structure preservation
-- Kubernetes deployment
-- Helm chart integration
-- Docker registry authentication
-- SSL environment variable configuration
-- Keystore creation and management
+3. **Hostname verification failed**
+   - Use full Kubernetes service name: `service.namespace.svc.cluster.local`
+   - Regenerate certificate with correct CN
 
-### ❌ Limitations
-- Frontend SSL listening not supported in version 7.0.0.42
-- `verify-full` SSL mode not available
-- Account access limited to version 7.0.0.42
-
-## Notes
-
-- The gateway automatically masks email addresses while preserving other data
-- Phone numbers and other fields remain unmasked by default
-- The masking preserves the email format (xxxxxxx@xxxxxxx.xxx)
-- All database operations (SELECT, INSERT, UPDATE, DELETE) work through the gateway
-- The gateway maintains connection pooling and performance optimization
-
-## Current Service Ports
-
-* **pgAdmin Web Interface:** Port 30871 (NodePort)
-* **Secupi Gateway:** Port 30543 (NodePort)
-* **Direct PostgreSQL:** Port 30432 (NodePort)
-
-## Quick Start
+### Debug Commands
 
 ```bash
-# 1. Start Minikube
-minikube start
+# Check pod status
+kubectl get pods -n default
 
-# 2. Deploy PostgreSQL
-kubectl apply -f postgres-secret.yaml
-kubectl apply -f postgres-storage.yaml
-kubectl apply -f postgres-deployment.yaml
-kubectl apply -f postgres-service.yaml
+# View gateway logs
+kubectl logs $(kubectl get pods -l app=secupi-gateway-gateway -o jsonpath='{.items[0].metadata.name}') -n default
 
-# 3. Create test data
-kubectl apply -f postgres-client-pod.yaml
-kubectl wait --for=condition=Ready pod postgres-client --timeout=60s
-kubectl exec postgres-client -- psql "host=postgres-service port=5432 user=postgres dbname=postgresdb" -c "CREATE TABLE IF NOT EXISTS customers (id SERIAL PRIMARY KEY, name VARCHAR(100), email VARCHAR(100), phone VARCHAR(20));"
-kubectl exec postgres-client -- psql "host=postgres-service port=5432 user=postgres dbname=postgresdb" -c "INSERT INTO customers (name, email, phone) VALUES ('John Doe', 'john.doe@example.com', '+1-555-0101') ON CONFLICT DO NOTHING;"
+# Check PostgreSQL logs
+kubectl logs $(kubectl get pods -l app=postgres -o jsonpath='{.items[0].metadata.name}') -n default
 
-# 4. Deploy Secupi Gateway
-helm install secupi-gateway . -f custom-values.yaml
-kubectl wait --for=condition=Ready pod -l app.kubernetes.io/name=secupi-gateway-postgresql --timeout=60s
+# Verify certificate content
+kubectl exec postgres-client -- openssl x509 -in /root/.postgresql/root.crt -text -noout
 
-# 5. Test email masking
-kubectl exec postgres-client -- psql "host=secupi-gateway-secupi-gateway-postgresql port=5432 user=postgres dbname=postgresdb" -c "SELECT * FROM customers;"
+# Test SSL connection
+kubectl exec postgres-client -- openssl s_client -connect secupi-gateway-gateway.default.svc.cluster.local:5432 -servername secupi-gateway-gateway.default.svc.cluster.local < /dev/null
 ```
 
-## pgAdmin Access
+## 🔐 Security Features
 
-### Port Forwarding Setup
+- **End-to-End SSL Encryption**: All connections use SSL/TLS
+- **Certificate Validation**: verify-full mode ensures hostname matching
+- **Data Masking**: Sensitive data automatically masked by SecuPi Gateway
+- **Authentication**: PostgreSQL md5 authentication required
+- **Network Isolation**: Kubernetes network policies supported
+
+## 📊 Performance Considerations
+
+- **Connection Pooling**: Gateway provides connection pooling
+- **SSL Overhead**: Minimal performance impact with modern hardware
+- **Data Masking**: Real-time masking with negligible latency
+- **Scalability**: Horizontal scaling supported via Kubernetes
+
+## 🆕 Updates and Maintenance
+
+### Updating Certificates
+
 ```bash
-kubectl port-forward service/pgadmin 8080:80
+# Generate new certificates
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout server-new.key -out server-new.crt \
+  -subj "/C=US/ST=State/L=City/O=Organization/CN=postgres-service.default.svc.cluster.local"
+
+# Update secret
+kubectl create secret generic postgres-ssl-certs-new \
+  --from-file=server.crt=server-new.crt \
+  --from-file=server.key=server-new.key \
+  --namespace=default
+
+# Update deployment to use new secret
+kubectl patch deployment postgres -p '{"spec":{"template":{"spec":{"volumes":[{"name":"postgres-ssl-temp","secret":{"secretName":"postgres-ssl-certs-new"}}]}}}}'
 ```
 
-### Access pgAdmin
-- **URL:** http://localhost:8080
-- **Login:** admin@admin.com / admin
+### Scaling the Gateway
 
-### PostgreSQL Server Configuration
-
-#### Direct Database Connection (unmasked data)
-- **Name:** PostgreSQL Direct
-- **Host:** postgres-service
-- **Port:** 5432
-- **Database:** postgresdb
-- **Username:** postgres
-- **Password:** strongpassword123
-- **SSL Mode:** Prefer
-
-#### Secupi Gateway Connection (masked data)
-- **Name:** Secupi Gateway
-- **Host:** secupi-gateway-secupi-gateway-postgresql
-- **Port:** 5432
-- **Database:** postgresdb
-- **Username:** postgres
-- **Password:** strongpassword123
-- **SSL Mode:** Prefer (Note: SSL not supported in current version)
-
-## Testing Email Masking
-
-### 1. Direct Database Access (Unmasked)
 ```bash
-kubectl exec postgres-client -- psql "host=postgres-service port=5432 user=postgres dbname=postgresdb" -c "SELECT * FROM customers LIMIT 3;"
+# Scale gateway deployment
+kubectl scale deployment secupi-gateway-gateway --replicas=3 -n default
+
+# Verify scaling
+kubectl get pods -l app=secupi-gateway-gateway -n default
 ```
 
-### 2. Gateway Access (Masked)
-```bash
-kubectl exec postgres-client -- psql "host=secupi-gateway-secupi-gateway-postgresql port=5432 user=postgres dbname=postgresdb" -c "SELECT * FROM customers LIMIT 3;"
-```
+## 📝 License
 
-### 3. Verify Masking
-Compare the email columns - direct access shows real emails, gateway access shows masked emails (xxxxxxx@xxxxxxx.xxx).
+This configuration is provided as-is for demonstration purposes. Please ensure compliance with your organization's security policies and SecuPi licensing terms.
 
-## Troubleshooting
+## 🤝 Contributing
 
-### Common Issues
+1. Test changes in a development environment
+2. Verify SSL functionality with both connection modes
+3. Ensure data masking is working correctly
+4. Update documentation as needed
 
-#### Connection Issues
-If client connections are not establishing properly, verify the authentication configuration:
-```yaml
-env:
-  GATEWAY_AUTH_METHOD: "md5"
-```
+---
 
-Check connection logs:
-```bash
-kubectl logs <gateway-pod> | grep -E "(authentication|connection)"
-```
-
-#### SSL Connection Timeouts
-For environments where SSL negotiation causes delays, use the following connection format:
-```bash
-psql "postgresql://postgres@secupi-gateway:5432/postgresdb?sslmode=disable"
-```
-
-#### Resource Constraints
-If pods remain in `Pending` state, verify resource allocation:
-```yaml
-gateway:
-  resources:
-    mid:
-      limits:
-        memory: "1Gi"
-      requests:
-        memory: "1Gi"
-```
-
-#### Image Pull Issues
-Verify Docker registry credentials:
-```bash
-kubectl get secret secupiregistry -o yaml
-```
-
-#### Gateway Startup Issues
-Check gateway logs for startup problems:
-```bash
-kubectl logs -l app=secupi-gateway
-```
-
-#### Database Connection Verification
-Verify PostgreSQL is running:
-```bash
-kubectl get pods -l app=postgres
-kubectl logs -l app=postgres
-```
-
-### SSL Configuration Notes
-
-- The current version (7.0.0.42) does not support frontend SSL listening
-- SSL environment variables are accepted but not functional for client connections
-- Backend SSL (gateway to PostgreSQL) may be supported but not tested
-- Version 7.0.0.59 exists but requires different account permissions
-
-## Implementation Status
-
-### Completed Components
-- Secupi Gateway deployment on Kubernetes cluster
-- Helm chart configuration and deployment
-- Secupi Gateway image tag 7.0.0.59
-- PostgreSQL database with customer data
-- Database table with email column for masking demonstration
-- SECUPI_BOOT_URL configuration
-- GATEWAY_SERVER_HOST configuration
-- Docker registry authentication
-- Email masking functionality
-- SSL certificate preparation
-- MD5 authentication configuration
-- Resource optimization for development environments
-- Comprehensive documentation
-
-### Implementation Notes
-- **Email Masking**: Masks email addresses as `XXXXXXXX@example.com`
-- **Authentication**: MD5 authentication method configured for PostgreSQL compatibility
-- **Connection Method**: Uses `sslmode=disable` parameter for reliable connectivity
-- **Resource Allocation**: Optimized with 1Gi memory limits for Minikube environments
-- **Documentation**: Includes troubleshooting guide for common deployment scenarios
-
-### SSL Configuration Status
-- SSL certificates prepared for future use
-- Current configuration uses `GATEWAY_SSL_ENABLED: "false"` for stable operation
-- SSL implementation available for environments requiring encrypted connections
-
-### Verification Command
-```bash
-kubectl exec postgres-client -- bash -c 'PGPASSWORD=strongpassword123 psql "postgresql://postgres@secupi-gateway:5432/postgresdb?sslmode=disable" -c "SELECT id, email FROM customers LIMIT 3;"'
-```
+**✅ Successfully Configured Features:**
+- ✅ PostgreSQL 16 with SSL encryption
+- ✅ SecuPi Gateway with data masking
+- ✅ SSL verify-full mode working
+- ✅ Proper certificate hostname validation
+- ✅ End-to-end secure communication

@@ -14,14 +14,24 @@ spec:
       labels:
         app: postgres
     spec:
+      initContainers:
+      - name: ssl-setup
+        image: postgres:16
+        command: ["/bin/bash", "-c", "cp /tmp/ssl/* /var/lib/postgresql/ssl/ && chmod 644 /var/lib/postgresql/ssl/server.crt && chmod 600 /var/lib/postgresql/ssl/server.key && chown postgres:postgres /var/lib/postgresql/ssl/*"]
+        volumeMounts:
+        - name: postgres-ssl-temp
+          mountPath: /tmp/ssl
+          readOnly: true
+        - name: postgres-ssl
+          mountPath: /var/lib/postgresql/ssl
       containers:
       - name: postgres
-        image: postgres:13
+        image: postgres:16
         ports:
         - containerPort: 5432
         env:
         - name: POSTGRES_DB
-          value: "postgresdb"
+          value: "customersdb"
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
@@ -36,22 +46,23 @@ spec:
           value: "--auth-host=md5 --auth-local=md5"
         - name: POSTGRES_HOST_AUTH_METHOD
           value: "md5"
+        - name: POSTGRES_SSL_CERT_FILE
+          value: "/var/lib/postgresql/ssl/server.crt"
+        - name: POSTGRES_SSL_KEY_FILE
+          value: "/var/lib/postgresql/ssl/server.key"
+        args: ["-c", "ssl=on", "-c", "ssl_cert_file=/var/lib/postgresql/ssl/server.crt", "-c", "ssl_key_file=/var/lib/postgresql/ssl/server.key"]
         volumeMounts:
         - name: postgres-storage
           mountPath: /var/lib/postgresql/data
         - name: postgres-ssl
           mountPath: /var/lib/postgresql/ssl
-          readOnly: true
-
-
       volumes:
       - name: postgres-storage
         persistentVolumeClaim:
           claimName: postgres-pvc
       - name: postgres-ssl
+        emptyDir: {}
+      - name: postgres-ssl-temp
         secret:
-          secretName: secupi-ssl-certs
-          defaultMode: 0600
-      - name: postgres-config
-        configMap:
-          name: postgres-config
+          secretName: postgres-ssl-certs
+          defaultMode: 0644
