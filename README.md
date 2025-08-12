@@ -2,7 +2,7 @@
 
 This repository contains the complete setup for deploying SecuPi Gateway with PostgreSQL using SSL encryption and data masking capabilities in Kubernetes.
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
@@ -12,14 +12,14 @@ This repository contains the complete setup for deploying SecuPi Gateway with Po
       SSL verify-full         SSL require           SSL enabled
 ```
 
-## 📋 Components
+## Components
 
 - **PostgreSQL 16**: Database server with SSL encryption
 - **SecuPi Gateway**: Data masking proxy with SSL termination
 - **SSL Certificates**: Custom certificates for secure communication
 - **Client Pod**: Testing container with PostgreSQL client tools
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Deploy the Infrastructure
 
@@ -82,7 +82,7 @@ kubectl exec $(kubectl get pods -l app=secupi-gateway-gateway -o jsonpath='{.ite
   kubectl exec -i postgres-client -- bash -c 'cat > /root/.postgresql/root.crt'
 ```
 
-## 🔒 SSL Connection Examples
+## SSL Connection Examples
 
 ### Direct PostgreSQL Connection (No Masking)
 
@@ -122,7 +122,7 @@ kubectl exec postgres-client -- bash -c 'PGPASSWORD=strongpassword123 psql "post
   3 | XXXXXXXXXXX@email.com
 ```
 
-## 📁 File Structure
+## File Structure
 
 ```
 k8s-secupi-gateway/
@@ -141,7 +141,7 @@ k8s-secupi-gateway/
 └── gateway-fixed.jks           # Fixed gateway keystore with correct hostname
 ```
 
-## 🔧 Configuration Details
+## Configuration Details
 
 ### PostgreSQL SSL Configuration
 
@@ -171,7 +171,7 @@ For `verify-full` SSL mode to work:
 3. Root CA certificate must be available to client
 4. Private key must be accessible to server
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Common SSL Issues
 
@@ -206,7 +206,7 @@ kubectl exec postgres-client -- openssl x509 -in /root/.postgresql/root.crt -tex
 kubectl exec postgres-client -- openssl s_client -connect secupi-gateway-gateway.default.svc.cluster.local:5432 -servername secupi-gateway-gateway.default.svc.cluster.local < /dev/null
 ```
 
-## 🔐 Security Features
+## Security Features
 
 - **End-to-End SSL Encryption**: All connections use SSL/TLS
 - **Certificate Validation**: verify-full mode ensures hostname matching
@@ -214,14 +214,14 @@ kubectl exec postgres-client -- openssl s_client -connect secupi-gateway-gateway
 - **Authentication**: PostgreSQL md5 authentication required
 - **Network Isolation**: Kubernetes network policies supported
 
-## 📊 Performance Considerations
+## Performance Considerations
 
 - **Connection Pooling**: Gateway provides connection pooling
 - **SSL Overhead**: Minimal performance impact with modern hardware
 - **Data Masking**: Real-time masking with negligible latency
 - **Scalability**: Horizontal scaling supported via Kubernetes
 
-## 🆕 Updates and Maintenance
+## Updates and Maintenance
 
 ### Updating Certificates
 
@@ -251,11 +251,11 @@ kubectl scale deployment secupi-gateway-gateway --replicas=3 -n default
 kubectl get pods -l app=secupi-gateway-gateway -n default
 ```
 
-## 📝 License
+## License
 
 This configuration is provided as-is for demonstration purposes. Please ensure compliance with your organization's security policies and SecuPi licensing terms.
 
-## 🤝 Contributing
+## Contributing
 
 1. Test changes in a development environment
 2. Verify SSL functionality with both connection modes
@@ -264,9 +264,9 @@ This configuration is provided as-is for demonstration purposes. Please ensure c
 
 ---
 
-**✅ Successfully Configured Features:**
-- ✅ PostgreSQL 16 with SSL encryption
-- ✅ SecuPi Gateway with data masking
-- ✅ SSL verify-full mode working
-- ✅ Proper certificate hostname validation
-- ✅ End-to-end secure communication
+**Successfully Configured Features:**
+- PostgreSQL 16 with SSL encryption
+- SecuPi Gateway with data masking
+- SSL verify-full mode working
+- Proper certificate hostname validation
+- End-to-end secure communication
