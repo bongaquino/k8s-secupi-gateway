@@ -1,6 +1,0 @@
-apiVersion: v2
-appVersion: 7.0.0.59
-description: A Helm chart for SecuPi Gateway
-name: secupi-gateway-postgresql
-type: application
-version: 7.0.0-59
