@@ -65,7 +65,7 @@ We used `service.json` to manually add peers. Here's the configuration for each 
 ```json
 {
   "cluster": {
-    "peername": "kr-bootstrap-01",
+    "peername": "node-bootstrap-01",
     "secret": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
     "listen_multiaddress": [
       "/ip4/0.0.0.0/tcp/9096",
@@ -82,7 +82,7 @@ We used `service.json` to manually add peers. Here's the configuration for each 
 ```json
 {
   "cluster": {
-    "peername": "kr-peer-01",
+    "peername": "node-peer-01",
     "secret": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
     "listen_multiaddress": [
       "/ip4/0.0.0.0/tcp/9096",
@@ -102,7 +102,7 @@ We used `service.json` to manually add peers. Here's the configuration for each 
 ```json
 {
   "cluster": {
-    "peername": "kr-peer-02",
+    "peername": "node-peer-02",
     "secret": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
     "listen_multiaddress": [
       "/ip4/0.0.0.0/tcp/9096",
@@ -318,9 +318,9 @@ As of this date, only the three cluster nodes are connected as IPFS swarm peers 
 
 #### Cluster Peer List
 ```
-12D3KooWSv57nfbit9pKb2BbmBRwRsWTnaHc4rk1NccuC1QBMGAT | kr-bootstrap-01 | Sees 2 other peers
-12D3KooWDAru6Qgr9qyaNcrdf9VBtHKQUTbSRtdaWSimMtENZYqT | kr-peer-02      | Sees 2 other peers
-12D3KooWFRUStGsNyi8YGnjLDjWZDb8XLy2iz3HnhvozFobdDtPJ | kr-peer-01      | Sees 2 other peers
+12D3KooWSv57nfbit9pKb2BbmBRwRsWTnaHc4rk1NccuC1QBMGAT | node-bootstrap-01 | Sees 2 other peers
+12D3KooWDAru6Qgr9qyaNcrdf9VBtHKQUTbSRtdaWSimMtENZYqT | node-peer-02      | Sees 2 other peers
+12D3KooWFRUStGsNyi8YGnjLDjWZDb8XLy2iz3HnhvozFobdDtPJ | node-peer-01      | Sees 2 other peers
 ```
 
 **Conclusion:**

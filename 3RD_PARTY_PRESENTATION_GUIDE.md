@@ -85,7 +85,7 @@ ssh ipfs@<NODE_IP> "docker exec ipfs ipfs swarm peers | wc -l"
 ### Q: "What happens if a node goes down?"
 **A:** Demonstrate high availability:
 ```bash
-ssh ipfs@27.255.70.17 "docker exec ipfs-cluster ipfs-cluster-ctl peers ls"
+ssh ipfs@10.0.0.17 "docker exec ipfs-cluster ipfs-cluster-ctl peers ls"
 # Show that content is replicated across multiple nodes
 ```
 

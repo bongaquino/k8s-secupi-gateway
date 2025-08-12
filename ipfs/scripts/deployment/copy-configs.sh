@@ -3,13 +3,13 @@
 # Define server configurations
 servers=(
 <<<<<<< HEAD
-    "<BOOTSTRAP_NODE_IP>:bongaquino-ipfs-kr-bootstrap-01"
-    "<PEER_01_IP>:bongaquino-ipfs-kr-peer-01"
-    "<PEER_02_IP>:bongaquino-ipfs-kr-peer-02"
+    "<BOOTSTRAP_NODE_IP>:example-ipfs-node-bootstrap-01"
+    "<PEER_01_IP>:example-ipfs-node-peer-01"
+    "<PEER_02_IP>:example-ipfs-node-peer-02"
 =======
-    "<BOOTSTRAP_NODE_IP>:koneksi-ipfs-kr-bootstrap-01"
-    "<PEER_01_IP>:koneksi-ipfs-kr-peer-01"
-    "<PEER_02_IP>:koneksi-ipfs-kr-peer-02"
+    "<BOOTSTRAP_NODE_IP>:koneksi-ipfs-node-bootstrap-01"
+    "<PEER_01_IP>:koneksi-ipfs-node-peer-01"
+    "<PEER_02_IP>:koneksi-ipfs-node-peer-02"
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 )
 
@@ -21,7 +21,7 @@ copy_to_server() {
     local server=$1
     local config_dir=$2
 <<<<<<< HEAD
-    local remote_dir="/home/ipfs/bongaquino-ipfs/$BASE_DIR/$config_dir"
+    local remote_dir="/home/ipfs/example-ipfs/$BASE_DIR/$config_dir"
 =======
     local remote_dir="/home/ipfs/koneksi-ipfs/$BASE_DIR/$config_dir"
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff

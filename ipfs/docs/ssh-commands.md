@@ -86,7 +86,7 @@ ssh -i ~/.ssh/id_rsa ipfs@<PEER_01_IP>
 
 # SSH via backend server
 <<<<<<< HEAD
-ssh -i ~/.ssh/bongaquino-ipfs-backend.pem ubuntu@<BACKEND_SERVER_IP>
+ssh -i ~/.ssh/example-ipfs-backend.pem ubuntu@<BACKEND_SERVER_IP>
 =======
 ssh -i ~/.ssh/backend-key.pem ubuntu@<BACKEND_SERVER_IP>
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
@@ -137,7 +137,7 @@ ssh -i ~/.ssh/id_rsa ipfs@<PEER_02_IP>
 
 # SSH via backend server
 <<<<<<< HEAD
-ssh -i ~/.ssh/bongaquino-ipfs-backend.pem ubuntu@<BACKEND_SERVER_IP>
+ssh -i ~/.ssh/example-ipfs-backend.pem ubuntu@<BACKEND_SERVER_IP>
 =======
 ssh -i ~/.ssh/backend-key.pem ubuntu@<BACKEND_SERVER_IP>
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff

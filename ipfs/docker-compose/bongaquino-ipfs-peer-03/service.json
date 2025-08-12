@@ -1,6 +1,6 @@
 {
   "cluster": {
-    "peername": "kr-peer-03",
+    "peername": "node-peer-03",
     "secret": "c646426b598f916698b56de8a83854a15e286cb4a08c35b28d819d169f0b9ad4",
     "leave_on_shutdown": false,
     "listen_multiaddress": [
@@ -42,15 +42,15 @@
     "pin_only_on_untrusted_peers": false,
     "disable_repinning": true,
     "peer_addresses": [
-      "/ip4/27.255.70.17/tcp/9096/p2p/12D3KooWQS5kWtsQ9aU3JatgPbQxVMX32tZij6qyhKd4HZg5W7tU"
+      "/ip4/10.0.0.17/tcp/9096/p2p/12D3KooWQS5kWtsQ9aU3JatgPbQxVMX32tZij6qyhKd4HZg5W7tU"
     ]
   },
   "consensus": {
     "crdt": {
 <<<<<<< HEAD
-      "cluster_name": "bongaquino-ipfs-cluster",
+      "cluster_name": "example-ipfs-cluster",
 =======
-      "cluster_name": "bongaquino-ipfs-cluster",
+      "cluster_name": "example-ipfs-cluster",
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
       "trusted_peers": [
         "*"

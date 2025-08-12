@@ -23,20 +23,20 @@ services:
     environment:
       - CLUSTER_IPFSHTTP_NODEMULTIADDRESS=/dns4/ipfs/tcp/5001
       - CLUSTER_CRDT_TRUSTALLPEERS=true
-      - CLUSTER_CRDT_DATACENTER=kr-bootstrap-02
+      - CLUSTER_CRDT_DATACENTER=node-bootstrap-02
 <<<<<<< HEAD
-      - CLUSTER_CRDT_CLUSTERNAME=bongaquino-ipfs-cluster
+      - CLUSTER_CRDT_CLUSTERNAME=example-ipfs-cluster
 =======
-      - CLUSTER_CRDT_CLUSTERNAME=bongaquino-ipfs-cluster
+      - CLUSTER_CRDT_CLUSTERNAME=example-ipfs-cluster
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
       - CLUSTER_BOOTSTRAP_NODE=true
       - CLUSTER_SECRET=0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
-      - CLUSTER_PEERNAME=kr-bootstrap-02
+      - CLUSTER_PEERNAME=node-bootstrap-02
       - CLUSTER_MONITORPINGINTERVAL=2s
       - CLUSTER_RESTAPI_HTTPLISTENMULTIADDRESS=/ip4/0.0.0.0/tcp/9094
-      - CLUSTER_RESTAPI_HTTPANNOUNCEMULTIADDRESS=/ip4/27.255.70.17/tcp/9094
+      - CLUSTER_RESTAPI_HTTPANNOUNCEMULTIADDRESS=/ip4/10.0.0.17/tcp/9094
       - CLUSTER_SWARM_LISTENMULTIADDRESS=/ip4/0.0.0.0/tcp/9096
-      - CLUSTER_SWARM_ANNOUNCE=/ip4/27.255.70.17/tcp/9096
+      - CLUSTER_SWARM_ANNOUNCE=/ip4/10.0.0.17/tcp/9096
       - CLUSTER_DEBUG=true
     networks:
       - ipfs_network

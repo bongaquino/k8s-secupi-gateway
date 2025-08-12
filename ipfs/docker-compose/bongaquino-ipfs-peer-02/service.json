@@ -1,6 +1,6 @@
 {
   "cluster": {
-    "peername": "kr-peer-02",
+    "peername": "node-peer-02",
     "secret": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
     "leave_on_shutdown": false,
     "listen_multiaddress": [
@@ -48,9 +48,9 @@
   "consensus": {
     "crdt": {
 <<<<<<< HEAD
-      "cluster_name": "bongaquino-ipfs-cluster",
+      "cluster_name": "example-ipfs-cluster",
 =======
-      "cluster_name": "bongaquino-ipfs-cluster",
+      "cluster_name": "example-ipfs-cluster",
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
       "trusted_peers": [
         "*"

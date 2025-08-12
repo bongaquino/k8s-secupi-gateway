@@ -1,7 +1,7 @@
 # SSL Certificate Setup for Bootstrap Node 02
 
 ## Overview
-This document describes the SSL certificate configuration for the IPFS Bootstrap Node 02 (27.255.70.17).
+This document describes the SSL certificate configuration for the IPFS Bootstrap Node 02 (10.0.0.17).
 
 ## Certificate Details
 - **Type**: Wildcard SSL Certificate
@@ -20,11 +20,11 @@ This document describes the SSL certificate configuration for the IPFS Bootstrap
 ## File Locations
 ```
 <<<<<<< HEAD
-bongaquino-ipfs/docker-compose/bongaquino-ipfs-bootstrap-02/nginx/ssl/
+example-ipfs/docker-compose/example-ipfs-bootstrap-02/nginx/ssl/
 ├── wildcard.example.com.pem (Certificate)
 └── wildcard.example.com.key (Private Key)
 =======
-bongaquino-ipfs/docker-compose/bongaquino-ipfs-bootstrap-02/nginx/ssl/
+example-ipfs/docker-compose/example-ipfs-bootstrap-02/nginx/ssl/
 ├── wildcard.example.com.pem (Certificate)
 └── wildcard.example.com.key (Private Key)
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff

@@ -118,7 +118,7 @@ This repository contains scripts and configurations for deploying an IPFS cluste
    ```json
    {
      "cluster": {
-       "peername": "kr-peer-01",
+       "peername": "node-peer-01",
        "secret": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
        "listen_multiaddress": [
          "/ip4/0.0.0.0/tcp/9096",
@@ -231,9 +231,9 @@ This repository contains scripts and configurations for deploying an IPFS cluste
 
 2. Nginx Configuration:
 <<<<<<< HEAD
-   - Located at: `docker-compose/bongaquino-ipfs-bootstrap-01/nginx/conf.d/default.conf`
+   - Located at: `docker-compose/example-ipfs-bootstrap-01/nginx/conf.d/default.conf`
 =======
-   - Located at: `docker-compose/bongaquino-ipfs-bootstrap-01/nginx/conf.d/default.conf`
+   - Located at: `docker-compose/example-ipfs-bootstrap-01/nginx/conf.d/default.conf`
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
    - Handles both HTTP and HTTPS traffic
    - Implements access control for private endpoints
@@ -261,33 +261,33 @@ This repository contains scripts and configurations for deploying an IPFS cluste
 
 ```
 <<<<<<< HEAD
-bongaquino-ipfs/
+example-ipfs/
 ├── README.md                          # Project documentation
 ├── docker-compose/                    # Docker Compose configurations
-│   ├── bongaquino-ipfs-bootstrap-01/  # Bootstrap node (<BOOTSTRAP_NODE_IP>)
+│   ├── example-ipfs-bootstrap-01/  # Bootstrap node (<BOOTSTRAP_NODE_IP>)
 │   │   ├── docker-compose.yml         # Container configuration
 │   │   └── .env                       # Environment variables
-│   ├── bongaquino-ipfs-bootstrap-02/  # New isolated bootstrap node (27.255.70.17)
+│   ├── example-ipfs-bootstrap-02/  # New isolated bootstrap node (10.0.0.17)
 │   │   ├── docker-compose.yml         # Container configuration
 │   │   └── .env                       # Environment variables
-│   ├── bongaquino-ipfs-peer-01/       # Peer node 1 (<PEER_01_IP>)
+│   ├── example-ipfs-peer-01/       # Peer node 1 (<PEER_01_IP>)
 │   │   ├── docker-compose.yml         # Container configuration
 │   │   └── .env                       # Environment variables
-│   └── bongaquino-ipfs-peer-02/       # Peer node 2 (<PEER_02_IP>)
+│   └── example-ipfs-peer-02/       # Peer node 2 (<PEER_02_IP>)
 =======
-bongaquino-ipfs/
+example-ipfs/
 ├── README.md                          # Project documentation
 ├── docker-compose/                    # Docker Compose configurations
-│   ├── bongaquino-ipfs-bootstrap-01/  # Bootstrap node (<BOOTSTRAP_NODE_IP>)
+│   ├── example-ipfs-bootstrap-01/  # Bootstrap node (<BOOTSTRAP_NODE_IP>)
 │   │   ├── docker-compose.yml         # Container configuration
 │   │   └── .env                       # Environment variables
-│   ├── bongaquino-ipfs-bootstrap-02/  # New isolated bootstrap node (27.255.70.17)
+│   ├── example-ipfs-bootstrap-02/  # New isolated bootstrap node (10.0.0.17)
 │   │   ├── docker-compose.yml         # Container configuration
 │   │   └── .env                       # Environment variables
-│   ├── bongaquino-ipfs-peer-01/       # Peer node 1 (<PEER_01_IP>)
+│   ├── example-ipfs-peer-01/       # Peer node 1 (<PEER_01_IP>)
 │   │   ├── docker-compose.yml         # Container configuration
 │   │   └── .env                       # Environment variables
-│   └── bongaquino-ipfs-peer-02/       # Peer node 2 (<PEER_02_IP>)
+│   └── example-ipfs-peer-02/       # Peer node 2 (<PEER_02_IP>)
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 │       ├── docker-compose.yml         # Container configuration
 │       └── .env                       # Environment variables

@@ -1,7 +1,7 @@
 # IPFS Bootstrap Node 02 Configuration
 
 ## Server Details
-- **IP Address:** 27.255.70.17
+- **IP Address:** 10.0.0.17
 <<<<<<< HEAD
 - **Username:** admin
 =======
@@ -9,7 +9,7 @@
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 - **Password:** !Z2x3c*()
 - **Node Type:** Bootstrap Node (Secondary)
-- **Peername:** kr-bootstrap-02
+- **Peername:** node-bootstrap-02
 
 ## Purpose
 This is a new isolated IPFS cluster bootstrap node that will create a completely separate cluster from the existing one. This node will not connect to the old cluster nodes (.217, .33, .34) and will serve as the foundation for a new cluster deployment.
@@ -20,9 +20,9 @@ This is a new isolated IPFS cluster bootstrap node that will create a completely
 ```bash
 # SSH into the new server
 <<<<<<< HEAD
-ssh admin@27.255.70.17
+ssh admin@10.0.0.17
 =======
-ssh admin@27.255.70.17
+ssh admin@10.0.0.17
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 # Password: !Z2x3c*()
 
@@ -73,20 +73,20 @@ sudo mkdir -p /data/ipfs /data/ipfs-cluster
 sudo chown -R admin:admin /data/ipfs /data/ipfs-cluster
 
 # Create project directory
-mkdir -p /home/admin/bongaquino-ipfs/docker-compose
-cd /home/admin/bongaquino-ipfs/docker-compose
+mkdir -p /home/admin/example-ipfs/docker-compose
+cd /home/admin/example-ipfs/docker-compose
 
 # Copy configuration files (from your local machine)
-scp -r bongaquino-ipfs-bootstrap-02 admin@27.255.70.17:/home/admin/bongaquino-ipfs/docker-compose/
+scp -r example-ipfs-bootstrap-02 admin@10.0.0.17:/home/admin/example-ipfs/docker-compose/
 =======
 sudo chown -R admin:admin /data/ipfs /data/ipfs-cluster
 
 # Create project directory
-mkdir -p /home/admin/bongaquino-ipfs/docker-compose
-cd /home/admin/bongaquino-ipfs/docker-compose
+mkdir -p /home/admin/example-ipfs/docker-compose
+cd /home/admin/example-ipfs/docker-compose
 
 # Copy configuration files (from your local machine)
-scp -r bongaquino-ipfs-bootstrap-02 admin@27.255.70.17:/home/admin/bongaquino-ipfs/docker-compose/
+scp -r example-ipfs-bootstrap-02 admin@10.0.0.17:/home/admin/example-ipfs/docker-compose/
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 ```
 
@@ -96,9 +96,9 @@ scp -r bongaquino-ipfs-bootstrap-02 admin@27.255.70.17:/home/admin/bongaquino-ip
 ```bash
 # Navigate to the configuration directory
 <<<<<<< HEAD
-cd /home/admin/bongaquino-ipfs/docker-compose/bongaquino-ipfs-bootstrap-02
+cd /home/admin/example-ipfs/docker-compose/example-ipfs-bootstrap-02
 =======
-cd /home/admin/bongaquino-ipfs/docker-compose/bongaquino-ipfs-bootstrap-02
+cd /home/admin/example-ipfs/docker-compose/example-ipfs-bootstrap-02
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 # Make scripts executable
@@ -136,7 +136,7 @@ This bootstrap node creates a completely new and isolated IPFS cluster that does
 
 ### 2. Adding New Peer Nodes
 When you're ready to add peer nodes to this new cluster:
-1. Deploy new peer nodes with configurations pointing to this bootstrap (27.255.70.17)
+1. Deploy new peer nodes with configurations pointing to this bootstrap (10.0.0.17)
 2. Update firewall rules to allow cluster communication between new nodes
 3. Update the `disable-external-peers.sh` script to include new peer IDs
 4. Ensure all new nodes use the same cluster secret
@@ -193,7 +193,7 @@ sudo ufw status verbose
 ## Important Notes
 - This creates a completely new and isolated IPFS cluster
 - Uses the same cluster secret for consistency with deployment patterns
-- The peername is set to "kr-bootstrap-02" for identification
+- The peername is set to "node-bootstrap-02" for identification
 - No connections to old cluster nodes (.217, .33, .34)
 - Standard IPFS cluster ports are used for future peer additions
 - Access controls are configured for security

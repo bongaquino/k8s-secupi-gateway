@@ -1,6 +1,6 @@
 {
   "cluster": {
-    "peername": "kr-bootstrap-02",
+    "peername": "node-bootstrap-02",
     "secret": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
     "leave_on_shutdown": false,
     "listen_multiaddress": [
@@ -8,7 +8,7 @@
       "/ip4/0.0.0.0/udp/9096/quic"
     ],
     "announce_multiaddress": [
-      "/ip4/27.255.70.17/tcp/9096"
+      "/ip4/10.0.0.17/tcp/9096"
     ],
     "no_announce_multiaddress": [],
     "enable_relay_hop": true,
@@ -46,9 +46,9 @@
   "consensus": {
     "crdt": {
 <<<<<<< HEAD
-      "cluster_name": "bongaquino-ipfs-cluster",
+      "cluster_name": "example-ipfs-cluster",
 =======
-      "cluster_name": "bongaquino-ipfs-cluster",
+      "cluster_name": "example-ipfs-cluster",
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
       "trusted_peers": [
         "*"

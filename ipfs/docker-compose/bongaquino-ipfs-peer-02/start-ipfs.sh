@@ -16,7 +16,7 @@ ipfs config Addresses.Swarm --json '["/ip4/0.0.0.0/tcp/4001", "/ip4/0.0.0.0/tcp/
 # Bootstrap to the bootstrap node
 echo "[+] Configuring bootstrap nodes..."
 ipfs bootstrap rm --all
-ipfs bootstrap add /ip4/27.255.70.17/tcp/4001/p2p/12D3KooWApLN3436Fhz7vRssLwNxsGJr6CpHN4fUVM8e8DPn9gwc
+ipfs bootstrap add /ip4/10.0.0.17/tcp/4001/p2p/12D3KooWApLN3436Fhz7vRssLwNxsGJr6CpHN4fUVM8e8DPn9gwc
 
 # Start the daemon
 echo "[+] Starting IPFS daemon..."

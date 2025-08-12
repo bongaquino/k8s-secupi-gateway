@@ -3,7 +3,7 @@
 ## 🏗️ Architecture Summary
 
 **Cluster Type:** Private IPFS Cluster with Swarm Key Isolation  
-**Geographic Location:** South Korea  
+**Geographic Location:** Example Region  
 **Total Nodes:** 4 (1 Bootstrap + 3 Peers)  
 **Network Security:** 3-Layer Firewall + Private Swarm Key  
 
@@ -11,10 +11,10 @@
 
 | Role | IP Address | Hostname | Storage | Purpose |
 |------|------------|----------|---------|---------|
-| Bootstrap | `<BOOTSTRAP_IP>` | kr-bootstrap-01 | Standard | Primary Gateway & API |
-| Peer-01 | `<PEER_01_IP>` | kr-peer-01 | 14.6TB XFS | Storage Node |
-| Peer-02 | `<PEER_02_IP>` | kr-peer-02 | 125TB RAID-6 | High-Capacity Storage |
-| Peer-03 | `<PEER_03_IP>` | kr-peer-03 | Standard | Storage Node |
+| Bootstrap | `<BOOTSTRAP_IP>` | node-bootstrap-01 | Standard | Primary Gateway & API |
+| Peer-01 | `<PEER_01_IP>` | node-peer-01 | 14.6TB XFS | Storage Node |
+| Peer-02 | `<PEER_02_IP>` | node-peer-02 | 125TB RAID-6 | High-Capacity Storage |
+| Peer-03 | `<PEER_03_IP>` | node-peer-03 | Standard | Storage Node |
 
 ## 🔗 Public Endpoints
 

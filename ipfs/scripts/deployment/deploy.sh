@@ -78,14 +78,14 @@ copy_files() {
     
     # Create remote directory
 <<<<<<< HEAD
-    ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "mkdir -p /home/$SSH_USER/bongaquino-ipfs"
+    ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "mkdir -p /home/$SSH_USER/example-ipfs"
     
     # Copy files
-    scp -i "$SSH_KEY" -o StrictHostKeyChecking=no -r ../docker-compose $SSH_USER@$host:/home/$SSH_USER/bongaquino-ipfs/
-    scp -i "$SSH_KEY" -o StrictHostKeyChecking=no ../scripts/setup-storage.sh $SSH_USER@$host:/home/$SSH_USER/bongaquino-ipfs/scripts/
+    scp -i "$SSH_KEY" -o StrictHostKeyChecking=no -r ../docker-compose $SSH_USER@$host:/home/$SSH_USER/example-ipfs/
+    scp -i "$SSH_KEY" -o StrictHostKeyChecking=no ../scripts/setup-storage.sh $SSH_USER@$host:/home/$SSH_USER/example-ipfs/scripts/
     
     # Make scripts executable
-    ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "chmod +x /home/$SSH_USER/bongaquino-ipfs/scripts/*.sh"
+    ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "chmod +x /home/$SSH_USER/example-ipfs/scripts/*.sh"
 =======
     ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "mkdir -p /home/$SSH_USER/koneksi-ipfs"
     
@@ -161,7 +161,7 @@ setup_bootstrap() {
     
     # Create .env file
 <<<<<<< HEAD
-    ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "cat > /home/$SSH_USER/bongaquino-ipfs/docker-compose/.env << EOL
+    ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "cat > /home/$SSH_USER/example-ipfs/docker-compose/.env << EOL
 =======
     ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "cat > /home/$SSH_USER/koneksi-ipfs/docker-compose/.env << EOL
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
@@ -194,11 +194,11 @@ EOL"
     
     # Setup storage
 <<<<<<< HEAD
-    ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "sudo /home/$SSH_USER/bongaquino-ipfs/scripts/setup-storage.sh"
+    ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "sudo /home/$SSH_USER/example-ipfs/scripts/setup-storage.sh"
     
     # Start services
     print_status "Starting IPFS and Cluster services..."
-    ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "cd /home/$SSH_USER/bongaquino-ipfs/docker-compose && docker-compose up -d"
+    ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "cd /home/$SSH_USER/example-ipfs/docker-compose && docker-compose up -d"
 =======
     ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "sudo /home/$SSH_USER/koneksi-ipfs/scripts/setup-storage.sh"
     
@@ -220,7 +220,7 @@ EOL"
     
     # Add peer ID to .env
 <<<<<<< HEAD
-    ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "echo 'CLUSTER_PEER_ID=$peer_id' >> /home/$SSH_USER/bongaquino-ipfs/docker-compose/.env"
+    ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "echo 'CLUSTER_PEER_ID=$peer_id' >> /home/$SSH_USER/example-ipfs/docker-compose/.env"
 =======
     ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "echo 'CLUSTER_PEER_ID=$peer_id' >> /home/$SSH_USER/koneksi-ipfs/docker-compose/.env"
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
@@ -251,7 +251,7 @@ setup_secondary() {
     
     # Create .env file
 <<<<<<< HEAD
-    ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "cat > /home/$SSH_USER/bongaquino-ipfs/docker-compose/.env << EOL
+    ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "cat > /home/$SSH_USER/example-ipfs/docker-compose/.env << EOL
 =======
     ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "cat > /home/$SSH_USER/koneksi-ipfs/docker-compose/.env << EOL
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
@@ -285,11 +285,11 @@ EOL"
     
     # Setup storage
 <<<<<<< HEAD
-    ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "sudo /home/$SSH_USER/bongaquino-ipfs/scripts/setup-storage.sh"
+    ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "sudo /home/$SSH_USER/example-ipfs/scripts/setup-storage.sh"
     
     # Start services
     print_status "Starting IPFS and Cluster services..."
-    ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "cd /home/$SSH_USER/bongaquino-ipfs/docker-compose && docker-compose up -d"
+    ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "cd /home/$SSH_USER/example-ipfs/docker-compose && docker-compose up -d"
 =======
     ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no $SSH_USER@$host "sudo /home/$SSH_USER/koneksi-ipfs/scripts/setup-storage.sh"
     

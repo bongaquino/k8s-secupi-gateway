@@ -1,10 +1,10 @@
 # New Cluster Expansion Guide
 
 ## Overview
-This guide explains how to add new peer nodes to the isolated IPFS cluster started with bootstrap node 27.255.70.17.
+This guide explains how to add new peer nodes to the isolated IPFS cluster started with bootstrap node 10.0.0.17.
 
 ## Prerequisites
-- Bootstrap node (27.255.70.17) is running and healthy
+- Bootstrap node (10.0.0.17) is running and healthy
 - New server(s) prepared for peer node deployment
 - SSH access to all nodes
 
@@ -14,15 +14,15 @@ This guide explains how to add new peer nodes to the isolated IPFS cluster start
 ```bash
 # Copy the peer-01 configuration as a template
 <<<<<<< HEAD
-cp -r ../bongaquino-ipfs-peer-01 ../bongaquino-ipfs-new-peer-01
+cp -r ../example-ipfs-peer-01 ../example-ipfs-new-peer-01
 
 # Update the configuration for the new peer
-cd ../bongaquino-ipfs-new-peer-01
+cd ../example-ipfs-new-peer-01
 =======
-cp -r ../bongaquino-ipfs-peer-01 ../bongaquino-ipfs-new-peer-01
+cp -r ../example-ipfs-peer-01 ../example-ipfs-new-peer-01
 
 # Update the configuration for the new peer
-cd ../bongaquino-ipfs-new-peer-01
+cd ../example-ipfs-new-peer-01
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 ```
 
@@ -31,7 +31,7 @@ cd ../bongaquino-ipfs-new-peer-01
    - Change `CLUSTER_RESTAPI_HTTPANNOUNCEMULTIADDRESS` to new peer IP
    - Change `CLUSTER_SWARM_ANNOUNCE` to new peer IP
    - Change `CLUSTER_PEERNAME` to new peer name
-   - Update `CLUSTER_BOOTSTRAP_PEERS` to point to new bootstrap (27.255.70.17)
+   - Update `CLUSTER_BOOTSTRAP_PEERS` to point to new bootstrap (10.0.0.17)
 
 2. **Update `service.json`:**
    - Change `peername` to new peer name
@@ -47,9 +47,9 @@ cd ../bongaquino-ipfs-new-peer-01
 ```bash
 # SSH to bootstrap node
 <<<<<<< HEAD
-ssh admin@27.255.70.17
+ssh admin@10.0.0.17
 =======
-ssh admin@27.255.70.17
+ssh admin@10.0.0.17
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 # Get the peer ID
@@ -68,7 +68,7 @@ docker exec ipfs ipfs id
 
 ## Step 3: Update Firewall Rules
 
-### On Bootstrap Node (27.255.70.17)
+### On Bootstrap Node (10.0.0.17)
 ```bash
 # Allow new peer node
 sudo ufw allow from NEW_PEER_IP to any port 4001,5001,8080,9094,9095,9096 proto tcp
@@ -78,7 +78,7 @@ sudo ufw reload
 ### On New Peer Node
 ```bash
 # Allow bootstrap node
-sudo ufw allow from 27.255.70.17 to any port 4001,5001,8080,9094,9095,9096 proto tcp
+sudo ufw allow from 10.0.0.17 to any port 4001,5001,8080,9094,9095,9096 proto tcp
 
 # Allow other peer nodes (if any)
 sudo ufw allow from OTHER_PEER_IP to any port 4001,5001,8080,9094,9095,9096 proto tcp
@@ -92,9 +92,9 @@ sudo ufw reload
 ```bash
 # SSH to bootstrap node
 <<<<<<< HEAD
-ssh admin@27.255.70.17
+ssh admin@10.0.0.17
 =======
-ssh admin@27.255.70.17
+ssh admin@10.0.0.17
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 # Update the disable-external-peers.sh script to include new peer
@@ -117,9 +117,9 @@ docker exec ipfs ipfs config --json Peering.Peers '[
 ```bash
 # Copy configuration to new peer server
 <<<<<<< HEAD
-scp -r bongaquino-ipfs-new-peer-01 user@NEW_PEER_IP:/home/user/ipfs/docker-compose/
+scp -r example-ipfs-new-peer-01 user@NEW_PEER_IP:/home/user/ipfs/docker-compose/
 =======
-scp -r bongaquino-ipfs-new-peer-01 user@NEW_PEER_IP:/home/user/ipfs/docker-compose/
+scp -r example-ipfs-new-peer-01 user@NEW_PEER_IP:/home/user/ipfs/docker-compose/
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 ```
 
@@ -130,9 +130,9 @@ ssh user@NEW_PEER_IP
 
 # Navigate to configuration directory
 <<<<<<< HEAD
-cd /home/user/ipfs/docker-compose/bongaquino-ipfs-new-peer-01
+cd /home/user/ipfs/docker-compose/example-ipfs-new-peer-01
 =======
-cd /home/user/ipfs/docker-compose/bongaquino-ipfs-new-peer-01
+cd /home/user/ipfs/docker-compose/example-ipfs-new-peer-01
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
 
 # Make scripts executable

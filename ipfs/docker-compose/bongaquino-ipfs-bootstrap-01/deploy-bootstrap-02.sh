@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Deployment script for IPFS Bootstrap Node 02
-# Server: 27.255.70.17
+# Server: 10.0.0.17
 # User: ipfs
 
 set -e
@@ -13,7 +13,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m'
 
 # Server configuration
-SERVER_IP="27.255.70.17"
+SERVER_IP="10.0.0.17"
 USERNAME="ipfs"
 PASSWORD="!Z2x3c*()"
 
@@ -85,7 +85,7 @@ prepare_server() {
     remote_exec "sudo mkdir -p /data/ipfs /data/ipfs-cluster"
     remote_exec "sudo chown -R $USERNAME:$USERNAME /data/ipfs /data/ipfs-cluster"
 <<<<<<< HEAD
-    remote_exec "mkdir -p /home/$USERNAME/bongaquino-ipfs/docker-compose"
+    remote_exec "mkdir -p /home/$USERNAME/example-ipfs/docker-compose"
 =======
     remote_exec "mkdir -p /home/$USERNAME/koneksi-ipfs/docker-compose"
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
@@ -123,25 +123,25 @@ deploy_configuration() {
     # Copy configuration files
     print_status "Copying configuration files..."
 <<<<<<< HEAD
-    remote_copy "." "/home/$USERNAME/bongaquino-ipfs/docker-compose/bongaquino-ipfs-kr-bootstrap-02"
+    remote_copy "." "/home/$USERNAME/example-ipfs/docker-compose/example-ipfs-node-bootstrap-02"
     
     # Make scripts executable
     print_status "Making scripts executable..."
-    remote_exec "cd /home/$USERNAME/bongaquino-ipfs/docker-compose/bongaquino-ipfs-kr-bootstrap-02 && chmod +x *.sh"
+    remote_exec "cd /home/$USERNAME/example-ipfs/docker-compose/example-ipfs-node-bootstrap-02 && chmod +x *.sh"
     
     # Start services
     print_status "Starting IPFS services..."
-    remote_exec "cd /home/$USERNAME/bongaquino-ipfs/docker-compose/bongaquino-ipfs-kr-bootstrap-02 && sg docker -c 'docker-compose up -d'"
+    remote_exec "cd /home/$USERNAME/example-ipfs/docker-compose/example-ipfs-node-bootstrap-02 && sg docker -c 'docker-compose up -d'"
 =======
-    remote_copy "." "/home/$USERNAME/koneksi-ipfs/docker-compose/koneksi-ipfs-kr-bootstrap-02"
+    remote_copy "." "/home/$USERNAME/koneksi-ipfs/docker-compose/koneksi-ipfs-node-bootstrap-02"
     
     # Make scripts executable
     print_status "Making scripts executable..."
-    remote_exec "cd /home/$USERNAME/koneksi-ipfs/docker-compose/koneksi-ipfs-kr-bootstrap-02 && chmod +x *.sh"
+    remote_exec "cd /home/$USERNAME/koneksi-ipfs/docker-compose/koneksi-ipfs-node-bootstrap-02 && chmod +x *.sh"
     
     # Start services
     print_status "Starting IPFS services..."
-    remote_exec "cd /home/$USERNAME/koneksi-ipfs/docker-compose/koneksi-ipfs-kr-bootstrap-02 && sg docker -c 'docker-compose up -d'"
+    remote_exec "cd /home/$USERNAME/koneksi-ipfs/docker-compose/koneksi-ipfs-node-bootstrap-02 && sg docker -c 'docker-compose up -d'"
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
     
     # Wait for services to start
@@ -156,9 +156,9 @@ verify_deployment() {
     # Check service status
     print_status "Checking service status..."
 <<<<<<< HEAD
-    remote_exec "cd /home/$USERNAME/bongaquino-ipfs/docker-compose/bongaquino-ipfs-kr-bootstrap-02 && sg docker -c 'docker-compose ps'"
+    remote_exec "cd /home/$USERNAME/example-ipfs/docker-compose/example-ipfs-node-bootstrap-02 && sg docker -c 'docker-compose ps'"
 =======
-    remote_exec "cd /home/$USERNAME/koneksi-ipfs/docker-compose/koneksi-ipfs-kr-bootstrap-02 && sg docker -c 'docker-compose ps'"
+    remote_exec "cd /home/$USERNAME/koneksi-ipfs/docker-compose/koneksi-ipfs-node-bootstrap-02 && sg docker -c 'docker-compose ps'"
 >>>>>>> ff1a2945f8bd7c03b52b06fcba179354b2b893ff
     
     # Check IPFS status
@@ -179,7 +179,7 @@ show_info() {
     print_status "Server Information:"
     print_status "  IP Address: $SERVER_IP"
     print_status "  Username: $USERNAME"
-    print_status "  Peername: kr-bootstrap-02"
+    print_status "  Peername: node-bootstrap-02"
     echo ""
     print_status "Access URLs:"
     print_status "  IPFS API: http://$SERVER_IP:5001"

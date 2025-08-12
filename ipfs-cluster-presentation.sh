@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "================================================================================================"
-echo "                    bongaquino PRIVATE IPFS CLUSTER - TECHNICAL DETAILS"
+echo "                    EXAMPLE PRIVATE IPFS CLUSTER - TECHNICAL DETAILS"
 echo "================================================================================================"
 echo ""
 
@@ -9,10 +9,10 @@ echo "🏗️  CLUSTER ARCHITECTURE"
 echo "════════════════════════════════════════════════════════════════════════════════════════════"
 echo "Cluster Type: Private IPFS Cluster with Swarm Key Isolation"
 echo "Total Nodes: 4 (1 Bootstrap + 3 Peers)"
-echo "Geographic Location: South Korea"
+echo "Geographic Location: Example Region"
 echo ""
 echo "Node Distribution:"
-echo "  📍 Bootstrap Node (.17): 27.255.70.17  - Primary Gateway & API Endpoint"
+echo "  📍 Bootstrap Node (.17): 10.0.0.17  - Primary Gateway & API Endpoint"
 echo "  📍 Peer-01 (.33):      <PEER_01_IP>  - Storage Node (14.6TB)"
 echo "  📍 Peer-02 (.34):      <PEER_02_IP>  - Storage Node (125TB RAID-6)"
 echo "  📍 Peer-03 (.217):     <BOOTSTRAP_NODE_IP> - Storage Node"
@@ -37,7 +37,7 @@ echo ""
 # Check cluster connectivity and security
 echo "🌐 REAL-TIME CLUSTER STATUS"
 echo "════════════════════════════════════════════════════════════════════════════════════════════"
-ssh ipfs@27.255.70.17 "
+ssh ipfs@10.0.0.17 "
 echo '📊 CLUSTER PEER STATUS:'
 docker exec ipfs-cluster ipfs-cluster-ctl peers ls
 
@@ -66,7 +66,7 @@ ssh ipfs@<BOOTSTRAP_NODE_IP> "echo '📦 Peer-03 Storage:'; df -h /data | tail -
 echo ""
 echo "🔥 FIREWALL CONFIGURATION"
 echo "════════════════════════════════════════════════════════════════════════════════════════════"
-ssh ipfs@27.255.70.17 "
+ssh ipfs@10.0.0.17 "
 echo '🛡️  UFW Rules (OS Level):'
 sudo ufw status numbered | head -20
 
@@ -76,13 +76,13 @@ sudo ufw-docker list 2>/dev/null | head -10 || echo 'UFW-Docker rules active (de
 
 echo ''
 echo '📋 Nginx IP Whitelist (Sample):'
-grep -A 5 'IP Whitelist' /home/ipfs/bongaquino-ipfs/docker-compose/bongaquino-ipfs-kr-bootstrap-01/nginx.conf | head -10
+grep -A 5 'IP Whitelist' /home/ipfs/example-ipfs/docker-compose/example-ipfs-node-bootstrap-01/nginx.conf | head -10
 "
 
 echo ""
 echo "⚡ PERFORMANCE METRICS"
 echo "════════════════════════════════════════════════════════════════════════════════════════════"
-ssh ipfs@27.255.70.17 "
+ssh ipfs@10.0.0.17 "
 echo '🔧 IPFS Configuration:'
 docker exec ipfs ipfs config show | grep -E '(StorageMax|ConnMgr|Routing)'
 
@@ -110,7 +110,7 @@ echo ""
 echo "🔍 CONNECTIVITY TEST"
 echo "════════════════════════════════════════════════════════════════════════════════════════════"
 echo "Testing inter-node connectivity..."
-ssh ipfs@27.255.70.17 "
+ssh ipfs@10.0.0.17 "
 for node in <BOOTSTRAP_NODE_IP> <PEER_01_IP> <PEER_02_IP>; do
   echo \"Testing \$node:4001 (IPFS P2P)\"
   timeout 3 nc -zv \$node 4001 2>&1 | grep -E '(succeeded|open)'
@@ -129,7 +129,7 @@ echo ""
 echo "🧪 FUNCTIONALITY TEST"
 echo "════════════════════════════════════════════════════════════════════════════════════════════"
 echo "Performing live cluster test..."
-ssh ipfs@27.255.70.17 "
+ssh ipfs@10.0.0.17 "
 echo 'Creating test content...'
 TEST_HASH=\$(echo 'CLUSTER DEMO - \$(date)' | docker exec -i ipfs ipfs add -q)
 echo \"Test content added: \$TEST_HASH\"
@@ -146,25 +146,25 @@ echo ""
 echo "📊 WHITELISTED ACCESS"
 echo "════════════════════════════════════════════════════════════════════════════════════════════"
 echo "Authorized Team IPs:"
-echo "  • Bong (Admin):           112.200.104.154"
-echo "  • Alex (DevOps):          119.94.172.143"
-echo "  • Franz (Developer):      157.20.143.170, 157.20.143.172, 157.20.143.171"
-echo "  • Drew (Developer):       112.205.173.97"
-echo "  • JB (Developer):         103.125.151.254"
-echo "  • Rafa (Developer):       65.93.75.199"
-echo "  • Karl (Developer):       119.92.3.131"
+echo "  • Admin:                  192.168.1.10"
+echo "  • DevOps:                 192.168.1.11"
+echo "  • Developer 1:            192.168.1.12"
+echo "  • Developer 2:            192.168.1.13"
+echo "  • Developer 3:            192.168.1.14"
+echo "  • Developer 4:            192.168.1.15"
+echo "  • Developer 5:            192.168.1.16"
 echo ""
 echo "Infrastructure IPs:"
-echo "  • Backend Server:         52.77.36.120"
-echo "  • UAT Bastion:           18.139.136.149"
-echo "  • ECS NAT Gateway:       13.250.68.194"
-echo "  • ALB IPs:               54.254.84.88, 13.228.96.207"
+echo "  • Backend Server:         10.0.1.10"
+echo "  • UAT Bastion:           10.0.1.11"
+echo "  • ECS NAT Gateway:       10.0.1.12"
+echo "  • ALB IPs:               10.0.1.13, 10.0.1.14"
 echo ""
 
 echo "🔧 MANAGEMENT COMMANDS"
 echo "════════════════════════════════════════════════════════════════════════════════════════════"
 echo "SSH Access:"
-echo "  ssh ipfs@27.255.70.17    # Bootstrap node"
+echo "  ssh ipfs@10.0.0.17    # Bootstrap node"
 echo "  ssh ipfs@<BOOTSTRAP_NODE_IP> # Peer-03"
 echo "  ssh ipfs@<PEER_01_IP>   # Peer-01"
 echo "  ssh ipfs@<PEER_02_IP>   # Peer-02"
