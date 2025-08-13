@@ -5,11 +5,29 @@ This repository contains the complete setup for deploying SecuPi Gateway with Po
 ## Architecture Overview
 
 ```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Client App    │───▶│  SecuPi Gateway │───▶│   PostgreSQL    │
-│                 │    │   (Data Mask)   │    │   (SSL Enabled) │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-      SSL verify-full         SSL require           SSL enabled
+┌─────────────────┐   SSL verify-full    ┌─────────────────┐   SSL require      ┌─────────────────┐
+│   Client App    │   CN verification    │  SecuPi Gateway │   Data masking     │   PostgreSQL    │
+│ (postgres-client) │ ─────────────────▶ │ gateway-fixed.jks │ ─────────────────▶ │ server.crt/key  │
+│                 │                      │   Port 5432     │                    │   Port 5432     │
+└─────────────────┘                      └─────────────────┘                    └─────────────────┘
+                                                   │
+                                                   ▼
+                                         ┌─────────────────────┐
+                                         │  SSL Certificates   │
+                                         │                     │
+                                         │ gateway-fixed.jks:  │
+                                         │ • Contains private  │
+                                         │   key & certificate │
+                                         │ • CN: secupi-gateway│
+                                         │   -gateway.default  │
+                                         │   .svc.cluster.local│
+                                         │                     │
+                                         │ server.crt/key:     │
+                                         │ • PostgreSQL SSL    │
+                                         │ • CN: postgres-     │
+                                         │   service.default   │
+                                         │   .svc.cluster.local│
+                                         └─────────────────────┘
 ```
 
 ## Components
