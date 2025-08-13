@@ -114,7 +114,7 @@ kubectl exec $(kubectl get pods -l app=secupi-gateway-gateway -n default --no-he
   kubectl exec -i postgres-client -- bash -c 'cat > /root/.postgresql/root.crt'
 ```
 
-### 6. Demonstration Commands
+### 6. Verification Commands
 
 ```bash
 # Verify all pods are running
@@ -127,9 +127,9 @@ kubectl logs $(kubectl get pods -l app=secupi-gateway-gateway -n default --no-he
 kubectl exec postgres-client -- openssl x509 -in /root/.postgresql/root.crt -text -noout | grep -A 2 "Subject:"
 ```
 
-## Complete Demonstration Guide
+## Complete Setup Guide
 
-This section provides step-by-step commands for demonstrating the SSL verify-full mode with data masking functionality.
+This section provides step-by-step commands for validating the SSL verify-full mode with data masking functionality.
 
 ### Step 1: Verify Infrastructure Status
 
@@ -177,7 +177,7 @@ kubectl exec postgres-client -- bash -c 'PGPASSWORD=strongpassword123 psql "post
 echo "=== SECUPI GATEWAY SSL DISABLED (WITH MASKING) ==="
 kubectl exec postgres-client -- bash -c 'PGPASSWORD=strongpassword123 psql "postgresql://postgres@secupi-gateway-gateway:5432/customersdb?sslmode=disable" -c "SELECT id, email FROM customers LIMIT 3;"'
 
-# MAIN DEMONSTRATION: SSL verify-full with data masking
+# MAIN VALIDATION: SSL verify-full with data masking
 echo "=== SECUPI GATEWAY SSL VERIFY-FULL (WITH MASKING) ==="
 kubectl exec postgres-client -- bash -c 'PGPASSWORD=strongpassword123 psql "postgresql://postgres@secupi-gateway-gateway.default.svc.cluster.local:5432/customersdb?sslmode=verify-full" -c "SELECT id, email FROM customers LIMIT 3;"'
 ```
@@ -223,7 +223,7 @@ echo "=== DATA MASKING CONSISTENCY CHECK ==="
 kubectl exec postgres-client -- bash -c 'PGPASSWORD=strongpassword123 psql "postgresql://postgres@secupi-gateway-gateway.default.svc.cluster.local:5432/customersdb?sslmode=verify-full" -c "SELECT id, email, first_name, last_name FROM customers;"'
 ```
 
-## Key Demonstration Points
+## Key Validation Points
 
 1. **SSL Security**: Both direct and gateway connections use SSL verify-full mode
 2. **Data Masking**: Only gateway connections show masked data (XXXXXXXX@domain.com)
@@ -374,7 +374,7 @@ kubectl get pods -l app=secupi-gateway-gateway -n default
 
 ## License
 
-This configuration is provided as-is for demonstration purposes. Please ensure compliance with your organization's security policies and SecuPi licensing terms.
+This configuration is provided as-is for educational purposes. Please ensure compliance with your organization's security policies and SecuPi licensing terms.
 
 ## Contributing
 
