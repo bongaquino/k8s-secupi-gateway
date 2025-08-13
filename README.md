@@ -194,12 +194,14 @@ kubectl get services -n default
 
 ### Step 2: Test Direct PostgreSQL Connection (Baseline)
 
-```bash
-# Test SSL verify-ca mode (shows real data - no masking)
-echo "=== DIRECT POSTGRESQL CONNECTION (NO MASKING) ==="
-kubectl exec postgres-client -- bash -c 'PGPASSWORD=strongpassword123 psql "postgresql://postgres@postgres-service:5432/customersdb?sslmode=verify-ca" -c "SELECT id, email FROM customers LIMIT 3;"'
+**Important**: Use the full FQDN `postgres-service.default.svc.cluster.local` because our CA certificate was created with this exact hostname as the Common Name (CN).
 
-# Test SSL verify-full mode (shows real data - no masking)
+```bash
+# Test SSL verify-ca mode (validates certificate against CA)
+echo "=== DIRECT POSTGRESQL SSL VERIFY-CA (NO MASKING) ==="
+kubectl exec postgres-client -- bash -c 'PGPASSWORD=strongpassword123 psql "postgresql://postgres@postgres-service.default.svc.cluster.local:5432/customersdb?sslmode=verify-ca" -c "SELECT id, email FROM customers LIMIT 3;"'
+
+# Test SSL verify-full mode (validates certificate + hostname)
 echo "=== DIRECT POSTGRESQL SSL VERIFY-FULL (NO MASKING) ==="
 kubectl exec postgres-client -- bash -c 'PGPASSWORD=strongpassword123 psql "postgresql://postgres@postgres-service.default.svc.cluster.local:5432/customersdb?sslmode=verify-full" -c "SELECT id, email FROM customers LIMIT 3;"'
 ```
