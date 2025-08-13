@@ -83,48 +83,81 @@ kubectl wait --for=condition=ready pod -l app=secupi-gateway-gateway -n default 
 
 ```bash
 # Initialize database with sample data
-cat init-db.sql | kubectl exec -i $(kubectl get pods -l app=postgres -o jsonpath='{.items[0].metadata.name}') -n default -- bash -c 'PGPASSWORD=strongpassword123 psql -U postgres -d customersdb'
+cat init-db.sql | kubectl exec -i $(kubectl get pods -l app=postgres -n default --no-headers -o custom-columns=":metadata.name") -n default -- bash -c 'PGPASSWORD=strongpassword123 psql -U postgres -d customersdb'
 ```
 
-### 4. Setup SSL Certificates
+### 4. Setup SSL Certificates with Certificate Authority
+
+This setup creates a proper Certificate Authority (CA) that signs both PostgreSQL and Gateway certificates, enabling a single root certificate for all SSL connections.
 
 ```bash
-# Create SSL certificates secret for PostgreSQL
+# Step 1: Create Certificate Authority
+openssl req -new -x509 -days 365 -nodes -out ca.crt -keyout ca.key \
+  -subj "/C=US/ST=State/L=City/O=SecuPi Organization/CN=SecuPi-SSL-CA"
+
+# Step 2: Extract gateway private key from existing keystore
+kubectl exec $(kubectl get pods -l app=secupi-gateway-gateway -n default --no-headers -o custom-columns=":metadata.name") -n default -- \
+  keytool -importkeystore -srckeystore /opt/secupi/etc/keystore.jks -destkeystore /tmp/gateway-temp.p12 \
+  -srcstoretype JKS -deststoretype PKCS12 -srcstorepass test123456 -deststorepass test123456 -srcalias 1 -destalias 1
+
+kubectl cp default/$(kubectl get pods -l app=secupi-gateway-gateway -n default --no-headers -o custom-columns=":metadata.name"):/tmp/gateway-temp.p12 ./gateway-temp.p12
+
+openssl pkcs12 -in gateway-temp.p12 -nocerts -nodes -out gateway-temp.key -passin pass:test123456
+
+# Step 3: Generate certificate signing requests
+openssl req -new -key server.key -out server-new.csr \
+  -subj "/C=US/ST=State/L=City/O=SecuPi Organization/CN=postgres-service.default.svc.cluster.local"
+
+openssl req -new -key gateway-temp.key -out gateway-new.csr \
+  -subj "/C=US/ST=State/L=City/O=SecuPi Organization/CN=secupi-gateway-gateway.default.svc.cluster.local"
+
+# Step 4: Sign certificates with CA
+openssl x509 -req -in server-new.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server-new.crt -days 365
+openssl x509 -req -in gateway-new.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out gateway-new.crt -days 365
+
+# Step 5: Create new gateway keystore with CA-signed certificate
+openssl pkcs12 -export -in gateway-new.crt -inkey gateway-temp.key -out gateway-new.p12 -name 1 -passout pass:test123456
+
+kubectl cp ./gateway-new.p12 default/$(kubectl get pods -l app=secupi-gateway-gateway -n default --no-headers -o custom-columns=":metadata.name"):/tmp/gateway-new.p12
+
+kubectl exec $(kubectl get pods -l app=secupi-gateway-gateway -n default --no-headers -o custom-columns=":metadata.name") -n default -- \
+  keytool -importkeystore -srckeystore /tmp/gateway-new.p12 -srcstoretype PKCS12 \
+  -destkeystore /tmp/gateway-fixed-ca.jks -deststoretype JKS \
+  -srcstorepass test123456 -deststorepass test123456 -alias 1
+
+kubectl cp default/$(kubectl get pods -l app=secupi-gateway-gateway -n default --no-headers -o custom-columns=":metadata.name"):/tmp/gateway-fixed-ca.jks ./gateway-fixed-ca.jks
+
+# Step 6: Deploy CA-signed certificates
+kubectl delete secret postgres-ssl-certs -n default --ignore-not-found
 kubectl create secret generic postgres-ssl-certs \
-  --from-file=server.crt=server.crt \
+  --from-file=server.crt=server-new.crt \
   --from-file=server.key=server.key \
   --from-file=client.crt=client.crt \
   --from-file=client.key=client.key \
   --namespace=default
 
-# Create fixed gateway keystore with correct hostname
-kubectl exec $(kubectl get pods -l app=secupi-gateway-gateway -n default --no-headers -o custom-columns=":metadata.name") -n default -- \
-  keytool -genkeypair -alias 1 -keyalg RSA -keysize 2048 \
-  -keystore /tmp/gateway-fixed.jks -storepass test123456 -keypass test123456 \
-  -dname "CN=secupi-gateway-gateway.default.svc.cluster.local,O=SecuPi Software,L=City,ST=State,C=US" \
-  -validity 365
-
-# Copy and update the keystore
-kubectl cp default/$(kubectl get pods -l app=secupi-gateway-gateway -n default --no-headers -o custom-columns=":metadata.name"):/tmp/gateway-fixed.jks ./gateway-fixed.jks
-
 kubectl delete secret secupi-gateway-gateway-keystore -n default
-kubectl create secret generic secupi-gateway-gateway-keystore --from-file=keystore.jks=gateway-fixed.jks -n default
+kubectl create secret generic secupi-gateway-gateway-keystore --from-file=keystore.jks=gateway-fixed-ca.jks -n default
 
-# Restart gateway to pick up new certificate
+# Step 7: Install CA certificate for client SSL validation
+cat ca.crt | kubectl exec -i postgres-client -- bash -c 'cat > /root/.postgresql/root.crt'
+
+# Step 8: Restart services to pick up new certificates
+kubectl rollout restart deployment postgres -n default
 kubectl rollout restart deployment secupi-gateway-gateway -n default
+
+kubectl wait --for=condition=ready pod -l app=postgres -n default --timeout=120s
 kubectl wait --for=condition=ready pod -l app=secupi-gateway-gateway -n default --timeout=120s
 ```
 
-### 5. Setup Client SSL Configuration
+### 5. Verify SSL Configuration
 
 ```bash
-# Create .postgresql directory in client pod
-kubectl exec postgres-client -- mkdir -p /root/.postgresql
+# Verify CA certificate is properly installed
+kubectl exec postgres-client -- openssl x509 -in /root/.postgresql/root.crt -text -noout | grep -A 2 "Subject:"
 
-# Extract and copy gateway certificate for SSL verification
-kubectl exec $(kubectl get pods -l app=secupi-gateway-gateway -n default --no-headers -o custom-columns=":metadata.name") -n default -- \
-  keytool -exportcert -alias 1 -keystore /opt/secupi/etc/keystore.jks -storepass test123456 -rfc | \
-  kubectl exec -i postgres-client -- bash -c 'cat > /root/.postgresql/root.crt'
+# Check that both services are running with new certificates
+kubectl get pods -n default | grep -E "(postgres|secupi)"
 ```
 
 ### 6. Verification Commands
@@ -253,15 +286,26 @@ k8s-secupi-gateway/
 ├── postgres-deployment.yaml    # SSL-enabled PostgreSQL 16 deployment
 ├── custom-values.yaml          # SecuPi Gateway Helm values configuration
 ├── init-db.sql                 # Database initialization with customer data
-├── server.crt                  # PostgreSQL server SSL certificate
+├── ca.crt                      # Certificate Authority certificate (root CA)
+├── ca.key                      # Certificate Authority private key
+├── ca.srl                      # Certificate Authority serial number file
+├── server.crt                  # PostgreSQL server SSL certificate (original)
 ├── server.key                  # PostgreSQL server private key
 ├── server.csr                  # PostgreSQL server certificate signing request
+├── server-new.crt              # CA-signed PostgreSQL server certificate
+├── server-new.csr              # Certificate signing request for PostgreSQL
 ├── client.crt                  # PostgreSQL client SSL certificate
 ├── client.key                  # PostgreSQL client private key
 ├── client.csr                  # PostgreSQL client certificate signing request
-├── gateway-fixed.crt           # Gateway SSL certificate with correct hostname
-├── gateway-fixed.key           # Gateway private key with correct hostname
-└── gateway-fixed.jks           # Gateway Java keystore with correct hostname
+├── gateway-temp.key            # Extracted gateway private key (temp)
+├── gateway-temp.p12            # Temporary PKCS12 file (temp)
+├── gateway-new.crt             # CA-signed Gateway certificate
+├── gateway-new.csr             # Certificate signing request for Gateway
+├── gateway-new.p12             # PKCS12 file for new gateway certificate
+├── gateway-fixed.crt           # Gateway SSL certificate (legacy)
+├── gateway-fixed.key           # Gateway private key (legacy)
+├── gateway-fixed.jks           # Gateway Java keystore (legacy)
+└── gateway-fixed-ca.jks        # CA-signed Gateway Java keystore (active)
 ```
 
 ## Configuration Details
@@ -300,6 +344,69 @@ For `verify-full` SSL mode to work:
 2. Certificate must be properly signed
 3. Root CA certificate must be available to client
 4. Private key must be accessible to server
+
+### Certificate Authority Architecture
+
+This implementation uses a **single Certificate Authority (CA)** approach that provides:
+
+**🔐 CA Certificate (`ca.crt`):**
+- **Subject**: `CN=SecuPi-SSL-CA, O=SecuPi Organization`
+- **Purpose**: Signs both PostgreSQL and Gateway server certificates
+- **Location**: `/root/.postgresql/root.crt` in postgres-client pod
+
+**🗄️ PostgreSQL Server Certificate (`server-new.crt`):**
+- **Subject**: `CN=postgres-service.default.svc.cluster.local`
+- **Signed by**: SecuPi-SSL-CA
+- **Usage**: PostgreSQL server SSL termination
+
+**🚪 Gateway Server Certificate (`gateway-fixed-ca.jks`):**
+- **Subject**: `CN=secupi-gateway-gateway.default.svc.cluster.local`
+- **Signed by**: SecuPi-SSL-CA
+- **Format**: Java KeyStore (JKS) containing certificate + private key
+- **Usage**: SecuPi Gateway SSL termination with data masking
+
+**✅ SSL Validation Flow:**
+1. Client connects to server with `sslmode=verify-full`
+2. Server presents its CA-signed certificate
+3. Client validates certificate against CA (`ca.crt`)
+4. Client verifies hostname matches certificate CN
+5. Secure SSL connection established ✅
+
+**🎯 Benefits:**
+- **Single root certificate** for all connections
+- **Proper certificate hierarchy** (production-ready)
+- **Both PostgreSQL and Gateway** connections work with `verify-full`
+- **Data masking preserved** through Gateway
+
+## Working SSL Test Commands
+
+### Test PostgreSQL Direct Connection (No Masking)
+```bash
+kubectl exec postgres-client -- bash -c 'PGPASSWORD=strongpassword123 psql "postgresql://postgres@postgres-service.default.svc.cluster.local:5432/customersdb?sslmode=verify-full" -c "SELECT id, email FROM customers LIMIT 3;"'
+```
+
+**Expected Output (Real Data):**
+```
+ id |         email          
+----+------------------------
+  1 | john.doe@example.com
+  2 | jane.smith@company.com
+  3 | bob.johnson@email.com
+```
+
+### Test SecuPi Gateway Connection (With Masking)
+```bash
+kubectl exec postgres-client -- bash -c 'PGPASSWORD=strongpassword123 psql "postgresql://postgres@secupi-gateway-gateway.default.svc.cluster.local:5432/customersdb?sslmode=verify-full" -c "SELECT id, email FROM customers LIMIT 3;"'
+```
+
+**Expected Output (Masked Data):**
+```
+ id |         email          
+----+------------------------
+  1 | XXXXXXXX@example.com
+  2 | XXXXXXXXXX@company.com
+  3 | XXXXXXXXXXX@email.com
+```
 
 ## Troubleshooting
 
