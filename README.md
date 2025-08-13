@@ -205,7 +205,7 @@ kubectl exec postgres-client -- openssl s_client -connect secupi-gateway-gateway
 
 # Check gateway logs for connection activity
 echo "=== GATEWAY CONNECTION LOGS ==="
-kubectl logs $(kubectl get pods -l app=secupi-gateway-gateway -o jsonpath='{.items[0].metadata.name}') -n default | tail -5
+kubectl logs secupi-gateway-gateway-649f6f6c7-n9zjt -n default | tail -5
 ```
 
 ### Step 5: Performance and Security Validation
@@ -230,31 +230,6 @@ kubectl exec postgres-client -- bash -c 'PGPASSWORD=strongpassword123 psql "post
 3. **Performance**: Negligible latency impact with SSL and masking
 4. **Certificate Validation**: Proper hostname verification working
 5. **Transparency**: Application connects normally, masking is transparent
-
-## Quick Demo Script
-
-For a streamlined demonstration, copy and paste this entire script:
-
-```bash
-#!/bin/bash
-echo "========================================="
-echo "SecuPi Gateway SSL Demo"
-echo "========================================="
-
-echo -e "\n1. Infrastructure Status:"
-kubectl get pods -n default | grep -E "(postgres|secupi)"
-
-echo -e "\n2. Direct PostgreSQL (Real Data):"
-kubectl exec postgres-client -- bash -c 'PGPASSWORD=strongpassword123 psql "postgresql://postgres@postgres-service.default.svc.cluster.local:5432/customersdb?sslmode=verify-full" -c "SELECT id, email FROM customers LIMIT 3;"'
-
-echo -e "\n3. SecuPi Gateway (Masked Data):"
-kubectl exec postgres-client -- bash -c 'PGPASSWORD=strongpassword123 psql "postgresql://postgres@secupi-gateway-gateway.default.svc.cluster.local:5432/customersdb?sslmode=verify-full" -c "SELECT id, email FROM customers LIMIT 3;"'
-
-echo -e "\n4. SSL Certificate Verification:"
-kubectl exec postgres-client -- openssl x509 -in /root/.postgresql/root.crt -noout -subject
-
-echo -e "\nDemo completed successfully!"
-```
 
 ## File Structure
 
