@@ -291,22 +291,16 @@ k8s-secupi-gateway/
 ├── ca.crt                      # Certificate Authority certificate (root CA)
 ├── ca.key                      # Certificate Authority private key
 ├── ca.srl                      # Certificate Authority serial number file
-├── server.crt                  # PostgreSQL server SSL certificate (original)
 ├── server.key                  # PostgreSQL server private key
-├── server.csr                  # PostgreSQL server certificate signing request
-├── server-new.crt              # CA-signed PostgreSQL server certificate
+├── server-new.crt              # CA-signed PostgreSQL server certificate (active)
 ├── server-new.csr              # Certificate signing request for PostgreSQL
 ├── client.crt                  # PostgreSQL client SSL certificate
 ├── client.key                  # PostgreSQL client private key
-├── client.csr                  # PostgreSQL client certificate signing request
 ├── gateway-temp.key            # Extracted gateway private key (temp)
 ├── gateway-temp.p12            # Temporary PKCS12 file (temp)
 ├── gateway-new.crt             # CA-signed Gateway certificate
 ├── gateway-new.csr             # Certificate signing request for Gateway
 ├── gateway-new.p12             # PKCS12 file for new gateway certificate
-├── gateway-fixed.crt           # Gateway SSL certificate (legacy)
-├── gateway-fixed.key           # Gateway private key (legacy)
-├── gateway-fixed.jks           # Gateway Java keystore (legacy)
 └── gateway-fixed-ca.jks        # CA-signed Gateway Java keystore (active)
 ```
 
