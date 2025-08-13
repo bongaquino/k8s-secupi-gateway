@@ -184,9 +184,9 @@ This section provides step-by-step commands for validating the SSL verify-full m
 kubectl get pods -n default
 
 # Expected output should show all pods in Running status:
-# postgres-xxxxx-xxxxx                 1/1     Running
-# postgres-client                      1/1     Running  
-# secupi-gateway-gateway-xxxxx-xxxxx   1/1     Running
+# postgres-6fc97d8cc7-67f2q             1/1     Running
+# postgres-client                       1/1     Running  
+# secupi-gateway-gateway-7b48f7fc75-h994l  1/1     Running
 
 # Verify services are available
 kubectl get services -n default
@@ -251,7 +251,7 @@ kubectl exec postgres-client -- openssl s_client -connect secupi-gateway-gateway
 
 # Check gateway logs for connection activity
 echo "=== GATEWAY CONNECTION LOGS ==="
-kubectl logs secupi-gateway-gateway-649f6f6c7-n9zjt -n default | tail -5
+kubectl logs secupi-gateway-gateway-7b48f7fc75-h994l -n default | tail -5
 ```
 
 ### Step 5: Performance and Security Validation
