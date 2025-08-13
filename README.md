@@ -246,13 +246,9 @@ k8s-secupi-gateway/
 ├── client.crt                  # PostgreSQL client SSL certificate
 ├── client.key                  # PostgreSQL client private key
 ├── client.csr                  # PostgreSQL client certificate signing request
-├── gateway.crt                 # Gateway SSL certificate (original)
-├── gateway.key                 # Gateway private key (original)
-├── gateway.csr                 # Gateway certificate signing request
-├── gateway.jks                 # Gateway Java keystore (original)
-├── gateway-fixed.crt           # Fixed gateway certificate with correct hostname
-├── gateway-fixed.key           # Fixed gateway private key
-└── gateway-fixed.jks           # Fixed gateway keystore with correct hostname
+├── gateway-fixed.crt           # Gateway SSL certificate with correct hostname
+├── gateway-fixed.key           # Gateway private key with correct hostname
+└── gateway-fixed.jks           # Gateway Java keystore with correct hostname
 ```
 
 ## Configuration Details
