@@ -4,30 +4,25 @@ This repository contains the complete setup for deploying SecuPi Gateway with Po
 
 ## Architecture Overview
 
-```
-┌─────────────────┐   SSL verify-full    ┌─────────────────┐   SSL require      ┌─────────────────┐
-│   Client App    │   CN verification    │  SecuPi Gateway │   Data masking     │   PostgreSQL    │
-│ (postgres-client) │ ─────────────────▶ │ gateway-fixed.jks │ ─────────────────▶ │ server.crt/key  │
-│                 │                      │   Port 5432     │                    │   Port 5432     │
-└─────────────────┘                      └─────────────────┘                    └─────────────────┘
-                                                   │
-                                                   ▼
-                                         ┌─────────────────────┐
-                                         │  SSL Certificates   │
-                                         │                     │
-                                         │ gateway-fixed.jks:  │
-                                         │ • Contains private  │
-                                         │   key & certificate │
-                                         │ • CN: secupi-gateway│
-                                         │   -gateway.default  │
-                                         │   .svc.cluster.local│
-                                         │                     │
-                                         │ server.crt/key:     │
-                                         │ • PostgreSQL SSL    │
-                                         │ • CN: postgres-     │
-                                         │   service.default   │
-                                         │   .svc.cluster.local│
-                                         └─────────────────────┘
+```mermaid
+graph LR
+    A["Client App<br/>(postgres-client)"] -->|"SSL verify-full<br/>CN verification"| B["SecuPi Gateway<br/>gateway-fixed.jks<br/>Port 5432"]
+    B -->|"SSL require<br/>Data masking"| C["PostgreSQL<br/>server.crt/key<br/>Port 5432"]
+    
+    subgraph D["SSL Certificates"]
+        E["gateway-fixed.jks<br/>• Contains private key<br/>• Contains certificate<br/>• CN: secupi-gateway-gateway.default.svc.cluster.local"]
+        F["server.crt/key<br/>• PostgreSQL SSL<br/>• CN: postgres-service.default.svc.cluster.local"]
+    end
+    
+    B -.-> E
+    C -.-> F
+    
+    style A fill:#f3e5f5,stroke:#9c27b0,stroke-width:2px
+    style B fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
+    style C fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+    style D fill:#f5f5f5,stroke:#616161,stroke-width:2px
+    style E fill:#fff3e0,stroke:#f57c00,stroke-width:1px
+    style F fill:#fff3e0,stroke:#f57c00,stroke-width:1px
 ```
 
 ## Components
