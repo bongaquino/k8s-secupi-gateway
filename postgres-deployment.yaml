@@ -66,3 +66,4 @@ spec:
         secret:
           secretName: postgres-ssl-certs
           defaultMode: 0644
+

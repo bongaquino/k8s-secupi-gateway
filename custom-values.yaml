@@ -29,3 +29,4 @@ gateway:
     GATEWAY_PORT: "5432"
 imagePullSecrets:
   - name: secupi-registry
+

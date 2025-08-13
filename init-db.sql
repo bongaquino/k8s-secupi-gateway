@@ -15,3 +15,4 @@ INSERT INTO customers (email, first_name, last_name) VALUES
 ('alice.williams@test.org', 'Alice', 'Williams'),
 ('charlie.brown@sample.net', 'Charlie', 'Brown')
 ON CONFLICT DO NOTHING;
+

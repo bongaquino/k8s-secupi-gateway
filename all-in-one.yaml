@@ -52,3 +52,4 @@ spec:
   - name: postgres-client
     image: postgres:16
     command: ["sleep", "infinity"]
+
