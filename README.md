@@ -85,14 +85,14 @@ kubectl create secret generic postgres-ssl-certs \
   --namespace=default
 
 # Create fixed gateway keystore with correct hostname
-kubectl exec $(kubectl get pods -l app=secupi-gateway-gateway -o jsonpath='{.items[0].metadata.name}') -n default -- \
+kubectl exec $(kubectl get pods -l app=secupi-gateway-gateway -n default --no-headers -o custom-columns=":metadata.name") -n default -- \
   keytool -genkeypair -alias 1 -keyalg RSA -keysize 2048 \
   -keystore /tmp/gateway-fixed.jks -storepass test123456 -keypass test123456 \
   -dname "CN=secupi-gateway-gateway.default.svc.cluster.local,O=SecuPi Software,L=City,ST=State,C=US" \
   -validity 365
 
 # Copy and update the keystore
-kubectl cp default/$(kubectl get pods -l app=secupi-gateway-gateway -o jsonpath='{.items[0].metadata.name}'):/tmp/gateway-fixed.jks ./gateway-fixed.jks
+kubectl cp default/$(kubectl get pods -l app=secupi-gateway-gateway -n default --no-headers -o custom-columns=":metadata.name"):/tmp/gateway-fixed.jks ./gateway-fixed.jks
 
 kubectl delete secret secupi-gateway-gateway-keystore -n default
 kubectl create secret generic secupi-gateway-gateway-keystore --from-file=keystore.jks=gateway-fixed.jks -n default
@@ -109,7 +109,7 @@ kubectl wait --for=condition=ready pod -l app=secupi-gateway-gateway -n default 
 kubectl exec postgres-client -- mkdir -p /root/.postgresql
 
 # Extract and copy gateway certificate for SSL verification
-kubectl exec $(kubectl get pods -l app=secupi-gateway-gateway -o jsonpath='{.items[0].metadata.name}') -n default -- \
+kubectl exec $(kubectl get pods -l app=secupi-gateway-gateway -n default --no-headers -o custom-columns=":metadata.name") -n default -- \
   keytool -exportcert -alias 1 -keystore /opt/secupi/etc/keystore.jks -storepass test123456 -rfc | \
   kubectl exec -i postgres-client -- bash -c 'cat > /root/.postgresql/root.crt'
 ```
@@ -121,7 +121,7 @@ kubectl exec $(kubectl get pods -l app=secupi-gateway-gateway -o jsonpath='{.ite
 kubectl get pods -n default
 
 # Check gateway logs (optional)
-kubectl logs $(kubectl get pods -l app=secupi-gateway-gateway -o jsonpath='{.items[0].metadata.name}') -n default | tail -10
+kubectl logs $(kubectl get pods -l app=secupi-gateway-gateway -n default --no-headers -o custom-columns=":metadata.name") -n default | tail -10
 
 # Verify certificate is properly configured
 kubectl exec postgres-client -- openssl x509 -in /root/.postgresql/root.crt -text -noout | grep -A 2 "Subject:"
@@ -315,10 +315,10 @@ For `verify-full` SSL mode to work:
 kubectl get pods -n default
 
 # View gateway logs
-kubectl logs $(kubectl get pods -l app=secupi-gateway-gateway -o jsonpath='{.items[0].metadata.name}') -n default
+kubectl logs $(kubectl get pods -l app=secupi-gateway-gateway -n default --no-headers -o custom-columns=":metadata.name") -n default
 
 # Check PostgreSQL logs
-kubectl logs $(kubectl get pods -l app=postgres -o jsonpath='{.items[0].metadata.name}') -n default
+kubectl logs $(kubectl get pods -l app=postgres -n default --no-headers -o custom-columns=":metadata.name") -n default
 
 # Verify certificate content
 kubectl exec postgres-client -- openssl x509 -in /root/.postgresql/root.crt -text -noout
